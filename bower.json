@@ -1,0 +1,19 @@
+{
+  "name": "WhoCares",
+  "version": "0.0.0",
+  "authors": [
+    "Joy Johnson",
+    "Haley Bash",
+    "Rory Sametz",
+    "Ambroise Piganeau"
+  ],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib"
+  ],
+  "dependencies": {
+  }
+}
