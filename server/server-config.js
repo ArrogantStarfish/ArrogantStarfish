@@ -2,15 +2,13 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var Query = require('../db/query');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-// todo: get geolocation information
-
 app.post('/query', function(req, res) {
-  // search query in database
-  // get query info from user
-  //1) keyword 2) locations within a radius
   var newQuery = new Query({
     user: req.body.user,
     latitude: req.body.latitude,
@@ -22,13 +20,16 @@ app.post('/query', function(req, res) {
 
   newQuery.save(function(err, newQuery) {
     if (err) {
-      res.send(500, err);
+      res.status(500);
+      res.send(err);
     } else {
       Query.find({keyword: req.body.keyword}).exec(function(err, queries) {
         if (err) {
-          res.send(500, err);
+          res.status(500);
+          res.send(err);
         } else {
-          res.send(200, queries);
+          res.status(200);
+          res.send(queries);
         }
       });
     }
