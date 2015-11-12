@@ -3,9 +3,10 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     this.inputView = new InputView({});
-    this.mapView = new MapView({});
+    this.mapView = new MapView({collection: this.model.get('NewsItemCollection')});
     this.preRender();
     this.renderMap();
+
   },
 
   preRender: function() {
