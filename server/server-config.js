@@ -13,8 +13,8 @@ app.post('/query', function(req, res) {
   //1) keyword 2) locations within a radius
   var newQuery = new Query({
     user: req.body.user,
-    latitude: /**/,
-    longitude: /**/,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
     keyword: req.body.keyword,
     datetime: new Date(),
     message: req.body.message
