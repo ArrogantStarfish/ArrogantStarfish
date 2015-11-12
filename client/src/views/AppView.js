@@ -6,7 +6,9 @@ var AppView = Backbone.View.extend({
     this.mapView = new MapView({collection: this.model.get('NewsItemCollection')});
     this.preRender();
     this.renderMap();
-
+    this.inputView.on('querySubmit', function(e){
+      this.model.postQuery(e);
+    }, this);
   },
 
   preRender: function() {
