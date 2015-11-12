@@ -3,7 +3,13 @@ var AppModel = Backbone.Model.extend({
     this.set('NewsItemCollection', new NewsItemCollection);
   },
 
-  postQuery: function(e){
-    console.log(e);
+  postQuery: function(query){
+    console.log(query);
+    this.get('NewsItemCollection').fetch({
+      data: query,
+      method: "POST"
+    }, function(res) {
+      console.log(res)
+    });
   }
 });
