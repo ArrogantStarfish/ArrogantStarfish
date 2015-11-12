@@ -7,7 +7,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-<script type="text/javascript" src="../bower_components/datamaps/dist/datamaps.world.min.js"></script>
+<script type="text/javascript" src="lib/datamaps/dist/datamaps.world.min.js"></script>
 
 <!-- Backbone Models -->
 <script type="text/javascript" src="src/models/AppModel.js"></script>
@@ -28,6 +28,12 @@
 <script>
   // runs when page is loaded
   $(function() {
+    console.log(navigator.geolocation)
+    if ("geolocation" in navigator) {
+      // console.log('Yes')
+    } else {
+      // console.log('No')
+    }
     var app = new AppModel();
     var appView = new AppView({model:app});
   });
