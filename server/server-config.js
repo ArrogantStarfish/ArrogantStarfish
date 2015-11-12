@@ -8,8 +8,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-app.post('/', function(req, res) {
-  console.log(req.body);
+app.post('/query', function(req, res) {
   var newQuery = new Query({
     user: req.body.user,
     latitude: req.body.latitude,
@@ -21,13 +20,14 @@ app.post('/', function(req, res) {
 
   newQuery.save(function(err, newQuery) {
     if (err) {
-      res.send(500, err);
+      res.status(500);
+      res.send(err);
     } else {
       Query.find({keyword: req.body.keyword}).exec(function(err, queries) {
         if (err) {
-          res.send(500, err);
+          res.status(500);
+          res.send(err);
         } else {
-          console.log(queries);
           res.status(200);
           res.send(queries);
         }
