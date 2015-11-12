@@ -6,8 +6,9 @@ var AppModel = Backbone.Model.extend({
   postQuery: function(query){
     console.log(query);
     this.get('NewsItemCollection').fetch({
-      data: query,
-      method: "POST"
+      data: JSON.stringify(query),
+      method: 'POST',
+      contentType: 'application/json',
     }, function(res) {
       console.log(res)
     });
