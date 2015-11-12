@@ -1,5 +1,5 @@
 var InputView = Backbone.View.extend({
-  el: '<form><input name="query"></input><button type="submit">Who Cares?</button></form>',
+  el: '<form><input id="query" name="query" placeholder="Subject"></input><input name="message" placeholder="Message"></input><button type="submit">Who Cares?</button></form>',
 
   initialize: function() {
     this.render();
@@ -12,14 +12,19 @@ var InputView = Backbone.View.extend({
     'submit': function(e) {
       e.preventDefault();
       var queryText = e.currentTarget[0].value;
-      console.log(queryText)
+      var message = e.currentTarget[1].value;
+
+      //get user
+      var username = 'testUser';
+      var thisView = this;
       navigator.geolocation.getCurrentPosition(function(position) {
-        console.log(position);
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        thisView.trigger('querySubmit', {user:username, message: message, keyword:queryText, latitude:latitude, longitude:longitude});
       }, function() {
-        console.log('Fail')
+        alert('Failed to get location data...');
       });
-      // $('#query').val();
-      // $('#query').val('');
+      $('input').val('');
     }
   },
 
