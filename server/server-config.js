@@ -30,7 +30,7 @@ app.post('/query', function(req, res) {
         } else {
           res.send(200, queries);
         }
-      });
+      }));
     }
   });
 });
