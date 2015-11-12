@@ -5,6 +5,7 @@
   "main": "/server/server.js",
   "dependencies": {
     "express": "^4.13.3",
+    "mongodb": "^2.0.48",
     "twitter": "^1.2.5"
   }
 }
