@@ -1,11 +1,12 @@
 var MapView = Backbone.View.extend({
-  el: '',
+  el: '<div id="map"></div>',
 
   initialize: function() {
-
   },
 
   render: function() {
-    return this.$el;
+    var map = new Datamap({
+      element: this.el
+    });
   }
 });

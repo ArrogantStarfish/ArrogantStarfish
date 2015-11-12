@@ -4,12 +4,22 @@ var AppView = Backbone.View.extend({
   initialize: function() {
     this.inputView = new InputView({});
     this.mapView = new MapView({});
+    this.preRender();
+    this.renderMap();
   },
 
-  render: function() {
-    return this.$el.append([
-      this.inputView.render(),
-      this.mapView.render()
-    ]);
+  preRender: function() {
+    $('body').append(
+      this.$el.append([
+        this.inputView.el,
+        this.mapView.el
+      ])
+    );
+  },
+
+  renderMap: function() {
+    // this.mapView.$el.detach();
+    // this.$el.append(this.mapView.el)
+    this.mapView.render();
   }
 });
