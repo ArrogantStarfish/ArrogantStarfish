@@ -1,10 +1,10 @@
 var InputView = Backbone.View.extend({
-  el: '',
+  el: '<input></input>',
 
   initialize: function() {
-
+    this.render();
   },
   render: function() {
-    return this.$el;
+
   }
 });
