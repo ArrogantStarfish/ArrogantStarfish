@@ -5,6 +5,8 @@ var Query = require('../db/query');
 
 app.use(express.static(__dirname + '/../client'));
 
+// todo: get geolocation information
+
 app.post('/query', function(req, res) {
   // search query in database
   // get query info from user
@@ -17,6 +19,7 @@ app.post('/query', function(req, res) {
     datetime: new Date(),
     message: req.body.message
   });
+
   newQuery.save(function(err, newQuery) {
     if (err) {
       res.send(500, err);
