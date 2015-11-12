@@ -25,7 +25,7 @@ var client = new Twitter({
   access_token_secret: ''
 });
 
-client.get('search/tweets', {q: 'kim kardashian', count: 1, result_type: 'popular', vertical: 'news'}, function(error, tweets, response) {
+client.get('search/tweets', {q: 'syria news', count: 100}, function(error, tweets, response) {
   console.log(tweets.statuses);
 });
 
