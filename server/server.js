@@ -8,7 +8,6 @@ var consumerKeys = require('./consumerKeys.js');
 var port = 3000;
 
 app.get('/', function(req, res) {
-  var pathName = ''
   res.sendFile(path.join(__dirname + '/../client/index.html'));
 });
 
@@ -25,8 +24,12 @@ var client = new Twitter({
   access_token_secret: ''
 });
 
-client.get('search/tweets', {q: 'syria news', count: 100}, function(error, tweets, response) {
-  console.log(tweets.statuses);
+client.get('search/tweets', {q: 'kenya news', count: 100}, function(error, tweets, response) {
+  var count = 0;
+  for (var i = 0; i < tweets.statuses.length; i++) {
+    count++;
+  }
+  console.log(count);
 });
 
 module.exports = app;
