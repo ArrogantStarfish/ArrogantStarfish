@@ -12,6 +12,12 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/index.html'));
 });
 
+app.get('/articles', function(req, res) {
+  //twitter api call
+});
+
+app.listen(port);
+
 var client = new Twitter({
   consumer_key: consumerKeys.consumerKey,
   consumer_secret: consumerKeys.consumerSecret,
@@ -19,18 +25,8 @@ var client = new Twitter({
   access_token_secret: ''
 });
 
-client.get('search/tweets', {q: 'bieber'}, function(error, tweets, response) {
-  var i = 0;
-  for (tweet in tweets) {
-    i++;
-  }
-  console.log(i);
+client.get('search/tweets', {q: 'bieber', count: 2}, function(error, tweets, response) {
+  console.log(tweets.statuses);
 });
-
-app.get('/articles', function(req, res) {
-  //twitter api call
-});
-
-app.listen(port);
 
 module.exports = app;
