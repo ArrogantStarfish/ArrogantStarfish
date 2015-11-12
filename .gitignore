@@ -1,5 +1,8 @@
 ### node etc ###
 
+# Client keys
+server/consumerKeys.js
+
 # Logs
 logs
 *.log
