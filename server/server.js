@@ -25,7 +25,7 @@ var client = new Twitter({
   access_token_secret: ''
 });
 
-client.get('search/tweets', {q: 'syria news', count: 5, result_type: 'popular'}, function(error, tweets, response) {
+client.get('search/tweets', {q: 'syria news', count: 100}, function(error, tweets, response) {
   console.log(tweets.statuses);
 });
 
