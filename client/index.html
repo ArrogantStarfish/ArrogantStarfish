@@ -31,11 +31,6 @@
 <script>
   // runs when page is loaded
   $(function() {
-    if ("geolocation" in navigator) {
-      // console.log('Yes')
-    } else {
-      // console.log('No')
-    }
     var app = new AppModel();
     var appView = new AppView({model:app});
   });

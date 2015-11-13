@@ -4,7 +4,6 @@ var AppModel = Backbone.Model.extend({
   },
 
   postQuery: function(query){
-    console.log(query);
     var thisModel = this;
     this.get('NewsItemCollection').fetch({
       data: JSON.stringify(query),
