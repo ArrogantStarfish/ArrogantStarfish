@@ -2,7 +2,6 @@ var request = require('supertest');
 var express = require('express');
 var expect = require('chai').expect;
 var app = require('../server/server-config');
-var 
 
 var db = require('../db/config');
 var Query = require('../db/query');
@@ -22,7 +21,7 @@ describe('Who Cares test: ', function() {
 
   describe('Query creation: ', function() {
 
-    it('All data passed in matches what inputs were', function(done) {
+    it('Outputs match inputs', function(done) {
       request(app)
         .post('/query')
         .send({
@@ -48,9 +47,9 @@ describe('Who Cares test: ', function() {
             expect(query.longitude).to.equal(30);
             expect(query.keyword).to.equal('syria');
             expect(query.message).to.equal('I CARE DAMNIT');
-          });
-          .end(done);
+          })
         })
+        .end(done);
     });
 
   });
@@ -65,28 +64,26 @@ describe('Who Cares test: ', function() {
         keyword: 'cuba',
         message: 'I SWEAR I CARE'
       }).save(function() {
-        done();
+        new Query({
+          user: 'dog',
+          latitude: 50,
+          longitude: 50,
+          keyword: 'cuba',
+          message: 'I CARE MORE'
+        }).save(function() {
+          new Query({
+            user: 'rabbit',
+            latitude: 20,
+            longitude: 20,
+            keyword: 'cuba',
+            message: 'I AM THE CARINGEST'
+          }).save(function() {
+            done();
+          });
+        });
       });
 
-      new Query({
-        user: 'dog',
-        latitude: 50,
-        longitude: 50,
-        keyword: 'cuba',
-        message: 'I CARE MORE'
-      }).save(function() {
-        done();
-      });
 
-      new Query({
-        user: 'rabbit',
-        latitude: 20,
-        longitude: 20,
-        keyword: 'cuba',
-        message: 'I AM THE CARINGEST'
-      }).save(function() {
-        done();
-      });
 
     });
 
@@ -104,7 +101,8 @@ describe('Who Cares test: ', function() {
           Query.find({keyword: 'cuba'}).exec(function(err, queries) {
             expect(queries.length).to.equal(3);
           });
-        });
+        })
+        .end(done);
     });
 
   });
