@@ -13,8 +13,8 @@ describe('Who Cares test: ', function() {
     request(app)
       .get('/')
       .end(function(err, res) {
-        Query.remove({keyword: 'syria'}).exec();
-        Query.remove({keyword: 'cuba'}).exec();
+        Query.remove({user: 'doge', keyword: 'syria', latitude:30, longitude: 30, message: 'I CARE DAMNIT'}).exec();
+        Query.remove({keyword: 'xgzabnor'}).exec();
         done();
       });
   });
@@ -61,21 +61,21 @@ describe('Who Cares test: ', function() {
         user: 'cat',
         latitude: 40,
         longitude: 40,
-        keyword: 'cuba',
+        keyword: 'xgzabnor',
         message: 'I SWEAR I CARE'
       }).save(function() {
         new Query({
           user: 'dog',
           latitude: 50,
           longitude: 50,
-          keyword: 'cuba',
+          keyword: 'xgzabnor',
           message: 'I CARE MORE'
         }).save(function() {
           new Query({
             user: 'rabbit',
             latitude: 20,
             longitude: 20,
-            keyword: 'cuba',
+            keyword: 'xgzabnor',
             message: 'I AM THE CARINGEST'
           }).save(function() {
             done();
@@ -98,7 +98,7 @@ describe('Who Cares test: ', function() {
       request(app)
         .post('/query')
         .expect(function() {
-          Query.find({keyword: 'cuba'}).exec(function(err, queries) {
+          Query.find({keyword: 'xgzabnor'}).exec(function(err, queries) {
             expect(queries.length).to.equal(3);
           });
         })
