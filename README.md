@@ -1,12 +1,12 @@
-# Project Name
+# Who Cares?
 
-> Pithy project description
+> Put in a subject, see if others around the U.S. care about it.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Rory Sametz
+  - __Scrum Master__: Ambroise Piganeau
+  - __Development Team Members__: Ambroise Piganeau, Haley Bash, Joy Johnson, Rory Sametz
 
 ## Table of Contents
 
