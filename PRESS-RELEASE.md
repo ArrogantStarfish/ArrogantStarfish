@@ -29,10 +29,10 @@ Once the project moves into development, the press release can be used as a touc
   > Feeling like no one else cares about a topic as you sit alone at the computer.
 
 ## Solution ##
-  > See who else has cared about the topic that you do. (And if no one does, well... now you can confirm the cold, hard truth.)
+  > Find out where else someone has cared about the topic that you do. (And if no one does, well... now you can confirm the cold, hard truth.)
 
 ## Quote from You ##
-  > "Who cares?"
+  > "See who cares and where."
 
 ## How to Get Started ##
   > Type in the topic you care about. Put in a message about why you care. On submit, you'll see who all cares about the topic other than you.
