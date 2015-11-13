@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "description": "",
   "main": "/server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "postinstall": "bower install"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
-    "twitter": "^1.2.5"
+    "twitter": "^1.2.5",
+    "bower": "1.6.5"
   },
   "devDependencies": {
     "chance": "^0.8.0",
