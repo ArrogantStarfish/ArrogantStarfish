@@ -29,7 +29,7 @@ Once the project moves into development, the press release can be used as a touc
   > Feeling like no one else cares about a topic as you sit alone at the computer.
 
 ## Solution ##
-  > See who else has cared about the topic that you do. (And if no one does, well... now you can confirm your angst.)
+  > See who else has cared about the topic that you do. (And if no one does, well... now you can confirm the cold, hard truth.)
 
 ## Quote from You ##
   > "Who cares?"
@@ -41,4 +41,4 @@ Once the project moves into development, the press release can be used as a touc
   > "I'm able to validate whether I'm the only person who cares!"
 
 ## Closing and Call to Action ##
-  > Come check us out: [INSERT LINK]
+  > Come see who cares: [http://arrogantstarfish.herokuapp.com/]
