@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Who cares, other than you?
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > See who cares about what you do.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Feeling like no one else cares about a topic as you sit alone at the computer.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > See who else has cared about the topic that you do. (And if no one does, well... now you can confirm the cold, hard truth.)
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "Who cares?"
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Type in the topic you care about. Put in a message about why you care. On submit, you'll see who all cares about the topic other than you.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "I'm able to validate whether I'm the only person who cares!"
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Come see who cares: [http://arrogantstarfish.herokuapp.com/]

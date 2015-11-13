@@ -20,15 +20,12 @@
 
 ## Usage
 
-> Some usage instructions
+> [Insert Gulp details here]
 
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Bower 1.6.x
 
 ## Development
 
@@ -44,8 +41,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
-
+View the project roadmap [here](ROADMAP.md)
 
 ## Contributing
 
