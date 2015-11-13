@@ -1,6 +1,6 @@
 # Who Cares?
 
-> Put in a subject, see if others around the U.S. care about it. For further details, see: [PRESS-RELEASE.md](PRESS-RELEASE.md).
+> Put in a subject, see if others care about it. For further details, see: [PRESS-RELEASE.md](PRESS-RELEASE.md).
 
 ## Team
 
