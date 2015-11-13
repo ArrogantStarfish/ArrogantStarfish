@@ -12,15 +12,22 @@
 
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
+1. [Technologies Used](#technologies-used)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
-1. [Team](#team)
 1. [Contributing](#contributing)
 
 ## Usage
 
 > [Insert Gulp details here]
+
+## Technologies Used
+
+- Backbone
+- Express
+- Mongodb
+- D3 / Datamaps
 
 ## Requirements
 
@@ -37,6 +44,18 @@ From within the root directory:
 sudo npm install -g bower
 npm install
 bower install
+```
+
+For convenience with running the server:
+```sh
+npm install nodemon
+```
+
+### Testing
+
+To run tests:
+```sh
+mocha test/serverSpec.js
 ```
 
 ### Roadmap
