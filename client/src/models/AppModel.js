@@ -5,12 +5,15 @@ var AppModel = Backbone.Model.extend({
 
   postQuery: function(query){
     console.log(query);
+    var thisModel = this;
     this.get('NewsItemCollection').fetch({
       data: JSON.stringify(query),
       method: 'POST',
       contentType: 'application/json',
-    }, function(res) {
-      console.log(res)
+      success: function(res) {
+        console.log(thisModel);
+        thisModel.trigger('renderBubbles');
+      }
     });
   }
 });
