@@ -51,13 +51,6 @@ For convenience with running the server:
 npm install nodemon
 ```
 
-### Testing
-
-To run tests:
-```sh
-mocha test/serverSpec.js
-```
-
 ### Running Locally
 
 On one tab:
@@ -68,6 +61,13 @@ node server/server.js
 On separate tab:
 ```sh
 mongod
+```
+
+### Testing
+
+To run tests:
+```sh
+mocha test/serverSpec.js
 ```
 
 ### Roadmap
