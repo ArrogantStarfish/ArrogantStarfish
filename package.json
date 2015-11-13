@@ -11,6 +11,7 @@
     "twitter": "^1.2.5"
   },
   "devDependencies": {
-    "chance": "^0.8.0"
+    "chance": "^0.8.0",
+    "request": "^2.65.0"
   }
 }

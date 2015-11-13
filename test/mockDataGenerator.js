@@ -1,3 +1,4 @@
+var request = require('request');
 var chance = require('chance').Chance();
 
 var generateMockData = function(n) {
@@ -11,7 +12,7 @@ var generateMockData = function(n) {
     return {latitude: lat, longitude: lng};
   };
 
-  var topics = ['syria', 'tech', 'France', 'Canada', 'US president', 'Michigan football team', 'Starbucks']
+  var topics = ['syria', 'tech', 'France', 'Canada', 'US president', 'Michigan football team', 'Starbucks'];
 
   var generatePost = function() {
     var post = generateCoordinates();
@@ -29,4 +30,23 @@ var generateMockData = function(n) {
   return res;
 };
 
-module.exports = generateMockData;
+var postBubblesToDB = function(n) {
+  var queries = generateMockData(n);
+  queries.forEach(function(query) {
+    request({body: JSON.stringify(query),
+      url: 'http://127.0.0.1:3000/query',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'}, function(err, succ) {
+        if (err) console.log(err);
+        else console.log('hi');
+    });
+  });
+};
+
+module.exports = {
+  generateMockData: generateMockData,
+  postBubblesToDB: postBubblesToDB
+};
+postBubblesToDB(50);
