@@ -9,7 +9,7 @@ var MapView = Backbone.View.extend({
       element: this.el,
       fills: {
         defaultFill: '#ABDDA4',
-        bubble: 'black'
+        bubbleFill: 'black'
       },
       geographyConfig: {
         popupOnHover: false,
@@ -38,15 +38,15 @@ var MapView = Backbone.View.extend({
         fillOpacity: newsItem.get('opacity') || 50,
         borderColor: 'black',
         borderWidth: 1,
-        fillKey: 'bubble'
+        fillKey: 'bubbleFill'
       }
     });
 
-    var bubbleArray = [
-      {latitude:37.783911, longitude:-121.411502, radius:6, fillKey: 'bubble'},
-      {latitude:50, longitude:-100, radius:6, fillKey: 'bubble'},
-      {latitude:40, longitude:-110, radius:6, fillKey: 'bubble'}
-      ];
+    // var bubbleArray = [
+    //   {latitude:37.783911, longitude:-121.411502, radius:6, fillKey: 'bubbleFill'},
+    //   {latitude:50, longitude:-100, radius:6, fillKey: 'bubbleFill'},
+    //   {latitude:40, longitude:-110, radius:6, fillKey: 'bubbleFill'}
+    //   ];
 
     this.map.bubbles(bubbleArray);
   },
