@@ -59,7 +59,11 @@ describe('Who Cares test: ', function() {
     //before each that loads in a query, keyword A
     beforeEach(function(done) {
       query = new Query({
-        
+        user: 'cat',
+        latitude: 40,
+        longitude: 40,
+        keyword: 'sudan',
+        message: 'I SWEAR I CARE'
       });
 
       query.save(function() {
@@ -68,7 +72,8 @@ describe('Who Cares test: ', function() {
     });
 
     it('Responds with 200 header when retrieved from database', function(done) {
-      //
+      // request(app)
+      //   .
     });
 
     it('Number of queries retrieved matches number of queries created', function(done) {
