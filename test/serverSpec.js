@@ -14,8 +14,8 @@ describe('Who Cares test: ', function() {
     request(app)
       .get('/')
       .end(function(err, res) {
-        //remove things we added during testing
-        // Query.remove({}).exec();
+        Query.remove({keyword: 'syria'}).exec();
+        Query.remove({keyword: 'cuba'}).exec();
         done();
       });
   });
@@ -58,26 +58,53 @@ describe('Who Cares test: ', function() {
   describe('Query retrieval: ', function(){
     //before each that loads in a query, keyword A
     beforeEach(function(done) {
-      query = new Query({
+      new Query({
         user: 'cat',
         latitude: 40,
         longitude: 40,
-        keyword: 'sudan',
+        keyword: 'cuba',
         message: 'I SWEAR I CARE'
-      });
-
-      query.save(function() {
+      }).save(function() {
         done();
       });
+
+      new Query({
+        user: 'dog',
+        latitude: 50,
+        longitude: 50,
+        keyword: 'cuba',
+        message: 'I CARE MORE'
+      }).save(function() {
+        done();
+      });
+
+      new Query({
+        user: 'rabbit',
+        latitude: 20,
+        longitude: 20,
+        keyword: 'cuba',
+        message: 'I AM THE CARINGEST'
+      }).save(function() {
+        done();
+      });
+
     });
 
     it('Responds with 200 header when retrieved from database', function(done) {
-      // request(app)
-      //   .
+      request(app)
+        .post('/query')
+        .expect(200)
+        .end(done);
     });
 
     it('Number of queries retrieved matches number of queries created', function(done) {
-      //
+      request(app)
+        .post('/query')
+        .expect(function() {
+          Query.find({keyword: 'cuba'}).exec(function(err, queries) {
+            expect(queries.length).to.equal(3);
+          });
+        });
     });
 
   });

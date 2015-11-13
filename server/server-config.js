@@ -24,6 +24,7 @@ app.post('/query', function(req, res) {
       res.send(err);
     } else {
       Query.find({keyword: req.body.keyword}).exec(function(err, queries) {
+        console.log(queries);
         if (err) {
           res.status(500);
           res.send(err);
