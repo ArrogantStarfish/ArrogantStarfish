@@ -1,6 +1,6 @@
-# Project Name
+# Who Cares?
 
-> Pithy project description
+> Put in a subject, see if others around the U.S. care about it.
 
 ## Team
 
