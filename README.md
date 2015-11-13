@@ -58,6 +58,18 @@ To run tests:
 mocha test/serverSpec.js
 ```
 
+### Running Locally
+
+On one tab:
+```sh
+node server/server.js
+```
+
+On separate tab:
+```sh
+mongod
+```
+
 ### Roadmap
 
 View the project roadmap [here](ROADMAP.md).
