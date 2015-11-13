@@ -34,6 +34,8 @@ var MapView = Backbone.View.extend({
       return {
         latitude: newsItem.get('latitude'),
         longitude: newsItem.get('longitude'),
+        message: newsItem.get('message'),
+        keyword: newsItem.get('keyword'),
         radius: newsItem.get('value') || 10,
         fillOpacity: newsItem.get('opacity') || 50,
         borderColor: 'black',
@@ -48,7 +50,11 @@ var MapView = Backbone.View.extend({
     //   {latitude:40, longitude:-110, radius:6, fillKey: 'bubbleFill'}
     //   ];
 
-    this.map.bubbles(bubbleArray);
+    this.map.bubbles(bubbleArray, {
+      popupTemplate: function(data) {
+        return '<div class="hoverinfo">About ' + data.keyword + ': ' + data.message;
+      }
+    });
   },
 
 
