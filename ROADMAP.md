@@ -4,14 +4,15 @@
 
 ## Front End
 
-- Making geolocation a requirement before query submission
-- Changing opacity of dots based on particular query features (e.g., date posted, concentration of area concerned about a particular topic)
+- Make geolocation a requirement before query submission
+- Change opacity of dots based on particular query features (e.g., date posted, concentration of area concerned about a particular topic)
 - Allow messages to work with links to relevant news articles
-- Zooming in on map on load based on user geolocation
+- Zoom in on map on load based on user geolocation
 
 ## Back End
 
-- IP authentication: use IP table in Express to prevent spamming
+- Use IP tables in Express to prevent spamming
+- Call Twitter API to see where people have recently tweeted about a query
 
 ## Database
 
