@@ -1,3 +1,4 @@
+var request = require('request');
 var chance = require('chance').Chance();
 
 var generateMockData = function(n) {
@@ -29,4 +30,20 @@ var generateMockData = function(n) {
   return res;
 };
 
-module.exports = generateMockData;
+var postBubblesToDB = function(n) {
+  var queries = generateMockData(n);
+  queries.forEach(function(query) {
+    request.post({
+      data: JSON.stringify(query),
+      url: 'http://127.0.0.1:3000/query',
+      method: 'POST',
+      contentType: 'application/json',
+    });
+  });
+};
+
+module.exports = {
+  generateMockData: generateMockData,
+  postBubblesToDB: postBubblesToDB
+};
+postBubblesToDB(5);
