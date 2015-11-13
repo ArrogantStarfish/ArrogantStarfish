@@ -9,6 +9,7 @@ var AppView = Backbone.View.extend({
     this.inputView.on('querySubmit', function(e){
       this.model.postQuery(e);
     }, this);
+    this.model.on('renderBubbles', this.mapView.renderBubbles, this.mapView);
   },
 
   preRender: function() {
