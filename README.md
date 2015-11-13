@@ -1,6 +1,6 @@
 # Who Cares?
 
-> Put in a subject, see if others around the U.S. care about it.
+> Put in a subject, see if others care about it. For further details, see: [PRESS-RELEASE.md](PRESS-RELEASE.md).
 
 ## Team
 
@@ -12,15 +12,22 @@
 
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
+1. [Technologies Used](#technologies-used)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
-1. [Team](#team)
 1. [Contributing](#contributing)
 
 ## Usage
 
 > [Insert Gulp details here]
+
+## Technologies Used
+
+- Backbone
+- Node / Express
+- Mongodb / Mongoose
+- D3 / Datamaps
 
 ## Requirements
 
@@ -39,9 +46,33 @@ npm install
 bower install
 ```
 
+For convenience with running the server:
+```sh
+npm install nodemon
+```
+
+### Running Locally
+
+On one tab:
+```sh
+node server/server.js
+```
+
+On separate tab:
+```sh
+mongod
+```
+
+### Testing
+
+To run tests:
+```sh
+mocha test/serverSpec.js
+```
+
 ### Roadmap
 
-View the project roadmap [here](ROADMAP.md)
+View the project roadmap [here](ROADMAP.md).
 
 ## Contributing
 

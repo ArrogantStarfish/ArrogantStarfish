@@ -1,4 +1,4 @@
-# Project Name #
+# Who Cares? #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -20,7 +20,7 @@ Once the project moves into development, the press release can be used as a touc
   > Who cares, other than you?
 
 ## Sub-Heading ##
-  > See who cares about what you do.
+  > Get a nationwide perspective on who else is interested in a topic.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
@@ -29,10 +29,10 @@ Once the project moves into development, the press release can be used as a touc
   > Feeling like no one else cares about a topic as you sit alone at the computer.
 
 ## Solution ##
-  > See who else has cared about the topic that you do. (And if no one does, well... now you can confirm the cold, hard truth.)
+  > Find out where else someone has cared about the topic that you do. (And if no one does, well... now you can confirm the cold, hard truth.)
 
 ## Quote from You ##
-  > "Who cares?"
+  > "See who cares and where."
 
 ## How to Get Started ##
   > Type in the topic you care about. Put in a message about why you care. On submit, you'll see who all cares about the topic other than you.
