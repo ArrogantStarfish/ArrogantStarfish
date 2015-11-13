@@ -20,7 +20,7 @@ Once the project moves into development, the press release can be used as a touc
   > Who cares, other than you?
 
 ## Sub-Heading ##
-  > See who cares about what you do.
+  > Get a nationwide perspective on who else is interested in a topic.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.

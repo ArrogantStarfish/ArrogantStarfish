@@ -25,8 +25,8 @@
 ## Technologies Used
 
 - Backbone
-- Express
-- Mongodb
+- Node / Express
+- Mongodb / Mongoose
 - D3 / Datamaps
 
 ## Requirements
