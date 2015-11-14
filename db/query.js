@@ -7,7 +7,8 @@ var querySchema = mongoose.Schema({
   longitude: Number,
   keyword: String,
   datetime: Date,
-  message: String //do we need to handle links differently than rest of message?
+  message: String,
+  url: String
 });
 
 var Query = mongoose.model('Query', querySchema);
