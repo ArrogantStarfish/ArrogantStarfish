@@ -77,7 +77,7 @@ node server/server.js
 [optional] run the server in nodemon instead (if installed) to automatically restart the server after changing files:
 
 ```sh
-node server/server.js
+nodemon server/server.js
 ```
 
 ### Visiting the server
