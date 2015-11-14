@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var path = require('path');
 var Query = require('../db/query');
 var bodyParser = require('body-parser');
 
@@ -9,6 +8,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
 app.post('/query', function(req, res) {
+  'use strict';
   // create new Query instance
   var newQuery = new Query({
     user: req.body.user,
@@ -20,7 +20,7 @@ app.post('/query', function(req, res) {
   });
 
   // save Query instance to database
-  newQuery.save(function(err, newQuery) {
+  newQuery.save(function(err) {
     if (err) {
       res.status(500);
       res.send(err);
