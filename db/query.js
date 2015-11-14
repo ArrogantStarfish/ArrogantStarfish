@@ -1,3 +1,4 @@
+var db = require('./config');
 var mongoose = require('mongoose');
 
 var querySchema = mongoose.Schema({

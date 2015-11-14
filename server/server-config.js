@@ -8,7 +8,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
 app.post('/query', function(req, res) {
-  'use strict';
   // create new Query instance
   var newQuery = new Query({
     user: req.body.user,
