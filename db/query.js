@@ -7,8 +7,8 @@ var querySchema = mongoose.Schema({
   longitude: Number,
   keyword: String,
   datetime: Date,
-  message: String
-  // url: String
+  message: String,
+  url: String
 });
 
 var Query = mongoose.model('Query', querySchema);
