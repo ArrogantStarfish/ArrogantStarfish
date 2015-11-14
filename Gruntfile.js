@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         }
       },
       server: ['<%= paths.src.serverjs %>', '<%= paths.src.dbjs %>'],
-      client: ['<%= paths.src.js %>']
+      client: ['<%= paths.src.clientjs %>']
     },
     uglify: {
       options: {
