@@ -91,6 +91,12 @@ To run tests:
 grunt test
 ```
 
+### Adding Dummy Data to Database
+
+```sh
+node test/mockDataGenerator.js
+```
+
 ## Roadmap
 
 View the project roadmap [here](ROADMAP.md).
