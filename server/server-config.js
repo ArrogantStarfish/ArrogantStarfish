@@ -7,6 +7,20 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
+app.get('/query/:topicChars', function(req, res) {
+  var topicChars = req.params.topicChars;
+  // retrieve all keywords that begin with what the user is typing
+  Query.find({ keyword: new RegExp('^' + topicChars) }, 'keyword').exec(function(err, queries) {
+    if (err) {
+      res.status(500);
+      res.send(err);
+    } else {
+      res.status(200);
+      res.send(queries);
+    }
+  });
+});
+
 app.post('/query', function(req, res) {
   // create new Query instance
   var queryObj = {user: req.body.user,
@@ -25,8 +39,9 @@ app.post('/query', function(req, res) {
       res.status(500);
       res.send(err);
     } else {
-      // retrieve all instances with the same keyword from database
-      Query.find({keyword: req.body.keyword}).exec(function(err, queries) {
+      // retrieve all instances with a similar keyword from database
+      var newSearch = new RegExp('^' + req.body.keyword + '$', 'i');
+      Query.find({ keyword: newSearch } ).exec(function(err, queries) {
         if (err) {
           res.status(500);
           res.send(err);
