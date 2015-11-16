@@ -9,7 +9,7 @@ var MapView = Backbone.View.extend({
       element: this.el,
       fills: {
         defaultFill: '#ABDDA4',
-        bubbleFill: 'black'
+        bubbleFill: 'orange'
       },
       geographyConfig: {
         popupOnHover: false,
@@ -37,7 +37,7 @@ var MapView = Backbone.View.extend({
         message: newsItem.get('message'),
         keyword: newsItem.get('keyword'),
         url: newsItem.get('url'),
-        radius: newsItem.get('value') || 10,
+        radius: newsItem.get('value') || 5,
         fillOpacity: newsItem.get('opacity') || 50,
         borderColor: 'black',
         borderWidth: 1,
