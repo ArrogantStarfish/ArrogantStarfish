@@ -49,7 +49,13 @@ var MapView = Backbone.View.extend({
         return bubbleHover;
       }
     });
-  },
 
+    var thisView = this;
+    $('.bubbles').on('click', function (event) {
+      event.preventDefault();
+      var data = JSON.parse($(event.target).attr('data-info'));
+      thisView.trigger('article', new NewsItemModel(data));
+    });
+  }
 
 });
