@@ -31,7 +31,7 @@
 <script>
   // runs when page is loaded
   $(function() {
-    var app = new AppModel();
+    var app = new AppModel({collection: new NewsItemCollection()});
     var appView = new AppView({model:app});
   });
 </script>
