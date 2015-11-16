@@ -2,7 +2,6 @@ var db = require('./config');
 var mongoose = require('mongoose');
 
 var querySchema = mongoose.Schema({
-  user: String,
   latitude: Number,
   longitude: Number,
   keyword: String,

@@ -16,11 +16,10 @@ var generateMockData = function(n) {
 
   var generatePost = function() {
     var post = generateCoordinates();
-    post.username = 'testUser';
     post.message = chance.sentence();
     post.keyword = topics[Math.floor(Math.random() * topics.length)];
     return post;
-  }
+  };
 
   var res = [];
   for (var i = 0; i < n; i++) {
@@ -33,8 +32,9 @@ var generateMockData = function(n) {
 var postBubblesToDB = function(n) {
   var queries = generateMockData(n);
   queries.forEach(function(query) {
-    request({body: JSON.stringify(query),
-      url: 'https://arrogantstarfish.herokuapp.com/query',
+    request({
+      body: JSON.stringify(query),
+      url: 'http://127.0.0.1:3000/query',
       headers: {
         'Content-Type': 'application/json'
       },
