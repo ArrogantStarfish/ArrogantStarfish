@@ -15,22 +15,15 @@ var InputView = Backbone.View.extend({
       //prevents page from reloading
       e.preventDefault();
 
-      //input field parameters:
-      var queryText = e.currentTarget[0].value;
-      var message = e.currentTarget[1].value;
-      var url = e.currentTarget[2].value;
-
       var thisView = this;
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function successfulLocation (position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
           thisView.model.postQuery({
-            message: message,
-            keyword: queryText,
-            latitude: latitude,
-            longitude: longitude,
-            url: url
+            keyword: e.currentTarget[0].value,
+            message: e.currentTarget[1].value,
+            url: e.currentTarget[2].value,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
           });
           //clear the input boxes
           $('input').val('');

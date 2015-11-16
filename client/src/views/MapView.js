@@ -4,13 +4,14 @@ var MapView = Backbone.View.extend({
   fills: {
     defaultFill: '#ABDDA4',
     older: '#b27300',
-    //additions to this have to also be implemented in renderBubbles
+    //additions to this have to also be implemented in renderBubbles()
     newerThanThreeDays: '#cc8400',
     today: '#e59400',
     thisHour: '#ffa500'
   },
 
   render: function() {
+    //datamaps settings to get the map how we want
     this.map = new Datamap({
       element: this.el,
       fills: this.fills,
@@ -20,41 +21,40 @@ var MapView = Backbone.View.extend({
       },
       setProjection: function(element) {
         var projection = d3.geo.equirectangular()
-          .center([-95, 38])
+          .center([-90, 38])
           .rotate([4.4, 0])
           .scale(1000)
           .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
         var path = d3.geo.path()
           .projection(projection);
-        
         return {path: path, projection: projection};
       }
     });
   },
 
   renderBubbles: function() {
-    //grab from the bubble
-    var bubbleArray = this.collection.map(function(newsItem) {
-      var itemDate = new Date(newsItem.get('datetime'));
-      var deltaTime = (Date.now() - itemDate)/(1000*60*60);
+    //recreate the bubble collection to make it more datamaps friendly
+    var bubbleArray = this.collection.map(function(bubble) {
+      var itemDate = new Date(bubble.get('datetime'));
+      var hoursSincePost = (Date.now() - itemDate)/(1000*60*60);
 
-      if (deltaTime < 1) {
-        var fill = 'thisHour';
-      } else if (deltaTime < 24) {
-        var fill = 'today';
-      } else if (deltaTime < 24*3) {
-        var fill = 'newerThanThreeDays';
+      if (hoursSincePost < 1) {
+        var bubbleColoring = 'thisHour';
+      } else if (hoursSincePost < 24) {
+        var bubbleColoring = 'today';
+      } else if (hoursSincePost < 24*3) {
+        var bubbleColoring = 'newerThanThreeDays';
       } else {
-        var fill = 'older';
+        var bubbleColoring = 'older';
       }
 
       return {
-        latitude: newsItem.get('latitude'),
-        longitude: newsItem.get('longitude'),
-        message: newsItem.get('message'),
-        keyword: newsItem.get('keyword'),
-        url: newsItem.get('url'),
-        fillKey: fill,
+        latitude: bubble.get('latitude'),
+        longitude: bubble.get('longitude'),
+        message: bubble.get('message'),
+        keyword: bubble.get('keyword'),
+        url: bubble.get('url'),
+        fillKey: bubbleColoring,
         radius: 5,
         fillOpacity: 1,
         borderColor: 'black',
@@ -62,6 +62,7 @@ var MapView = Backbone.View.extend({
       };
     });
 
+    //the .bubbles function is a datamaps method that creates the bubbles and the bubble hover popups
     this.map.bubbles(bubbleArray, {
       popupTemplate: function(data) {
         var bubbleHover = '<div class="hoverinfo">About ' + data.keyword + ': ' + data.message;
@@ -74,8 +75,7 @@ var MapView = Backbone.View.extend({
     $('.bubbles').on('click', function (event) {
       event.preventDefault();
       var data = JSON.parse($(event.target).attr('data-info'));
-      thisView.trigger('article', new NewsItemModel(data));
+      thisView.trigger('article', new BubbleModel(data));
     });
   }
-
 });

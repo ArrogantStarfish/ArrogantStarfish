@@ -15,7 +15,7 @@ var AppView = Backbone.View.extend({
     //these are event handlers that must delegate through appView
     this.mapView.on('article', function(data) {
       this.articleView.model = data;
-      this.renderArticle();
+      this.articleView.render();
     }, this);
     this.model.on('renderBubbles', this.mapView.renderBubbles, this.mapView);
   },
@@ -28,9 +28,5 @@ var AppView = Backbone.View.extend({
         this.articleView.el
       ])
     );
-  },
-
-  renderArticle: function() {
-    this.articleView.render();
   }
 });

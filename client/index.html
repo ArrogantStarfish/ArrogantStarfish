@@ -11,10 +11,10 @@
 
 <!-- Backbone Models -->
 <script type="text/javascript" src="src/models/AppModel.js"></script>
-<script type="text/javascript" src="src/models/NewsItemModel.js"></script>
+<script type="text/javascript" src="src/models/BubbleModel.js"></script>
 
 <!-- Backbone Collections -->
-<script type="text/javascript" src="src/collections/NewsItemCollection.js"></script>
+<script type="text/javascript" src="src/collections/BubbleCollection.js"></script>
 
 <!-- Backbone Views -->
 <script type="text/javascript" src="src/views/AppView.js"></script>
@@ -31,7 +31,7 @@
 <script>
   // runs when page is loaded
   $(function() {
-    var app = new AppModel({collection: new NewsItemCollection()});
+    var app = new AppModel({collection: new BubbleCollection()});
     var appView = new AppView({model:app});
   });
 </script>
