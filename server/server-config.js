@@ -23,7 +23,7 @@ app.get('/query/:topicChars', function(req, res) {
 
 app.post('/query', function(req, res) {
   // create new Query instance
-  var queryObj = {user: req.body.user,
+  var queryObj = {
     latitude: req.body.latitude,
     longitude: req.body.longitude,
     keyword: req.body.keyword,
