@@ -17,15 +17,13 @@ var InputView = Backbone.View.extend({
       var message = e.currentTarget[1].value;
       var url = e.currentTarget[2].value;
 
-      //get user
-      var username = 'testUser';
       var thisView = this;
 
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
-          var query = {user:username, message: message, keyword:queryText, latitude:latitude, longitude:longitude};
+          var query = {message: message, keyword:queryText, latitude:latitude, longitude:longitude};
           if (url) {query.url = url}
           thisView.trigger('querySubmit', query);
           $('input').val('');
