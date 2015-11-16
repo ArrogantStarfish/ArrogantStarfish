@@ -91,7 +91,7 @@ To run tests:
 grunt test
 ```
 
-### Adding Dummy Data
+### Adding Dummy Data to Database
 
 ```sh
 node test/mockDataGenerator.js
