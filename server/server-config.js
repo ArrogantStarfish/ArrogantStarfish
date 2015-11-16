@@ -15,8 +15,18 @@ app.get('/query/:topicChars', function(req, res) {
       res.status(500);
       res.send(err);
     } else {
+
+      var queriesStartingWith = [];
+
+      for (var i = 0; i < queries.length; i++) {
+        var keyword = queries[i].keyword;
+        if (queriesStartingWith.indexOf(keyword) === -1) {
+          queriesStartingWith.push(keyword);
+        }
+      }
+      
       res.status(200);
-      res.send(queries);
+      res.send(queriesStartingWith);
     }
   });
 });
