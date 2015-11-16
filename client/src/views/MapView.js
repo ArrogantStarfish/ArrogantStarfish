@@ -1,13 +1,19 @@
 var MapView = Backbone.View.extend({
   el: '<div id="map"></div>',
 
+  fills: {
+    defaultFill: '#ABDDA4',
+    older: '#b27300',
+    //additions to this have to also be implemented in renderBubbles
+    newerThanThreeDays: '#cc8400',
+    today: '#e59400',
+    thisHour: '#ffa500'
+  },
+
   render: function() {
     this.map = new Datamap({
       element: this.el,
-      fills: {
-        defaultFill: '#ABDDA4',
-        bubbleFill: 'orange'
-      },
+      fills: this.fills,
       geographyConfig: {
         popupOnHover: false,
         highlightOnHover: false
@@ -27,19 +33,33 @@ var MapView = Backbone.View.extend({
   },
 
   renderBubbles: function() {
+    //grab from the bubble
     var bubbleArray = this.collection.map(function(newsItem) {
+      var itemDate = new Date(newsItem.get('datetime'));
+      var deltaTime = (Date.now() - itemDate)/(1000*60*60);
+
+      if (deltaTime < 1) {
+        var fill = 'thisHour';
+      } else if (deltaTime < 24) {
+        var fill = 'today';
+      } else if (deltaTime < 24*3) {
+        var fill = 'newerThanThreeDays';
+      } else {
+        var fill = 'older';
+      }
+
       return {
         latitude: newsItem.get('latitude'),
         longitude: newsItem.get('longitude'),
         message: newsItem.get('message'),
         keyword: newsItem.get('keyword'),
         url: newsItem.get('url'),
-        radius: newsItem.get('value') || 5,
-        fillOpacity: newsItem.get('opacity') || 50,
+        fillKey: fill,
+        radius: 5,
+        fillOpacity: 1,
         borderColor: 'black',
-        borderWidth: 1,
-        fillKey: 'bubbleFill'
-      }
+        borderWidth: 1
+      };
     });
 
     this.map.bubbles(bubbleArray, {
