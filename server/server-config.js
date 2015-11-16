@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/../client'));
 app.get('/query/:topicChars', function(req, res) {
   var topicChars = req.params.topicChars;
   // retrieve all keywords that begin with what the user is typing
-  Query.find({ keyword: new RegExp('^' + topicChars) }, 'keyword').exec(function(err, queries) {
+  Query.find({ keyword: new RegExp('^' + topicChars, 'i') }, 'keyword').exec(function(err, queries) {
     if (err) {
       res.status(500);
       res.send(err);
@@ -18,13 +18,14 @@ app.get('/query/:topicChars', function(req, res) {
 
       var queriesStartingWith = [];
 
+      // get all unique queries that begin with what the user is typing into array form
       for (var i = 0; i < queries.length; i++) {
         var keyword = queries[i].keyword;
         if (queriesStartingWith.indexOf(keyword) === -1) {
           queriesStartingWith.push(keyword);
         }
       }
-      
+
       res.status(200);
       res.send(queriesStartingWith);
     }
