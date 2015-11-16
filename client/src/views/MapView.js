@@ -50,8 +50,11 @@ var MapView = Backbone.View.extend({
       }
     });
 
-    this.map.svg.selectAll('.bubbles').on('click', function (event, data) {
-      console.dir(arguments)
+    var thisView = this;
+    $('.bubbles').on('click', function (event) {
+      event.preventDefault();
+      var data = JSON.parse($(event.target).attr('data-info'));
+      thisView.trigger('article', new NewsItemModel(data));
     });
   }
 
