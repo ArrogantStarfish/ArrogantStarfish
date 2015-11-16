@@ -12,32 +12,27 @@ var InputView = Backbone.View.extend({
 
   events: {
     'submit': function(e) {
+      //prevents page from reloading
       e.preventDefault();
-      var queryText = e.currentTarget[0].value;
-      var message = e.currentTarget[1].value;
-      var url = e.currentTarget[2].value;
 
       var thisView = this;
-
       if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
-          var query = {message: message, keyword:queryText, latitude:latitude, longitude:longitude};
-          if (url) {query.url = url}
-          thisView.trigger('querySubmit', query);
+        navigator.geolocation.getCurrentPosition(function successfulLocation (position) {
+          thisView.model.postQuery({
+            keyword: e.currentTarget[0].value,
+            message: e.currentTarget[1].value,
+            url: e.currentTarget[2].value,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+          //clear the input boxes
           $('input').val('');
-        }, function() {
+        }, function locationDisabled () {
           alert('Failed to get location data, please allow us to have access to it and ask again WhoCares...');
         });
       } else {
         alert('Your navigator doesn\'t support location, we are sorry but you might want to update it');
       }
-      
     }
-  },
-
-  render: function() {
-
   }
 });
