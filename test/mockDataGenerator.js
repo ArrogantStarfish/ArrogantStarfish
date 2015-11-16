@@ -34,7 +34,7 @@ var postBubblesToDB = function(n) {
   queries.forEach(function(query) {
     request({
       body: JSON.stringify(query),
-      url: 'http://127.0.0.1:3000/query',
+      url: 'https://arrogantstarfish.heroku.com/query',
       headers: {
         'Content-Type': 'application/json'
       },
