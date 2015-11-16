@@ -29,12 +29,17 @@ input:focus{
   border: 3px solid orange;
 }
 
+#article {
+  background-color: #fff;
+  text-decoration: none;
+  color: #333;
+}
+
 #map {
-  width:1200;
-  height:600;
+  width:1100;
+  height:500;
   background-color: #a1b1d3;
   margin: auto;
-  border-radius: 10px;
 }
 
 .message {
