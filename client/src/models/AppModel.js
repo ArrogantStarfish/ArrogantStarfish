@@ -1,4 +1,8 @@
 var AppModel = Backbone.Model.extend({
+  initialize: function() {
+    this.set('searchArray', []);
+  },
+  
   postQuery: function(query){
     var thisModel = this;
     //populates the collection of cares

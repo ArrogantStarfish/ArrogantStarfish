@@ -34,5 +34,16 @@ var InputView = Backbone.View.extend({
         alert('Your navigator doesn\'t support location, we are sorry but you might want to update it');
       }
     }
+  },
+
+  render: function() {
+    thisView = this;
+    $.ajax({
+      method: 'GET',
+      url: '/queries',
+      success: function(res) {
+        thisView.model.set('searchArray', res);
+      }
+    });
   }
 });
