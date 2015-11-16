@@ -8,9 +8,6 @@ var InputView = Backbone.View.extend({
 
   initialize: function() {
     this.render();
-    // this.on('click:button', function() {
-    //   this.trigger('')
-    // })
   },
 
   events: {

@@ -10,7 +10,6 @@ var AppModel = Backbone.Model.extend({
       method: 'POST',
       contentType: 'application/json',
       success: function(res) {
-        console.log(thisModel);
         thisModel.trigger('renderBubbles');
       }
     });
