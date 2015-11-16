@@ -49,7 +49,10 @@ var MapView = Backbone.View.extend({
         return bubbleHover;
       }
     });
-  },
 
+    this.map.svg.selectAll('.bubbles').on('click', function (event, data) {
+      console.dir(arguments)
+    });
+  }
 
 });
