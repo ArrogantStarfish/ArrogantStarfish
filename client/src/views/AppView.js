@@ -22,8 +22,6 @@ var AppView = Backbone.View.extend({
   },
 
   renderMap: function() {
-    // this.mapView.$el.detach();
-    // this.$el.append(this.mapView.el)
     this.mapView.render();
   }
 });

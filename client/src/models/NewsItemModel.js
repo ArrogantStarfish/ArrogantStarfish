@@ -1,5 +1,1 @@
-var NewsItemModel = Backbone.Model.extend({
-  initialize: function() {
-
-  }
-});
+var NewsItemModel = Backbone.Model.extend({});

@@ -1,9 +1,6 @@
 var MapView = Backbone.View.extend({
   el: '<div id="map"></div>',
 
-  initialize: function() {
-  },
-
   render: function() {
     this.map = new Datamap({
       element: this.el,
@@ -45,16 +42,9 @@ var MapView = Backbone.View.extend({
       }
     });
 
-    // var bubbleArray = [
-    //   {latitude:37.783911, longitude:-121.411502, radius:6, fillKey: 'bubbleFill'},
-    //   {latitude:50, longitude:-100, radius:6, fillKey: 'bubbleFill'},
-    //   {latitude:40, longitude:-110, radius:6, fillKey: 'bubbleFill'}
-    //   ];
-
     this.map.bubbles(bubbleArray, {
       popupTemplate: function(data) {
         var bubbleHover = '<div class="hoverinfo">About ' + data.keyword + ': ' + data.message;
-        console.log(bubbleHover)
         if (data.url) bubbleHover = bubbleHover + ' and this fancy article: ' + data.url;
         return bubbleHover;
       }
