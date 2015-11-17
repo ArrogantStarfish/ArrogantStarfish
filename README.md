@@ -77,7 +77,7 @@ node server/server.js
 [optional] run the server in nodemon instead (if installed) to automatically restart the server after changing files:
 
 ```sh
-nodemon server/server.js
+nodemon
 ```
 
 ### Visiting the server
@@ -94,7 +94,13 @@ grunt test
 ### Adding Dummy Data to Database
 
 ```sh
-node test/mockDataGenerator.js
+grunt generateData
+```
+
+### Checking Syntax with JSHint
+
+```sh
+grunt syntaxTest
 ```
 
 ## Roadmap
