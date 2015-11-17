@@ -30,9 +30,24 @@ input:focus{
 }
 
 #article {
+  width:1100;
   background-color: #fff;
   text-decoration: none;
   color: #333;
+  border-radius: 10px;
+  margin: 10px auto;
+}
+
+#article div {
+  margin: 0px 10px;
+}
+
+#article div.topic {
+  padding-top: 10px;
+}
+
+#article div.url {
+  padding-bottom: 10px;
 }
 
 #map {

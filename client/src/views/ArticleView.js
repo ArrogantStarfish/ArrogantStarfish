@@ -3,13 +3,7 @@ var ArticleView = Backbone.View.extend({
 
   template: _.template('<div class="topic"><%= keyword %></div> \
                         <div class="title"><%= title %></div> \
-                        <a href="<%= url %>"><%= url %></a>'),
-
-  // initialize: function(params) {
-  //   if (params) {
-  //     this.render();
-  //   }
-  // },
+                        <div class="url"><a href="<%= url %>"><%= url %></a></div>'),
 
   render: function() {
     var url = this.model.get('url');
@@ -22,19 +16,7 @@ var ArticleView = Backbone.View.extend({
           var title = match ? match[1] : url;
           this.model.set('title', title);
           this.$el.html(this.template(this.model.attributes));
-    }.bind(this));
-      // $.ajax({
-      //   url: url,
-      //   crossOrigin: true,
-      //   method: 'GET',
-      //   contentType: 'application/json',
-      //   error: function(err) {
-      //     console.log(err);
-      //   },
-      //   success: function(res) {
-      //     console.log(res);
-      //   }
-      // });
+        }.bind(this));
     }
   }
 
