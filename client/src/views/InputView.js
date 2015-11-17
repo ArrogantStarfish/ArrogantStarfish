@@ -1,6 +1,6 @@
 var InputView = Backbone.View.extend({
   el: '<form> \
-         <input name="query" placeholder="Subject" required></input> \
+         <input id="query" name="query" placeholder="Subject" required></input> \
          <input name="message" placeholder="Message" required></input> \
          <input name="url" placeholder="Any article to share?" type="url"></input> \
          <button type="submit">Who Cares?</button> \
@@ -42,7 +42,9 @@ var InputView = Backbone.View.extend({
       method: 'GET',
       url: '/queries',
       success: function(res) {
-        thisView.model.set('searchArray', res);
+        $('#query').autocomplete({
+         source: res
+        });
       }
     });
   }
