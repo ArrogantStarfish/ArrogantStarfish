@@ -8,7 +8,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
 app.get('/queries', function(req, res) {
-  var topicChars = req.params.topicChars;
   // retrieve all keywords
   Query.find({}, 'keyword').exec(function(err, queries) {
     if (err) {
