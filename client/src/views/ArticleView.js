@@ -3,7 +3,7 @@ var ArticleView = Backbone.View.extend({
 
   template: _.template('<div class="topic"><%= keyword %></div> \
                         <div class="title"><%= title %></div> \
-                        <a href="<%= url %>"><%= url %></a>'),
+                        <div class="url"><a href="<%= url %>"><%= url %></a></div>'),
 
   // initialize: function(params) {
   //   if (params) {

@@ -30,9 +30,26 @@ input:focus{
 }
 
 #article {
+  width:1100;
   background-color: #fff;
   text-decoration: none;
   color: #333;
+  border-radius: 10px;
+  margin: auto;
+  /*padding: 5px;*/
+
+}
+
+#article div {
+  margin: 0px 10px;
+}
+
+#article div.topic {
+  padding-top: 10px;
+}
+
+#article div.url {
+  padding-bottom: 10px;
 }
 
 #map {
@@ -40,6 +57,7 @@ input:focus{
   height:500;
   background-color: #a1b1d3;
   margin: auto;
+  margin-bottom: 5px;
 }
 
 .message {
