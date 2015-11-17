@@ -29,24 +29,23 @@ var generateMockData = function(n) {
   return res;
 };
 
+//super hacky/lazy way to get the url
+var hostURL = process.env.CUSTOMCONNSTR_MONGOLAB_URI ? 'http://arrogantstarfish.herokuapp.com' : 'http://localhost:3000';
+
 var postBubblesToDB = function(n) {
   var queries = generateMockData(n);
   queries.forEach(function(query) {
+    console.log(query)
     request({
       body: JSON.stringify(query),
-      url: 'https://arrogantstarfish.heroku.com/query',
+      url: hostURL + '/query',
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'POST'}, function(err, succ) {
         if (err) console.log(err);
-        else console.log('hi');
     });
   });
 };
 
-module.exports = {
-  generateMockData: generateMockData,
-  postBubblesToDB: postBubblesToDB
-};
 postBubblesToDB(50);
