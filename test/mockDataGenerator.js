@@ -14,10 +14,10 @@ var generateMockData = function(n) {
 
   var topics = ['syria', 'tech', 'France', 'Canada', 'US president', 'Michigan football team', 'Starbucks'];
 
-  var urls = ['http://www.nytimes.com/2015/11/17/world/europe/paris-terror-attack.html?hp&action=click&pgtype=Homepage&clickSource=story-heading&module=span-ab-top-region&region=top-news&WT.nav=top-news&_r=0',
-              'http://www.nytimes.com/politics/first-draft/2015/11/16/donald-trump-repeats-call-to-inspect-mosques-for-signs-of-terrorism/?hp&action=click&pgtype=Homepage&clickSource=story-heading&module=b-lede-package-region&region=top-news&WT.nav=top-news',
+  var urls = ['http://www.nytimes.com/2015/11/17/world/europe/paris-terror-attack.html',
+              'http://www.nytimes.com/politics/first-draft/2015/11/16/donald-trump-repeats-call-to-inspect-mosques-for-signs-of-terrorism/',
               'https://www.washingtonpost.com/news/football-insider/wp/2015/11/16/five-observations-from-the-redskins-win-over-the-saints/',
-              'https://www.washingtonpost.com/news/post-politics/wp/2015/11/16/obama-calls-idea-of-screening-syrian-refugees-based-on-religion-shameful-defends-white-house-strategy/?hpid=hp_hp-top-table-high_obama-1148am%3Ahomepage%2Fstory',
+              'https://www.washingtonpost.com/news/post-politics/wp/2015/11/16/obama-calls-idea-of-screening-syrian-refugees-based-on-religion-shameful-defends-white-house-strategy/',
               'http://www.lesoir.be/1044027/article/actualite/monde/2015-11-15/attentats-paris-salah-abdeslam-aurait-ete-controle-frontiere-samedi',
               'http://www.sfgate.com/news/article/Huge-Black-Friday-electronics-deals-6635900.php']
 
