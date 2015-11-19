@@ -11,25 +11,6 @@ var MapView = Backbone.View.extend({
   },
 
   render: function() {
-    //datamaps settings to get the map how we want
-    // this.map = new Datamap({
-    //   element: this.el,
-    //   fills: this.fills,
-    //   geographyConfig: {
-    //     popupOnHover: false,
-    //     highlightOnHover: false
-    //   },
-    //   setProjection: function(element) {
-    //     var projection = d3.geo.equirectangular()
-    //       .center([-90, 38])
-    //       .rotate([4.4, 0])
-    //       .scale(1000)
-    //       .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
-    //     var path = d3.geo.path()
-    //       .projection(projection);
-    //     return {path: path, projection: projection};
-    //   }
-    // });
     console.log("trying to render");
     var m_width = $("#map").width(),
       width = 938,
@@ -64,8 +45,12 @@ var MapView = Backbone.View.extend({
         .selectAll("path")
         .data(topojson.feature(us, us.objects.countries).features)
         .enter()
+        .each(function(d) {
+
+        })
         .append("path")
         .attr("id", function(d) {
+          console.log(d);
           return d.id;
         })
         .attr("d", path)
