@@ -4,6 +4,7 @@ var app = express();
 var Query = require('../db/query');
 var bodyParser = require('body-parser');
 var alerts = require('../db/TravelAlerts.json');
+var just_giving = require('./keys');
 
 app.use(bodyParser.json());
 
@@ -18,9 +19,10 @@ app.get('/warnings', function (req, res) {
 
 // on get to /issues, get issues for a country
 app.get('/issues', function (req, res) {
-  request('newsapiquerystuff', function (error, response, body) {
+  request('https://www.google.com', function (error, response, body) {
     if (!error && response.statusCode === 200) {
       // build response with news issues
+      res.send("hello");
     }
   });
 });
@@ -28,14 +30,14 @@ app.get('/issues', function (req, res) {
 // app get charities for keyword (keyword should be the country name)
 app.get('/charities', function (req, res) {
   var options = {
-    url: 'https://api.justgiving.com/{8a8d1f89}/v1/onesearch?q={"Syria"}',
+    url: 'https://api.justgiving.com/{'+just_giving+'}/v1/onesearch?q={"'+req.params.country+'"}',
     headers: {
       'Accept': 'application/json'
     }
   };
   request(options, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      // res.send(response.body);
+      res.send(response.body);
     }
   });
 });
