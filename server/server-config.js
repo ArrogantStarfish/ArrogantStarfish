@@ -23,9 +23,7 @@ app.get('/issues', function (req, res) {
   request(url, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       // build response with news issues
-      res.send('hhi');
-    } else {
-      res.send('no')
+      res.send(body);
     }
   });
 });
