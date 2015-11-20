@@ -25,6 +25,7 @@ var MapView = Backbone.View.extend({
     var path = d3.geo.path()
       .projection(projection);
 
+
     var svg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
       .attr("viewBox", "0 0 " + width + " " + height)
@@ -37,7 +38,10 @@ var MapView = Backbone.View.extend({
       .attr("height", height)
       .on("click", country_clicked);
 
-    var g = svg.append("g");
+    var g = svg.append("g")
+      .attr("id", "container");
+
+    console.log(CountryModel);
 
     d3.json("../../json/countries.topo.json", function(error, us) {
       g.append("g")
@@ -45,16 +49,25 @@ var MapView = Backbone.View.extend({
         .selectAll("path")
         .data(topojson.feature(us, us.objects.countries).features)
         .enter()
-        .each(function(d) {
-
-        })
         .append("path")
-        .attr("id", function(d) {
-          console.log(d);
-          return d.id;
-        })
         .attr("d", path)
-        .on("click", country_clicked);
+        .each(function(d) {
+          var countryModel = new CountryModel(d.id);
+          var countryView = new CountryView({
+            model: countryModel,
+            el: this
+          });
+          countryView.on('countryClicked', function(country) {
+            country_clicked(d);
+          }, this);
+        })
+        // .append("path")
+        // .attr("id", function(d) {
+        //   console.log(d);
+        //   return d.id;
+        // })
+
+      // .on("click", country_clicked);
     });
 
     function zoom(xyz) {
@@ -93,39 +106,6 @@ var MapView = Backbone.View.extend({
         var xyz = [width / 2, height / 1.5, 1];
         country = null;
         zoom(xyz);
-      }
-    }
-
-    function state_clicked(d) {
-      g.selectAll("#cities").remove();
-
-      if (d && state !== d) {
-        var xyz = get_xyz(d);
-        state = d;
-
-        country_code = state.id.substring(0, 3).toLowerCase();
-        state_name = state.properties.name;
-
-        d3.json("/json/cities_" + country_code + ".topo.json", function(error, us) {
-          g.append("g")
-            .attr("id", "cities")
-            .selectAll("path")
-            .data(topojson.feature(us, us.objects.cities).features.filter(function(d) {
-              return state_name == d.properties.state;
-            }))
-            .enter()
-            .append("path")
-            .attr("id", function(d) {
-              return d.properties.name;
-            })
-            .attr("class", "city")
-            .attr("d", path.pointRadius(20 / xyz[2]));
-
-          zoom(xyz);
-        });
-      } else {
-        state = null;
-        country_clicked(country);
       }
     }
 
