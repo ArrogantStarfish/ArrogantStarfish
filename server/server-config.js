@@ -9,8 +9,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-// on page load, save country statuses
-app.get('/queries', function (req, res) {
+
+app.get('/warnings', function (req, res) {
   for (var key in alerts.data) {
     var entry = {
       name: alerts.data[key].eng.name,
@@ -18,13 +18,18 @@ app.get('/queries', function (req, res) {
       hasAdvisory: alerts.data[key]["has-advisory-warning"],
       advisoryText: alerts.data[key]["eng"]["advisory-text"]
     };
-    console.log(entry);
     var newEntry = Query(entry);
     newEntry.save(function (err) {
       if (err) {
         console.log(err);
       } else {
-        console.log("Saved")
+        Query.find().exec(function(err, warnings) {
+          if (err) {
+            console.error(err);
+          } else {
+            res.json(warnings);
+          }
+        });
       }
     });
   }
@@ -41,9 +46,15 @@ app.get('/issues', function (req, res) {
 
 // app get charities for keyword (keyword should be the country name)
 app.get('/charities', function (req, res) {
-  request('https://api.justgiving.com/{8a8d1f89}/v1/onesearch?q={"Syria"}', function (error, response, body) {
+  var options = {
+    url: 'https://api.justgiving.com/{8a8d1f89}/v1/onesearch?q={"Syria"}',
+    headers: {
+      'Accept': 'application/json'
+    }
+  };
+  request(options, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      res.send(response.body);
+      // res.send(response.body);
     }
   });
 });
