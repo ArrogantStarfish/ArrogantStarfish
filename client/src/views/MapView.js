@@ -17,7 +17,12 @@ var MapView = Backbone.View.extend({
     "3": "red"
   },
 
-  render: function() {
+  initialize: function() {
+    this.model.on('warningsLoaded', this.renderMap, this);
+  },
+
+  renderMap: function() {
+    console.log("in render");
     var context = this;
     var mwidth = $("#map").width(),
       width = 938,
@@ -47,7 +52,6 @@ var MapView = Backbone.View.extend({
     var g = svg.append("g")
       .attr("id", "container");
 
-    console.log(this.model, "model??")
     d3.json("../../json/countries.topo.json", function(error, us) {
       g.append("g")
         .attr("id", "countries")

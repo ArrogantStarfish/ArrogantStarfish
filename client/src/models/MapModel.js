@@ -1,16 +1,21 @@
 var MapModel = Backbone.Model.extend({
-  url: '/countryAdvisory',
-
+  url: '/warnings',
+  parse: function(data) {
+    var warnings = {}
+    data.forEach(function(country) {
+      warnings[country.name] = country.advisorySate
+    });
+    return warnings;
+  },
   initialize: function() {
-    // this.fetch({
-    //   success: function(model, response, options) {
-    //     for (var country in response.data) {
-    //       this.set(country['country-eng'], country['advisory-state']);
-    //     }
-    //   },
-    //   error : function(model, response, options) {}
-    // });
-
-    this.set("France", 0);
+    var context = this;
+    this.fetch({
+      success: function(model, response, options) {
+        context.trigger('warningsLoaded', context);
+      },
+      error: function(model, response, options) {
+        console.log("Error fetching warnings");
+      }
+    });
   }
 });
