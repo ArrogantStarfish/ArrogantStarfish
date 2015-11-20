@@ -71,7 +71,7 @@ var MapView = Backbone.View.extend({
           }, this);
         })
         .style("fill", function(d) {
-          return this.advisoryKey[this.model.get(d.id)] ? this.advisoryKey[this.model.get(d.id)] : "grey";
+          return this.advisoryKey[this.model.get(d.id)] ? this.advisoryKey[this.model.get(d.id)] : "gray";
         }.bind(context));
     });
 

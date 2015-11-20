@@ -3,10 +3,19 @@ var MapModel = Backbone.Model.extend({
   parse: function(data) {
     var warnings = {}
     data.forEach(function(country) {
-      console.log(country);
-      warnings[country.name] = country.advisoryState;
+      var paren = country.name.indexOf('(');
+      if (paren !== -1) {
+        var name = country.name.substring(0, paren - 1);
+      } else {
+        var name = country.name;
+      }
+      warnings[name] = country.advisoryState;
     });
-    console.log(warnings);
+
+    //These are hardcoded because they're listed as Korea, North...
+    warnings['North Korea'] = 3;
+    warnings['South Korea'] = 0;
+    warnings['Somaliland'] = 3;
     return warnings;
   },
   initialize: function() {
