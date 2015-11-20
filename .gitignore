@@ -30,3 +30,6 @@ client/lib/
 
 # Mac stuff
 .DS_Store
+
+# API Keys
+api.js 

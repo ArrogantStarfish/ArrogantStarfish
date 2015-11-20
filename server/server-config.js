@@ -18,9 +18,14 @@ app.get('/warnings', function (req, res) {
 
 // on get to /issues, get issues for a country
 app.get('/issues', function (req, res) {
-  request('newsapiquerystuff', function (error, response, body) {
+  // Need from frontend: q, begin_date, 
+  var url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=france&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "National" "Today\'s Headlines" "Topics" "U.S." "Week in Review" "World")&begin_date=20151119&api-key=7c797d4528b7af8fdc9e050d1e22dfa0:16:73530952'; 
+  request(url, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       // build response with news issues
+      res.send('hhi');
+    } else {
+      res.send('no')
     }
   });
 });
