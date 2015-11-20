@@ -3,8 +3,10 @@ var MapModel = Backbone.Model.extend({
   parse: function(data) {
     var warnings = {}
     data.forEach(function(country) {
-      warnings[country.name] = country.advisorySate
+      console.log(country);
+      warnings[country.name] = country.advisoryState;
     });
+    console.log(warnings);
     return warnings;
   },
   initialize: function() {
