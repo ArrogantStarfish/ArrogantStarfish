@@ -10,8 +10,15 @@ var MapView = Backbone.View.extend({
     thisHour: '#ffa500'
   },
 
+  advisoryKey: {
+    "0": "gray",
+    "1": "yellow",
+    "2": "orange",
+    "3": "red"
+  },
+
   render: function() {
-    console.log("trying to render");
+    var context = this;
     var mwidth = $("#map").width(),
       width = 938,
       height = 500,
@@ -40,6 +47,7 @@ var MapView = Backbone.View.extend({
     var g = svg.append("g")
       .attr("id", "container");
 
+    console.log(this.model, "model??")
     d3.json("../../json/countries.topo.json", function(error, us) {
       g.append("g")
         .attr("id", "countries")
@@ -57,7 +65,10 @@ var MapView = Backbone.View.extend({
           countryView.on('countryClicked', function(country) {
             countryClicked(d);
           }, this);
-        });
+        })
+        .style("fill", function(d) {
+          return this.advisoryKey[this.model.get(d.id)] ? this.advisoryKey[this.model.get(d.id)] : "blue";
+        }.bind(context));
     });
 
     function zoom(xyz) {

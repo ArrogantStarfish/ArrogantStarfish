@@ -4,8 +4,12 @@ var AppView = Backbone.View.extend({
   //the initialize function delegates ALL the DOM rendering
   initialize: function() {
     //these are the views that make up the layout
-    this.inputView = new InputView({model: this.model});
-    this.mapView = new MapView({collection: this.model.get('collection')});
+    this.inputView = new InputView({
+      model: this.model
+    });
+    this.mapView = new MapView({
+      model: this.model.get('mapModel')
+    });
     this.articleView = new ArticleView();
 
     //mapView must be rendered after the layout because the Datamap must attach to an already-rendered DOM element
