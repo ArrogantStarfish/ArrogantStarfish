@@ -9,30 +9,11 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-
 app.get('/warnings', function (req, res) {
-  for (var key in alerts.data) {
-    var entry = {
-      name: alerts.data[key].eng.name,
-      advisoryState: alerts.data[key]["advisory-state"],
-      hasAdvisory: alerts.data[key]["has-advisory-warning"],
-      advisoryText: alerts.data[key]["eng"]["advisory-text"]
-    };
-    var newEntry = Query(entry);
-    newEntry.save(function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        Query.find().exec(function(err, warnings) {
-          if (err) {
-            console.error(err);
-          } else {
-            res.json(warnings);
-          }
-        });
-      }
-    });
-  }
+  Query.find().exec(function(err, warnings) {
+    if (err) return console.error(err);
+    res.json(warnings);
+  });
 });
 
 // on get to /issues, get issues for a country
