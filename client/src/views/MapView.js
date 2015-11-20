@@ -12,7 +12,7 @@ var MapView = Backbone.View.extend({
 
   render: function() {
     console.log("trying to render");
-    var m_width = $("#map").width(),
+    var mwidth = $("#map").width(),
       width = 938,
       height = 500,
       country,
@@ -29,19 +29,16 @@ var MapView = Backbone.View.extend({
     var svg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
       .attr("viewBox", "0 0 " + width + " " + height)
-      .attr("width", m_width)
-      .attr("height", m_width * height / width);
+      .attr("width", mwidth)
+      .attr("height", mwidth * height / width);
 
     svg.append("rect")
       .attr("class", "background")
       .attr("width", width)
       .attr("height", height)
-      .on("click", country_clicked);
 
     var g = svg.append("g")
       .attr("id", "container");
-
-    console.log(CountryModel);
 
     d3.json("../../json/countries.topo.json", function(error, us) {
       g.append("g")
@@ -58,16 +55,9 @@ var MapView = Backbone.View.extend({
             el: this
           });
           countryView.on('countryClicked', function(country) {
-            country_clicked(d);
+            countryClicked(d);
           }, this);
-        })
-        // .append("path")
-        // .attr("id", function(d) {
-        //   console.log(d);
-        //   return d.id;
-        // })
-
-      // .on("click", country_clicked);
+        });
     });
 
     function zoom(xyz) {
@@ -80,7 +70,7 @@ var MapView = Backbone.View.extend({
         .attr("d", path.pointRadius(20.0 / xyz[2]));
     }
 
-    function get_xyz(d) {
+    function getXYZ(d) {
       var bounds = path.bounds(d);
       var w_scale = (bounds[1][0] - bounds[0][0]) / width;
       var h_scale = (bounds[1][1] - bounds[0][1]) / height;
@@ -90,16 +80,16 @@ var MapView = Backbone.View.extend({
       return [x, y, z];
     }
 
-    function country_clicked(d) {
+    function countryClicked(d) {
       g.selectAll(["#states", "#cities"]).remove();
       state = null;
 
       if (country) {
-        g.selectAll("#" + country.id).style('display', null);
+        g.selectAll("#" + country.id).style('display', null)
+          .classed('selected', false);
       }
-
       if (d && country !== d) {
-        var xyz = get_xyz(d);
+        var xyz = getXYZ(d);
         country = d;
         zoom(xyz);
       } else {
@@ -114,52 +104,6 @@ var MapView = Backbone.View.extend({
       svg.attr("width", w);
       svg.attr("height", w * height / width);
     });
-  },
-
-  renderBubbles: function() {
-    //recreate the bubble collection to make it more datamaps friendly
-    var bubbleArray = this.collection.map(function(bubble) {
-      var itemDate = new Date(bubble.get('datetime'));
-      var hoursSincePost = (Date.now() - itemDate) / (1000 * 60 * 60);
-
-      if (hoursSincePost < 1) {
-        var bubbleColoring = 'thisHour';
-      } else if (hoursSincePost < 24) {
-        var bubbleColoring = 'today';
-      } else if (hoursSincePost < 24 * 3) {
-        var bubbleColoring = 'newerThanThreeDays';
-      } else {
-        var bubbleColoring = 'older';
-      }
-
-      return {
-        latitude: bubble.get('latitude'),
-        longitude: bubble.get('longitude'),
-        message: bubble.get('message'),
-        keyword: bubble.get('keyword'),
-        url: bubble.get('url'),
-        fillKey: bubbleColoring,
-        radius: 5,
-        fillOpacity: 1,
-        borderColor: 'black',
-        borderWidth: 1
-      };
-    });
-
-    //the .bubbles function is a datamaps method that creates the bubbles and the bubble hover popups
-    this.map.bubbles(bubbleArray, {
-      popupTemplate: function(data) {
-        var bubbleHover = '<div class="hoverinfo">About ' + data.keyword + ': ' + data.message;
-        if (data.url) bubbleHover = bubbleHover + ' and this fancy article: ' + data.url;
-        return bubbleHover;
-      }
-    });
-
-    var thisView = this;
-    $('.bubbles').on('click', function(event) {
-      event.preventDefault();
-      var data = JSON.parse($(event.target).attr('data-info'));
-      thisView.trigger('article', new BubbleModel(data));
-    });
   }
+
 });

@@ -9,7 +9,10 @@ var CountryView = Backbone.View.extend({
       });
   },
   countryClicked: function() {
+    d3.select(this.el)
+      .classed('selected', true);
     this.trigger('countryClicked', this);
+    //trigger request for news and charities 
   }
 
 });
