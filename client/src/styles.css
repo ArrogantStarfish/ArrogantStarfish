@@ -74,33 +74,60 @@ button:focus{
 
 
 #map {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  /*background-color: #fff;
+  border: 1px solid #ccc;*/
 }
 .background {
   fill: none;
   pointer-events: all;
 }
 #countries, #states {
-  fill: #cde;
+  /*fill: #cde;*/
   stroke: #fff;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
-#countries .active, #states .active {
+/*#countries .active, #states .active {
   fill: #89a;
-}
-#cities {
+}*/
+/*#cities {
   stroke-width: 0;
-}
-.city {
+}*/
+/*.city {
   fill: #345;
   stroke: #fff;
-}
+}*/
 pre.prettyprint {
   border: 1px solid #ccc;
   margin-bottom: 0;
   padding: 9.5px;
+}
+
+/**
+ * INDEX STYLE
+ */
+
+.title {
+  /*font-family: 'Poiret One', cursive;*/
+  /*font-family: 'Philosopher', sans-serif;*/
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 130px;
+  display: inline;
+}
+.title-line {
+  width: 80px;
+  height: 7px;
+  position: absolute;
+  top: 139px;
+  left: 249px;
+  background-color: #F64E53;
+  display: block;
+}
+img.heart {
+  position: absolute;
+  left: 245px;
+  top: 55px;
+  width: 90px;
 }
 
 /**
