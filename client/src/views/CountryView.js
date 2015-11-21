@@ -1,18 +1,23 @@
 var CountryView = Backbone.View.extend({
   events: {
-    'click': 'countryClicked'
+    'click': 'countryClicked',
+    'hover': 'showName'
   },
   initialize: function() {
     var context = this;
+
     d3.select(this.el)
       .attr("id", function(d) {
-        return d.id.replace(/ /g, '_');
-      })
-    d3.select('svg')
+        context.countryID = d.id.replace(/ /g, '_')
+        return context.countryID;
+      });
+
+
+    var tooltipSelection = d3.select('svg').append('g')
+
+    tooltipSelection
       .append('g')
-      .attr('class', function(d) {
-        return context.model.get('countryName').replace(/ /g, '_') + ' tooltip'
-      })
+      .attr('class', context.countryID + '.tooltip')
       .style('display', 'none')
       .append('g')
       .append('rect')
@@ -23,6 +28,34 @@ var CountryView = Backbone.View.extend({
         ry: 5
       })
       .style("fill", "white")
+      .each(function() {
+        return context.positionToCountryCoods(this);
+      })
+
+    tooltipSelection
+      .append('g')
+      .attr('class', context.countryID + '_hovertip')
+      .style('display', 'none')
+      .append('rect')
+      .attr({
+        width: 50,
+        height: 20,
+        rx: 5,
+        ry: 5
+      })
+      .style("fill", "white")
+      .each(function() {
+        return context.positionToCountryCoods(this);
+      })
+
+
+    this.model.on('dataLoaded', this.showCountryData, this);
+    this.selected = false;
+  },
+
+  positionToCountryCoods: function(element) {
+    var context = this;
+    return d3.select(element)
       .attr('x', function() {
         var bbox = d3.select(context.el).node().getBBox();
         return bbox.x + bbox.width / 2
@@ -30,11 +63,9 @@ var CountryView = Backbone.View.extend({
       .attr('y', function() {
         var bbox = d3.select(context.el).node().getBBox();
         return bbox.y + bbox.height / 2
-      })
-
-    this.model.on('dataLoaded', this.showCountryData, this);
-    this.selected = false;
+      });
   },
+
   countryClicked: function() {
     this.trigger('countryClicked', this);
     var context = this;
@@ -43,8 +74,9 @@ var CountryView = Backbone.View.extend({
     if (!this.selected) {
       this.selected = true;
       d3.select(this.el)
-        .classed('selected', true);
-      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip')
+        .classed('selected', true); << << << < HEAD
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip') === === =
+        d3.select('.' + context.countryID + '_tooltip') >>> >>> > Before rebase
         .style('display', 'inherit')
         .select('rect')
         .transition()
@@ -63,7 +95,7 @@ var CountryView = Backbone.View.extend({
       }
     } else {
       this.selected = false;
-      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip').select('g')
+      d3.select('.' + context.countryID + '.tooltip')
         .style('display', 'none')
     }
   },
@@ -75,32 +107,32 @@ var CountryView = Backbone.View.extend({
 
     var html = [];
     html[0] = '' +
-        '<div class="tooltip-container">' +
-        '  <div class="flag" style="background-image: url(\'/lib/Libya.png\')"></div>' +
-        '  <div class="tooltip-title">' +
-        '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
-        '  </div>' +
-        '  <div class="tooltip-article">' +
-        '    <div class="tooltip-article-header">What\'s going on rigth now</div>' +
-        '    <hr>' +
-        '    <div class="tooltip-article-content">' +
-        '      <ul>';
+      '<div class="tooltip-container">' +
+      '  <div class="flag" style="background-image: url(\'/lib/Libya.png\')"></div>' +
+      '  <div class="tooltip-title">' +
+      '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
+      '  </div>' +
+      '  <div class="tooltip-article">' +
+      '    <div class="tooltip-article-header">What\'s going on rigth now</div>' +
+      '    <hr>' +
+      '    <div class="tooltip-article-content">' +
+      '      <ul>';
     html[1] = [];
     html[2] = '' +
-        '      </ul>' +
-        '    </div>' +
-        '  </div>' +
-        '  <div class="tooltip-charity">' +
-        '    <div class="tooltip-charity-header">Maybe something here</div>' +
-        '    <hr>' +
-        '    <div class="tooltip-charity-content">' +
-        '      <ul>';
+      '      </ul>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="tooltip-charity">' +
+      '    <div class="tooltip-charity-header">Maybe something here</div>' +
+      '    <hr>' +
+      '    <div class="tooltip-charity-content">' +
+      '      <ul>';
     html[3] = [];
     html[4] = '' +
-        '      </ul>' +
-        '    </div>' +
-        '  </div>' +
-        '</div>';
+      '      </ul>' +
+      '    </div>' +
+      '  </div>' +
+      '</div>';
 
     news.forEach(function(article) {
       console.log(article);
@@ -111,7 +143,7 @@ var CountryView = Backbone.View.extend({
     });
     console.log(html)
 
-    var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip').select('g');
+    var toolTip = d3.select('.' + context.countryID + '.tooltip');
 
     toolTip.append('foreignObject')
       .attr('x', 40)
@@ -126,13 +158,17 @@ var CountryView = Backbone.View.extend({
 
   },
 
-  htmlBuilder: function (html) {
-    var a = _.reduce(html, function (string, next) {
-      var toJoin = Array.isArray(next) ? next/*.splice(0, 3)*/.join('') : next
+  htmlBuilder: function(html) {
+    var a = _.reduce(html, function(string, next) {
+      var toJoin = Array.isArray(next) ? next /*.splice(0, 3)*/ .join('') : next
       return string + toJoin;
     }, '');
     //console.log(a);
     return a;
+  },
+
+  showName: function() {
+
   }
 
 });
