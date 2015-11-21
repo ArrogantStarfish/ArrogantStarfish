@@ -5,6 +5,8 @@ var CountryView = Backbone.View.extend({
   },
   initialize: function() {
     var context = this;
+    this.selected = false;
+    this.selection = d3.select('svg').append('g').attr('class', context.countryID);
 
     d3.select(this.el)
       .attr("id", function(d) {
@@ -12,27 +14,30 @@ var CountryView = Backbone.View.extend({
         return context.countryID;
       });
 
+    this.makeToolTip();
+    this.makeHoverTip();
 
-    this.tooltipSelection = d3.select('svg').append('g').attr('class', context.countryID);
+    this.model.on('dataLoaded', this.showCountryData, this);
+  },
 
-
-    this.tooltipSelection
-      .append('foreignObject')
+  makeToolTip: function() {
+    var context = this;
+    this.toolTip = this.selection.append('foreignObject')
       .attr('class', 'tooltip')
       .style('display', 'none')
-      .attr({
-        width: 50,
-        height: 50
-      })
       .each(function() {
         return context.positionToCountryCoods(this);
       });
     this.showCountryData();
+  },
 
-    this.tooltipSelection
-      .append('g')
-      .attr('class', context.countryID + '_hovertip')
-      .style('display', 'none')
+  makeHoverTip: function() {
+    var context = this;
+    this.hoverTip = this.selection.append('g')
+      .attr('class', 'hovertip')
+      .style('display', 'none');
+
+    this.hoverTip
       .append('rect')
       .attr({
         width: 50,
@@ -45,9 +50,12 @@ var CountryView = Backbone.View.extend({
         return context.positionToCountryCoods(this);
       })
 
-
-    this.model.on('dataLoaded', this.showCountryData, this);
-    this.selected = false;
+    this.hoverTip
+      .append('text')
+      .text(context.model.get('countryName'))
+      .each(function() {
+        return context.positionToCountryCoods(this);
+      })
   },
 
   positionToCountryCoods: function(element) {
@@ -66,14 +74,12 @@ var CountryView = Backbone.View.extend({
   countryClicked: function() {
     this.trigger('countryClicked', this);
     var context = this;
-
-    //console.log(d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip'))
     if (!this.selected) {
       this.selected = true;
       d3.select(this.el)
         .classed('selected', true);
 
-      this.tooltipSelection.select('.tooltip')
+      this.toolTip
         .style('display', 'inherit')
         .transition()
         .duration(750)
@@ -91,7 +97,7 @@ var CountryView = Backbone.View.extend({
       }
     } else {
       this.selected = false;
-      d3.select('.' + context.countryID).select('.tooltip')
+      this.toolTip
         .style('display', 'none')
     }
   },
@@ -138,9 +144,7 @@ var CountryView = Backbone.View.extend({
       html[3].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
 
-    var toolTip = this.tooltipSelection.select('.tooltip')
-
-    toolTip
+    this.toolTip
       .html(this.htmlBuilder(html))
 
   },
