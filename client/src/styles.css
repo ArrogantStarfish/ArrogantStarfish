@@ -228,3 +228,7 @@ pre.prettyprint {
   text-decoration: none;
   color: white;
 }
+
+.hovertip {
+  font-size: 12pt;
+}

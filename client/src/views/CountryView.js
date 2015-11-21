@@ -1,7 +1,8 @@
 var CountryView = Backbone.View.extend({
   events: {
     'click': 'countryClicked',
-    'hover': 'showName'
+    'mouseenter': 'showName',
+    'mouseout': 'hideName'
   },
   initialize: function() {
     var context = this;
@@ -33,28 +34,13 @@ var CountryView = Backbone.View.extend({
 
   makeHoverTip: function() {
     var context = this;
-    this.hoverTip = this.selection.append('g')
+    this.hoverTip = this.selection.append('text')
       .attr('class', 'hovertip')
-      .style('display', 'none');
-
-    this.hoverTip
-      .append('rect')
-      .attr({
-        width: 50,
-        height: 20,
-        rx: 5,
-        ry: 5
-      })
-      .style("fill", "white")
-      .each(function() {
-        return context.positionToCountryCoods(this);
-      })
-
-    this.hoverTip
-      .append('text')
+      .style('display', 'none')
       .text(context.model.get('countryName'))
-      .each(function() {
-        return context.positionToCountryCoods(this);
+      .attr({
+        x: 50,
+        y: 50
       })
   },
 
@@ -76,6 +62,7 @@ var CountryView = Backbone.View.extend({
     var context = this;
     if (!this.selected) {
       this.selected = true;
+      this.hideName();
       d3.select(this.el)
         .classed('selected', true);
 
@@ -83,9 +70,9 @@ var CountryView = Backbone.View.extend({
         .style('display', 'inherit')
         .transition()
         .duration(750)
-        .attr('x', 40)
-        .attr('y', 50)
         .attr({
+          'x': 40,
+          'y': 50,
           width: 300,
           height: 300
         })
@@ -159,7 +146,13 @@ var CountryView = Backbone.View.extend({
   },
 
   showName: function() {
+    if (!this.selected) {
+      this.hoverTip.style('display', 'inherit');
+    }
+  },
 
+  hideName: function() {
+    this.hoverTip.style('display', 'none');
   }
 
 });
