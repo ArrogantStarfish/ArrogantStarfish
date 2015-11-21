@@ -6,7 +6,7 @@ var CountryView = Backbone.View.extend({
     var context = this;
     d3.select(this.el)
       .attr("id", function(d) {
-        return d.id.replace(/ /g, '_');
+        return d.id.replace(' ', '_');
       })
     d3.select('svg')
       .append('g')
@@ -29,13 +29,13 @@ var CountryView = Backbone.View.extend({
 
     d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip')
       .append('g')
-      .style('display', 'none')
       .append('rect')
       .attr({
         width: 250,
         height: 200,
         rx: 5,
-        ry: 5
+        ry: 5,
+        class: 'bg'
       })
       //.style("fill", "white")
       .attr('x', function() {
@@ -44,41 +44,26 @@ var CountryView = Backbone.View.extend({
       })
       .attr('y', function() {
         var bbox = d3.select(context.el).node().getBBox();
+        console.log(bbox);
         return bbox.y + bbox.height / 2
       })
+      .transition()
+      .duration(750)
+      .attr('x', 100) // need to decide where to put it, how big it should be
+      .attr('y', 100) // 
+      .attr({
+        width: 300,
+        height: 300
+      });
 
-    this.model.on('dataLoaded', this.showCountryData, this);
-    this.selected = false;
-  },
-  countryClicked: function() {
-    this.trigger('countryClicked', this);
-    var context = this;
-    if (!this.selected) {
-      this.selected = true;
-      d3.select(this.el)
-        .classed('selected', true);
-      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g')
-        .style('display', 'inherit')
-        .select('rect')
-        .transition()
-        .duration(750)
-        .attr('x', 100) // need to decide where to put it, how big it should be
-        .attr('y', 100) // 
-        .attr({
-          width: 300,
-          height: 300
-        });
-      if (this.model.get('issues') === undefined) {
-        console.log('getting data');
-        this.model.getData();
-      } else {
-        this.showCountryData();
-      }
+
+    if (this.model.get('issues') === undefined) {
+      console.log('getting data');
+      this.model.getData();
     } else {
-      this.selected = false;
-      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g')
-        .style('display', 'none')
+      this.showCountryData();
     }
+    //trigger request for news and charities 
   },
 
   showCountryData: function() {
