@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-
 app.get('/warnings', function(req, res) {
   Query.find().exec(function(err, warnings) {
     if (err) return console.error(err);
@@ -20,9 +19,19 @@ app.get('/warnings', function(req, res) {
 
 
 app.get('/issues', function(req, res) {
-  // Need from frontend: query country, begin_date
-  var url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=france&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "Today\'s Headlines" "Topics" "World")&begin_date=20151119&api-key='+keys.ny_times;
-  request(url, function(error, response, body) {
+  // DATE FORMATTING =================================================
+  var today = new Date(), day = today.getDate(), month = today.getMonth()+1, year = today.getFullYear();
+  month = (month < 10 ? "0" : "") + month;
+  day = (day < 10 ? "0" : "") + day;
+  todaysDate = ""+year+month+day;
+  // BUILD QUERY URLS ================================================
+  var ny_url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q='+req.query.country+'&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "Today\'s Headlines" "Topics" "World")&begin_date='+todaysDate+'&api-key='+keys.ny_times;
+  var giving_url = 'https://api.justgiving.com/{'+keys.just_giving+'}/v1/onesearch?q={'+req.query.country+'}';
+  // SET HEADERS =====================================================
+ 
+  // API REQUESTS ====================================================
+  var results = {};
+  request(ny_url, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       body = JSON.parse(body);
       var newsArray = [];
@@ -34,23 +43,44 @@ app.get('/issues', function(req, res) {
         };
         newsArray.push(obj);
       }
-      res.send(newsArray);
+      results.news = newsArray;
+      var options = {
+        url: giving_url,
+        headers: {
+          'Accept': 'application/json'
+        }
+      };
+      request(options, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          var body = JSON.parse(response.body);
+          // console.log(response.body["GroupedResults"]);
+          var indexes = body["GroupedResults"];
+          indexes.forEach(function (index) {
+            if (index["Title"] === "Charities") {
+              results.charities = index["Results"];
+            }
+          });
+          res.send(results);
+        }
+      });
     }
   });
 });
 
-app.get('/charities', function(req, res) {
-  var options = {
-    url: 'https://api.justgiving.com/{'+keys.just_giving+'}/v1/onesearch?q={'+req.query.country+'}',
-    headers: {
-      'Accept': 'application/json'
-    }
-  };
-  request(options, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      res.send(response.body);
-    }
-  });
-});
+// return an object for the country that looks like {news: [], charities: []}
+
+// app.get('/charities', function(req, res) {
+//   var options = {
+//     url: 'https://api.justgiving.com/{'+keys.just_giving+'}/v1/onesearch?q={'+req.query.country+'}',
+//     headers: {
+//       'Accept': 'application/json'
+//     }
+//   };
+//   request(options, function(error, response, body) {
+//     if (!error && response.statusCode === 200) {
+//       res.send(response.body);
+//     }
+//   });
+// });
 
 module.exports = app;
