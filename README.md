@@ -9,9 +9,9 @@
 
 ## Team
 
-  - __Product Owner__: Lorenzo De Nobili
+  - __Product Owner__: Abel Wang
   - __Scrum Master__: Laura Gelston
-  - __Development Team Members__: Jessica O'Brien, Abel Wang
+  - __Development Team Members__: Jess O'Brien, Lorenzo De Nobili
 
 ## Table of Contents
 
