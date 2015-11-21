@@ -160,6 +160,23 @@ pre.prettyprint {
 .tooltip-title {
   margin-top: -20px;
 }
+.tooltip-article {
+  background-color: rgba(255,255,255,0.2);
+  padding: 4px;
+  border-radius: 3px;
+}
+.tooltip hr {
+  margin-right: -4px;
+  margin-left: 10px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.tooltip-article-header {
+  padding-left: 10px;
+}
+.tooltip-article-content {
+  padding-top: 5px;
+  font-size: 11px;
+}
 .tooltip-title-text {
   width: 100%;
   /*padding-top: 10px;*/
@@ -168,6 +185,7 @@ pre.prettyprint {
 }
 .tooltip ul {
   /*list-style-type: none;*/
+
   list-style-position:inside;
   -webkit-margin-before: 0em;
   -webkit-margin-after: 1em;
