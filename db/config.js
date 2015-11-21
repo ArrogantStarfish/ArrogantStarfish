@@ -24,6 +24,7 @@ function loadAlerts() {
 
 db.once('open', function() {
   console.log('Mongodb connection open');
+  mongoose.connection.db.dropDatabase()
   loadAlerts();
 });
 

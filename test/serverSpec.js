@@ -8,30 +8,22 @@ var Query = require('../db/query');
 
 describe('Who Cares test: ', function() {
   
-  //remove test artifacts from database
-  beforeEach(function(done) {
-    request(app)
-      .get('/')
-      .end(function(err, res) {
-        Query.remove({user: 'doge', keyword: 'syria', latitude:30, longitude: 30, message: 'I CARE DAMNIT'}).exec();
-        Query.remove({keyword: 'xgzabnor'}).exec();
-        done();
-      });
-  });
+  //remove test artefacts from database
+  // beforeEach(function(done) {
+  //   request(app)
+  //     .get('/')
+  //     .end(function(err, res) {
+  //       Query.remove({user: 'doge', keyword: 'syria', latitude:30, longitude: 30, message: 'I CARE DAMNIT'}).exec();
+  //       Query.remove({keyword: 'xgzabnor'}).exec();
+  //       done();
+  //     });
+  // });
 
-  describe('Query creation: ', function() {
+  describe('Travel Warnings: ', function() {
 
-    it('Outputs match inputs', function(done) {
+    it('Sends current travel warnings upon connection open', function(done) {
       request(app)
-        .post('/query')
-        .send({
-          user: 'doge',
-          latitude: 30,
-          longitude: 30,
-          keyword: 'syria',
-          datetime: new Date(),
-          message: 'I CARE DAMNIT'
-        })
+        .get('/warnings')
         .expect(200)
         .expect(function(res) {
           Query.findOne({
