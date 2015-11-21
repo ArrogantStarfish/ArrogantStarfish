@@ -86,8 +86,6 @@ var CountryView = Backbone.View.extend({
     var news = this.model.get('news');
     var charities = this.model.get('charities');
 
-    
-<<<<<<< HEAD
     var html = [];
     html[0] = '' +
         '<div class="tooltip-container">' +
