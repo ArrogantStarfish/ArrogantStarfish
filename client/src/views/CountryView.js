@@ -17,8 +17,8 @@ var CountryView = Backbone.View.extend({
       .style('display', 'none')
       .append('rect')
       .attr({
-        width: 130,
-        height: 140,
+        width: 250,
+        height: 200,
         rx: 5,
         ry: 5
       })
@@ -76,10 +76,11 @@ var CountryView = Backbone.View.extend({
     html[0] = '' +
         '<div class="tooltip-container">' +
         '  <div class="tooltip-title">' +
-        '    <p class="tooltip-title-text">Title</p>' +
+        '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
         '  </div>' +
         '  <div class="tooltip-article">' +
         '    <div class="tooltip-article-header">What\'s going on rigth now</div>' +
+        '    <hr>' +
         '    <div class="tooltip-article-content">' +
         '      <ul>';
     html[1] = [];
@@ -107,8 +108,8 @@ var CountryView = Backbone.View.extend({
     var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip').select('g');
 
     toolTip.append('foreignObject')
-      .attr('x', 100)
-      .attr('y', 100)
+      .attr('x', 40)
+      .attr('y', 50)
       .attr({
         width: 300,
         height: 300
@@ -121,7 +122,7 @@ var CountryView = Backbone.View.extend({
 
   htmlBuilder: function (html) {
     var a = _.reduce(html, function (string, next) {
-      var toJoin = Array.isArray(next) ? next.splice(0, 3).join('') : next
+      var toJoin = Array.isArray(next) ? next/*.splice(0, 3)*/.join('') : next
       return string + toJoin;
     }, '');
     //console.log(a);

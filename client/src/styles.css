@@ -111,15 +111,50 @@ pre.prettyprint {
   fill: none;
 }
 .tooltip-container {
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.75);
   border-radius: 3%;
-  padding: 8px;
+  padding: 6px;
+  width: 400px;
   color: white;
+}
+.tooltip-article {
+  background-color: rgba(255,255,255,0.2);
+  padding: 4px;
+  border-radius: 3px;
+}
+.tooltip hr {
+  margin-right: -4px;
+  margin-left: 10px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.tooltip-article-header {
+  padding-left: 10px;
+}
+.tooltip-article-content {
+  padding-top: 5px;
+  font-size: 11px;
 }
 .tooltip-title-text {
   width: 100%;
   /*padding-top: 10px;*/
   text-align: center;
   -webkit-margin-before: 0;
-
+}
+.tooltip ul {
+  /*list-style-type: none;*/
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 15px;
+}
+.tooltip li {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  /*overflow:hidden;*/
+}
+.tooltip li a {
+  text-decoration: none;
+  color: white;
 }
