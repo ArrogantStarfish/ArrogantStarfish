@@ -72,18 +72,18 @@ var CountryView = Backbone.View.extend({
     var charities = this.model.get('charities');
 
     
-    var html = {};
-    html.title = '' +
+    var html = [];
+    html[0] = '' +
         '<div class="tooltip-container">' +
         '  <div class="tooltip-title">' +
-        '    <p>Title</p>' +
+        '    <p class="tooltip-title-text">Title</p>' +
         '  </div>' +
         '  <div class="tooltip-article">' +
-        '    <div class="tooltip-article-header">Maybe something here</div>' +
-        '    <div class="tooltip-article-content">'
+        '    <div class="tooltip-article-header">What\'s going on rigth now</div>' +
+        '    <div class="tooltip-article-content">' +
         '      <ul>';
-    html.articles = [];
-    html.body = '' +
+    html[1] = [];
+    html[2] = '' +
         '      </ul>' +
         '    </div>' +
         '  </div>' +
@@ -91,16 +91,18 @@ var CountryView = Backbone.View.extend({
         '    <div class="tooltip-charity-header">Maybe something here</div>' +
         '    <div class="tooltip-charity-content">' +
         '      <ul>';
-    html.charity = [];
-    html.close = '' +
+    html[3] = [];
+    html[4] = '' +
         '      </ul>' +
         '    </div>' +
         '  </div>' +
         '</div>';
 
     news.forEach(function(article) {
-      html.articles.push('<li><a href="' + article.url + '">' + article.headline + '</li>');
+      console.log(article);
+      html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
+    console.log(html)
 
     var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip').select('g');
 
@@ -118,10 +120,12 @@ var CountryView = Backbone.View.extend({
   },
 
   htmlBuilder: function (html) {
-    return _.reduce(html, function (string, next) {
-      var toJoin = Array.isArray(next) ? next.join('') : next
+    var a = _.reduce(html, function (string, next) {
+      var toJoin = Array.isArray(next) ? next.splice(0, 3).join('') : next
       return string + toJoin;
     }, '');
+    //console.log(a);
+    return a;
   }
 
 });
