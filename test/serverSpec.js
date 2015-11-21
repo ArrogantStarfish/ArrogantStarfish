@@ -7,97 +7,48 @@ var db = require('../db/config');
 var Query = require('../db/query');
 
 describe('Who Cares test: ', function() {
-  
-  //remove test artefacts from database
-  // beforeEach(function(done) {
-  //   request(app)
-  //     .get('/')
-  //     .end(function(err, res) {
-  //       Query.remove({user: 'doge', keyword: 'syria', latitude:30, longitude: 30, message: 'I CARE DAMNIT'}).exec();
-  //       Query.remove({keyword: 'xgzabnor'}).exec();
-  //       done();
-  //     });
-  // });
 
-  describe('Travel Warnings: ', function() {
-
-    it('Sends current travel warnings upon connection open', function(done) {
+  describe('GET /warnings', function() {
+    it('Sends current travel warnings upon connection open', function (done) {
       request(app)
         .get('/warnings')
         .expect(200)
-        .expect(function(res) {
+        .expect(function (res) {
           Query.findOne({
-            user: 'doge',
-            latitude: 30,
-            longitude: 30,
-            keyword: 'syria',
-            message: 'I CARE DAMNIT'
-          }).exec(function(err, query) {
+            name: 'Australia',
+          }).exec(function (err, query) {
             if (err) console.error(err);
-            expect(query.user).to.equal('doge');
-            expect(query.latitude).to.equal(30);
-            expect(query.longitude).to.equal(30);
-            expect(query.keyword).to.equal('syria');
-            expect(query.message).to.equal('I CARE DAMNIT');
+            expect(query.advisoryState).to.equal(1);
+            expect(query.advisoryTest).to.equal("Exercise normal security precautions");
           })
         })
         .end(done);
     });
-
-  });
-
-  describe('Query retrieval: ', function(){
-    //before each that loads in a query, keyword A
-    beforeEach(function(done) {
-      new Query({
-        user: 'cat',
-        latitude: 40,
-        longitude: 40,
-        keyword: 'xgzabnor',
-        message: 'I SWEAR I CARE'
-      }).save(function() {
-        new Query({
-          user: 'dog',
-          latitude: 50,
-          longitude: 50,
-          keyword: 'xgzabnor',
-          message: 'I CARE MORE'
-        }).save(function() {
-          new Query({
-            user: 'rabbit',
-            latitude: 20,
-            longitude: 20,
-            keyword: 'xgzabnor',
-            message: 'I AM THE CARINGEST'
-          }).save(function() {
-            done();
-          });
-        });
-      });
-
-
-
-    });
-
-    it('Responds with 200 header when retrieved from database', function(done) {
+    it ('Deletes old warnings from the database on connection open', function (done) {
       request(app)
-        .post('/query')
-        .expect(200)
-        .end(done);
-    });
-
-    it('Number of queries retrieved matches number of queries created', function(done) {
-      request(app)
-        .post('/query')
-        .expect(function() {
-          Query.find({keyword: 'xgzabnor'}).exec(function(err, queries) {
-            expect(queries.length).to.equal(3);
-          });
+      .get('/warnings')
+      .expect(200)
+      .expect(function (res) {
+        Query.find().exec(function (err, query) {
+          if (err) console.error(err);
+          expect(query.length).to.equal(229);
         })
-        .end(done);
+      })
+      .end(done);
     });
-
   });
 
+ describe('GET /issues', function(){
+  it('should return an object with an array of news and charities', function (done){
+    request(app)
+      .get('/issues')
+      .query({'country': 'Australia'})
+      .expect(function(res) {
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.include.keys('news', 'charities');
+      })
+      .end(done);
+    });
+  });
 
 });

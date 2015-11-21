@@ -17,7 +17,6 @@ app.get('/warnings', function(req, res) {
   });
 });
 
-
 app.get('/issues', function(req, res) {
   // DATE FORMATTING =================================================
   var today = new Date(),
