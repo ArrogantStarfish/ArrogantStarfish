@@ -115,7 +115,7 @@ pre.prettyprint {
   border-radius: 3%;
   padding: 10px;
   width: 400px;
-  color: white;
+  color: white; 
 }
 .tooltip .flag {
   width: 80px;
