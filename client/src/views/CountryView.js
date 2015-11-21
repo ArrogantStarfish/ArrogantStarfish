@@ -11,10 +11,10 @@ var CountryView = Backbone.View.extend({
     d3.select('svg')
       .append('g')
       .attr('class', function(d) {
-        return context.model.get('countryName').replace(/ /g, '_') + '_tooltip'
+        return context.model.get('countryName').replace(/ /g, '_') + ' tooltip'
       })
-      .append('g')
       .style('display', 'none')
+      .append('g')
       .append('rect')
       .attr({
         width: 130,
@@ -38,11 +38,13 @@ var CountryView = Backbone.View.extend({
   countryClicked: function() {
     this.trigger('countryClicked', this);
     var context = this;
+
+    //console.log(d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip'))
     if (!this.selected) {
       this.selected = true;
       d3.select(this.el)
         .classed('selected', true);
-      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g')
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip')
         .style('display', 'inherit')
         .select('rect')
         .transition()
@@ -61,7 +63,7 @@ var CountryView = Backbone.View.extend({
       }
     } else {
       this.selected = false;
-      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g')
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip').select('g')
         .style('display', 'none')
     }
   },
@@ -72,26 +74,65 @@ var CountryView = Backbone.View.extend({
     var charities = this.model.get('charities');
 
     var html = [];
-    news.forEach(function(article) {
-      html.push('<div>');
-      html.push(article.headline);
-      html.push(article.url);
-      html.push('</div>');
-    });
+    html[0] = '' +
+        '<div class="tooltip-container">' +
+        '  <div class="flag" style="background-image: url(\'/lib/Libya.png\')"></div>' +
+        '  <div class="tooltip-title">' +
+        '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
+        '  </div>' +
+        '  <div class="tooltip-article">' +
+        '    <div class="tooltip-article-header">What\'s going on rigth now</div>' +
+        '    <hr>' +
+        '    <div class="tooltip-article-content">' +
+        '      <ul>';
+    html[1] = [];
+    html[2] = '' +
+        '      </ul>' +
+        '    </div>' +
+        '  </div>' +
+        '  <div class="tooltip-charity">' +
+        '    <div class="tooltip-charity-header">Maybe something here</div>' +
+        '    <hr>' +
+        '    <div class="tooltip-charity-content">' +
+        '      <ul>';
+    html[3] = [];
+    html[4] = '' +
+        '      </ul>' +
+        '    </div>' +
+        '  </div>' +
+        '</div>';
 
-    var toolTip = d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g');
+    news.forEach(function(article) {
+      console.log(article);
+      html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
+    });
+    charities.forEach(function() {
+      html[3].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
+    });
+    console.log(html)
+
+    var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip').select('g');
 
     toolTip.append('foreignObject')
-      .attr('x', 100)
-      .attr('y', 100)
+      .attr('x', 40)
+      .attr('y', 50)
       .attr({
         width: 300,
         height: 300
       })
       .append("xhtml:div")
       .append('div')
-      .html(html.join(''))
+      .html(this.htmlBuilder(html))
 
+  },
+
+  htmlBuilder: function (html) {
+    var a = _.reduce(html, function (string, next) {
+      var toJoin = Array.isArray(next) ? next/*.splice(0, 3)*/.join('') : next
+      return string + toJoin;
+    }, '');
+    //console.log(a);
+    return a;
   }
 
 });
