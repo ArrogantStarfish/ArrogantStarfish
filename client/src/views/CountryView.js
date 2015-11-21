@@ -6,12 +6,12 @@ var CountryView = Backbone.View.extend({
     var context = this;
     d3.select(this.el)
       .attr("id", function(d) {
-        return d.id.replace(' ', '_');
+        return d.id.replace(/ /g, '_');
       })
     d3.select('svg')
       .append('g')
       .attr('class', function(d) {
-        return context.model.get('countryName').replace(' ', '_') + '_tooltip'
+        return context.model.get('countryName').replace(/ /g, '_') + '_tooltip'
       })
       .append('g')
       .style('display', 'none')
@@ -20,8 +20,7 @@ var CountryView = Backbone.View.extend({
         width: 130,
         height: 140,
         rx: 5,
-        ry: 5,
-        class: 'bg'
+        ry: 5
       })
       .style("fill", "white")
       .attr('x', function() {
@@ -30,7 +29,6 @@ var CountryView = Backbone.View.extend({
       })
       .attr('y', function() {
         var bbox = d3.select(context.el).node().getBBox();
-        console.log(bbox);
         return bbox.y + bbox.height / 2
       })
 
@@ -44,7 +42,7 @@ var CountryView = Backbone.View.extend({
       this.selected = true;
       d3.select(this.el)
         .classed('selected', true);
-      d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip').select('g')
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g')
         .style('display', 'inherit')
         .select('rect')
         .transition()
@@ -63,7 +61,7 @@ var CountryView = Backbone.View.extend({
       }
     } else {
       this.selected = false;
-      d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip').select('g')
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g')
         .style('display', 'none')
     }
   },
@@ -81,7 +79,7 @@ var CountryView = Backbone.View.extend({
       html.push('</div>');
     });
 
-    var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip').select('g');
+    var toolTip = d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g');
 
     toolTip.append('foreignObject')
       .attr('x', 100)
