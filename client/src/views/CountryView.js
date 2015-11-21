@@ -12,23 +12,9 @@ var CountryView = Backbone.View.extend({
       .append('g')
       .attr('class', function(d) {
         return context.model.get('countryName').replace(' ', '_') + '_tooltip'
-      });
-
-    this.model.on('dataLoaded', this.showCountryData, this);
-  },
-  countryClicked: function() {
-    var context = this;
-    d3.select(this.el)
-      .classed('selected', true);
-
-    this.trigger('countryClicked', this);
-
-    var projection = d3.geo.mercator()
-      .scale(150)
-      .translate([938 / 2, 500 / 1.5]);
-
-    d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip')
+      })
       .append('g')
+      .style('display', 'none')
       .append('rect')
       .attr({
         width: 130,
@@ -47,23 +33,39 @@ var CountryView = Backbone.View.extend({
         console.log(bbox);
         return bbox.y + bbox.height / 2
       })
-      .transition()
-      .duration(750)
-      .attr('x', 100) // need to decide where to put it, how big it should be
-      .attr('y', 100) // 
-      .attr({
-        width: 300,
-        height: 300
-      });
 
-
-    if (this.model.get('issues') === undefined) {
-      console.log('getting data');
-      this.model.getData();
+    this.model.on('dataLoaded', this.showCountryData, this);
+    this.selected = false;
+  },
+  countryClicked: function() {
+    this.trigger('countryClicked', this);
+    var context = this;
+    if (!this.selected) {
+      this.selected = true;
+      d3.select(this.el)
+        .classed('selected', true);
+      d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip').select('g')
+        .style('display', 'inherit')
+        .select('rect')
+        .transition()
+        .duration(750)
+        .attr('x', 100) // need to decide where to put it, how big it should be
+        .attr('y', 100) // 
+        .attr({
+          width: 300,
+          height: 300
+        });
+      if (this.model.get('issues') === undefined) {
+        console.log('getting data');
+        this.model.getData();
+      } else {
+        this.showCountryData();
+      }
     } else {
-      this.showCountryData();
+      this.selected = false;
+      d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip').select('g')
+        .style('display', 'none')
     }
-    //trigger request for news and charities 
   },
 
   showCountryData: function() {
