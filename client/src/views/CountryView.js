@@ -75,6 +75,7 @@ var CountryView = Backbone.View.extend({
     var html = [];
     html[0] = '' +
         '<div class="tooltip-container">' +
+        '  <div class="flag" style="background-image: url(\'/lib/Libya.png\')"></div>' +
         '  <div class="tooltip-title">' +
         '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
         '  </div>' +
@@ -90,6 +91,7 @@ var CountryView = Backbone.View.extend({
         '  </div>' +
         '  <div class="tooltip-charity">' +
         '    <div class="tooltip-charity-header">Maybe something here</div>' +
+        '    <hr>' +
         '    <div class="tooltip-charity-content">' +
         '      <ul>';
     html[3] = [];
@@ -102,6 +104,9 @@ var CountryView = Backbone.View.extend({
     news.forEach(function(article) {
       console.log(article);
       html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
+    });
+    charities.forEach(function() {
+      html[3].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
     console.log(html)
 
