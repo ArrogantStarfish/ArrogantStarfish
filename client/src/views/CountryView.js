@@ -11,8 +11,23 @@ var CountryView = Backbone.View.extend({
     d3.select('svg')
       .append('g')
       .attr('class', function(d) {
-        return context.model.get('countryName').replace(/ /g, '_') + '_tooltip'
-      })
+        return context.model.get('countryName').replace(' ', '_') + ' tooltip'
+      });
+
+    this.model.on('dataLoaded', this.showCountryData, this);
+  },
+  countryClicked: function() {
+    var context = this;
+    d3.select(this.el)
+      .classed('selected', true);
+
+    this.trigger('countryClicked', this);
+
+    var projection = d3.geo.mercator()
+      .scale(150)
+      .translate([938 / 2, 500 / 1.5]);
+
+    d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip')
       .append('g')
       .style('display', 'none')
       .append('rect')
@@ -72,6 +87,7 @@ var CountryView = Backbone.View.extend({
     var charities = this.model.get('charities');
 
     
+<<<<<<< HEAD
     var html = [];
     html[0] = '' +
         '<div class="tooltip-container">' +
