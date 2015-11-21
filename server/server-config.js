@@ -63,10 +63,13 @@ app.get('/issues', function(req, res) {
             }
           });
           // get flag for country
-          var countryName = req.query.country.toString();
-          var code = ISOCodes.ISOCodes["Australia"];
-          
-          Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
+          // var country = req.query.country;
+          // var stringified = JSON.stringify(ISOCodes);
+          // var code = stringified[country.toString()];
+          // console.log(stringified, country, code);
+          // code = code.toString().toLowerCase();
+          // console.log(typeof code, code);
+          Query.Flag.findOne({country: "au.png"}).exec(function (err, flag) {
             if (err) {
               console.error(err);
             }
