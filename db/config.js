@@ -3,6 +3,9 @@ var alerts = require('./TravelAlerts.json');
 var Query = require('./query');
 var fs = require('fs');
 var express = require('express');
+// required for automating travel warning updates
+var CronJob = require('cron').CronJob;
+
 
 mongoURI = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/whocaresdb';
 
@@ -12,6 +15,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind('connection error: '));
 
 // LOAD TRAVEL WARNINGS ====================================
+function clearAlerts() {
+  var Query = require('./query');
+  Query.Country.find().remove().exec();
+};
 function loadAlerts() {
   var Query = require('./query');
   for (var key in alerts.data) {
@@ -27,6 +34,10 @@ function loadAlerts() {
 };
 
 // LOAD FLAGS =============================================
+function clearFlags() {
+  var Query = require('./query');
+  Query.Flag.find().remove().exec();
+};
 function loadFlags() {
   var Query = require('./query');
 
@@ -51,11 +62,21 @@ function loadFlags() {
   });
 };
 
+// UPDATE WARNINGS ONCE A WEEK ==============================
+var mountie = new CronJob('21 15 * * sat', function(){
+    clearAlerts();
+    loadAlerts();
+  }, function () {
+    console.log('Cron stopped!');
+  },
+  true,
+  timeZone = 'America/Los_Angeles'
+);
+
 db.once('open', function() {
   console.log('Mongodb connection open');
-  mongoose.connection.db.dropDatabase();
+  clearFlags();
   loadFlags();
-  loadAlerts();
 });
 
 module.exports = db;

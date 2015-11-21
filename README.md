@@ -91,12 +91,6 @@ To run tests:
 grunt test
 ```
 
-### Adding Dummy Data to Database
-
-```sh
-grunt generateData
-```
-
 ### Checking Syntax with JSHint
 
 ```sh
