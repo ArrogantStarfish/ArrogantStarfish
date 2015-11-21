@@ -68,11 +68,15 @@ var CountryView = Backbone.View.extend({
 
   showCountryData: function() {
     var context = this;
-    var data = this.model.get('issues');
+    var news = this.model.get('news');
+    var charities = this.model.get('charities');
 
-    var html = "";
-    data.forEach(function(article) {
-      html += '<div><span>' + article.headline + ': </span><span> ' + article.url + '</span></div>';
+    var html = [];
+    news.forEach(function(article) {
+      html.push('<div>');
+      html.push(article.headline);
+      html.push(article.url);
+      html.push('</div>');
     });
 
     var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '_tooltip').select('g');
@@ -86,7 +90,7 @@ var CountryView = Backbone.View.extend({
       })
       .append("xhtml:div")
       .append('div')
-      .html(html)
+      .html(html.join(''))
 
   }
 

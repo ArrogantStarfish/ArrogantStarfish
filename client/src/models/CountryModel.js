@@ -1,8 +1,10 @@
 var CountryModel = Backbone.Model.extend({
   url: '/issues',
   parse: function(data) {
+    console.log(data);
     return {
-      issues: data
+      news: data.news,
+      charities: data.charities
     };
   },
   initialize: function(name) {
