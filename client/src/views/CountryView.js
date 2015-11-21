@@ -22,7 +22,7 @@ var CountryView = Backbone.View.extend({
         rx: 5,
         ry: 5
       })
-      .style("fill", "white")
+      //.style("fill", "white")
       .attr('x', function() {
         var bbox = d3.select(context.el).node().getBBox();
         return bbox.x + bbox.width / 2
@@ -71,15 +71,38 @@ var CountryView = Backbone.View.extend({
     var news = this.model.get('news');
     var charities = this.model.get('charities');
 
-    var html = [];
+    
+    var html = {};
+    html.title = '' +
+        '<div class="tooltip-container">' +
+        '  <div class="tooltip-title">' +
+        '    <p>Title</p>' +
+        '  </div>' +
+        '  <div class="tooltip-article">' +
+        '    <div class="tooltip-article-header">Maybe something here</div>' +
+        '    <div class="tooltip-article-content">'
+        '      <ul>';
+    html.articles = [];
+    html.body = '' +
+        '      </ul>' +
+        '    </div>' +
+        '  </div>' +
+        '  <div class="tooltip-charity">' +
+        '    <div class="tooltip-charity-header">Maybe something here</div>' +
+        '    <div class="tooltip-charity-content">' +
+        '      <ul>';
+    html.charity = [];
+    html.close = '' +
+        '      </ul>' +
+        '    </div>' +
+        '  </div>' +
+        '</div>';
+
     news.forEach(function(article) {
-      html.push('<div>');
-      html.push(article.headline);
-      html.push(article.url);
-      html.push('</div>');
+      html.articles.push('<li><a href="' + article.url + '">' + article.headline + '</li>');
     });
 
-    var toolTip = d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '_tooltip').select('g');
+    var toolTip = d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip').select('g');
 
     toolTip.append('foreignObject')
       .attr('x', 100)
@@ -90,8 +113,15 @@ var CountryView = Backbone.View.extend({
       })
       .append("xhtml:div")
       .append('div')
-      .html(html.join(''))
+      .html(this.htmlBuilder(html))
 
+  },
+
+  htmlBuilder: function (html) {
+    return _.reduce(html, function (string, next) {
+      var toJoin = Array.isArray(next) ? next.join('') : next
+      return string + toJoin;
+    }, '');
   }
 
 });

@@ -102,3 +102,15 @@ pre.prettyprint {
   margin-bottom: 0;
   padding: 9.5px;
 }
+
+/**
+ * TOOLTIP STYLE 
+ */
+
+.tooltip {
+  fill: none;
+}
+.tooltip-container {
+  background-color: rgba(0,0,0,0.6);
+  border-radius: 3%;
+}
