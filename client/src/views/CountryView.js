@@ -19,6 +19,8 @@ var CountryView = Backbone.View.extend({
     this.makeHoverTip();
 
     this.model.on('dataLoaded', this.showCountryData, this);
+    this.model.on('selection', this.selectCountry, this);
+    this.model.on('deselection', this.deselectCountry, this);
   },
 
   makeToolTip: function() {
@@ -36,7 +38,10 @@ var CountryView = Backbone.View.extend({
     var context = this;
     this.hoverTip = this.selection.append('text')
       .attr('class', 'hovertip')
-      .style('display', 'none')
+      .style({
+        display: "none",
+        background: "black"
+      })
       .text(context.model.get('countryName'))
       .attr({
         x: 50,
@@ -59,34 +64,35 @@ var CountryView = Backbone.View.extend({
 
   countryClicked: function() {
     this.trigger('countryClicked', this);
-    var context = this;
-    if (!this.selected) {
-      this.selected = true;
-      this.hideName();
-      d3.select(this.el)
-        .classed('selected', true);
+    this.model.get('selected') ? this.model.trigger('deselection') : this.model.trigger('selection');
+  },
 
-      this.toolTip
-        .style('display', 'inherit')
-        .transition()
-        .duration(750)
-        .attr({
-          'x': 40,
-          'y': 50,
-          width: 300,
-          height: 300
-        })
-      if (this.model.get('issues') === undefined) {
-        console.log('getting data');
-        this.model.getData();
-      } else {
-        this.showCountryData();
-      }
+  selectCountry: function() {
+    this.hideName();
+    d3.select(this.el)
+      .classed('selected', true);
+
+    this.toolTip
+      .style('display', 'inherit')
+      .transition()
+      .duration(750)
+      .attr({
+        'x': 40,
+        'y': 50,
+        width: 300,
+        height: 300
+      })
+    if (this.model.get('issues') === undefined) {
+      console.log('getting data');
+      this.model.getData();
     } else {
-      this.selected = false;
-      this.toolTip
-        .style('display', 'none')
+      this.showCountryData();
     }
+  },
+
+  deselectCountry: function() {
+    this.toolTip
+      .style('display', 'none');
   },
 
   showCountryData: function() {

@@ -1,14 +1,24 @@
 var CountryModel = Backbone.Model.extend({
   url: '/issues',
   parse: function(data) {
-    console.log(data);
     return {
       news: data.news,
       charities: data.charities
     };
   },
-  initialize: function(name) {
+  initialize: function(name, mapModel) {
     this.set('countryName', name);
+    this.set('mapModel', mapModel);
+    this.set('selected', false);
+
+    this.on('selection', function() {
+      this.set('selected', true);
+      this.get('mapModel').updateCountry(this)
+    }, this);
+    this.on('deselection', function() {
+      this.set('selected', false);
+      this.get('mapModel').removeSelection()
+    }, this)
   },
   getData: function() {
     var context = this;

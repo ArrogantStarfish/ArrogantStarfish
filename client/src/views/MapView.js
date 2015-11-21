@@ -61,7 +61,7 @@ var MapView = Backbone.View.extend({
         .append("path")
         .attr("d", path)
         .each(function(d) {
-          var countryModel = new CountryModel(d.id);
+          var countryModel = new CountryModel(d.id, context.model);
           var countryView = new CountryView({
             model: countryModel,
             el: this
