@@ -36,9 +36,7 @@ function loadFlags() {
     if (err) {
       console.error(err);
     }
-    var c = 0;
     flags.forEach(function (flagName) {
-      c++;
       fs.readFile(flagDirectory+flagName, function (err, image) {
         if (err) {
           console.error(err);

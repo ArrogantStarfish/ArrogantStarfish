@@ -5,13 +5,14 @@ var Query = require('../db/query');
 var bodyParser = require('body-parser');
 var alerts = require('../db/TravelAlerts.json');
 var keys = require('./keys');
+var ISOCodes = require('../db/ISOCodes');
 
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
 app.get('/warnings', function(req, res) {
-  Query.find().exec(function(err, warnings) {
+  Query.Country.find().exec(function (err, warnings) {
     if (err) return console.error(err);
     res.json(warnings);
   });
@@ -33,12 +34,12 @@ app.get('/issues', function(req, res) {
 
   // API REQUESTS ====================================================
   var results = {};
-  request(ny_url, function(error, response, body) {
+  request(ny_url, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       body = JSON.parse(body);
       var newsArray = [];
       var articleArray = body.response.docs;
-      articleArray.forEach(function(article) {
+      articleArray.forEach(function (article) {
         var obj = {
           headline: article.headline.main,
           url: article.web_url
@@ -52,7 +53,7 @@ app.get('/issues', function(req, res) {
           'Accept': 'application/json'
         }
       };
-      request(options, function(error, response, body) {
+      request(options, function (error, response, body) {
         if (!error && response.statusCode === 200) {
           var body = JSON.parse(response.body);
           var indexes = body["GroupedResults"];
@@ -61,7 +62,17 @@ app.get('/issues', function(req, res) {
               results.charities = index["Results"];
             }
           });
-          res.send(results);
+          // get flag for country
+          var countryName = req.query.country.toString();
+          var code = ISOCodes.ISOCodes["Australia"];
+          
+          Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
+            if (err) {
+              console.error(err);
+            }
+            results.flag = flag;
+            res.send(results);
+          });
         }
       });
     }
