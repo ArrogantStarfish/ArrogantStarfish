@@ -6,64 +6,66 @@ var CountryView = Backbone.View.extend({
     var context = this;
     d3.select(this.el)
       .attr("id", function(d) {
-        return d.id.replace(' ', '_');
+        return d.id.replace(/ /g, '_');
       })
     d3.select('svg')
       .append('g')
       .attr('class', function(d) {
-        return context.model.get('countryName').replace(' ', '_') + ' tooltip'
-      });
-
-    this.model.on('dataLoaded', this.showCountryData, this);
-  },
-  countryClicked: function() {
-    var context = this;
-    d3.select(this.el)
-      .classed('selected', true);
-
-    this.trigger('countryClicked', this);
-
-    var projection = d3.geo.mercator()
-      .scale(150)
-      .translate([938 / 2, 500 / 1.5]);
-
-    d3.select('.' + context.model.get('countryName').replace(' ', '_') + '.tooltip')
+        return context.model.get('countryName').replace(/ /g, '_') + ' tooltip'
+      })
+      .style('display', 'none')
       .append('g')
       .append('rect')
       .attr({
-        width: 250,
-        height: 200,
+        width: 130,
+        height: 140,
         rx: 5,
-        ry: 5,
-        class: 'bg'
+        ry: 5
       })
-      //.style("fill", "white")
+      .style("fill", "white")
       .attr('x', function() {
         var bbox = d3.select(context.el).node().getBBox();
         return bbox.x + bbox.width / 2
       })
       .attr('y', function() {
         var bbox = d3.select(context.el).node().getBBox();
-        console.log(bbox);
         return bbox.y + bbox.height / 2
       })
-      .transition()
-      .duration(750)
-      .attr('x', 100) // need to decide where to put it, how big it should be
-      .attr('y', 100) // 
-      .attr({
-        width: 300,
-        height: 300
-      });
 
+    this.model.on('dataLoaded', this.showCountryData, this);
+    this.selected = false;
+  },
+  countryClicked: function() {
+    this.trigger('countryClicked', this);
+    var context = this;
 
-    if (this.model.get('issues') === undefined) {
-      console.log('getting data');
-      this.model.getData();
+    //console.log(d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip'))
+    if (!this.selected) {
+      this.selected = true;
+      d3.select(this.el)
+        .classed('selected', true);
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip')
+        .style('display', 'inherit')
+        .select('rect')
+        .transition()
+        .duration(750)
+        .attr('x', 100) // need to decide where to put it, how big it should be
+        .attr('y', 100) // 
+        .attr({
+          width: 300,
+          height: 300
+        });
+      if (this.model.get('issues') === undefined) {
+        console.log('getting data');
+        this.model.getData();
+      } else {
+        this.showCountryData();
+      }
     } else {
-      this.showCountryData();
+      this.selected = false;
+      d3.select('.' + context.model.get('countryName').replace(/ /g, '_') + '.tooltip').select('g')
+        .style('display', 'none')
     }
-    //trigger request for news and charities 
   },
 
   showCountryData: function() {
