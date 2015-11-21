@@ -75,7 +75,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States of America",
+        "id": "United States",
         "arcs": [
           [44]
         ]
@@ -651,7 +651,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Côte d'Ivoire (Ivory Coast)",
+        "id": "Côte d'Ivoire",
         "arcs": [
           [-93, 317, 318, 319, 320, 321]
         ]
@@ -677,13 +677,13 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Democratic Republic of Congo (Kinshasa)",
+        "id": "Democratic Republic of Congo",
         "arcs": [
           [340, 341, 342, 343, 344, 345, 346, 347, 348, -76, 349, 350, 351, 352, -11, 353, -12, 354, -161]
         ]
       }, {
         "type": "Polygon",
-        "id": "Republic of Congo (Brazzaville)",
+        "id": "Republic of Congo",
         "arcs": [
           [-355, -14, 355, 356, -324, -162]
         ]
@@ -1557,7 +1557,7 @@
         ]
       }, {
         "type": "MultiPolygon",
-        "id": "Korea, South",
+        "id": "South Korea",
         "arcs": [
           [
             [709]
@@ -1726,7 +1726,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Burma (Myanmar)",
+        "id": "Burma",
         "arcs": [
           [-721, 763, 764, -96, -637, -303]
         ]
@@ -2088,13 +2088,13 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States of America",
+        "id": "United States",
         "arcs": [
           [879]
         ]
       }, {
         "type": "Polygon",
-        "id": "Korea, North (DPRK)",
+        "id": "North Korea",
         "arcs": [
           [880, 881, -711, 882, -297]
         ]
@@ -2638,7 +2638,7 @@
         ]
       }, {
         "type": "MultiPolygon",
-        "id": "United States of America",
+        "id": "United States",
         "arcs": [
           [
             [1039]
@@ -2777,7 +2777,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States of America",
+        "id": "United States",
         "arcs": [
           [1085]
         ]
