@@ -25,8 +25,8 @@ var MapView = Backbone.View.extend({
     console.log("in render");
     var context = this;
     var mwidth = $("#map").width(),
-      width = 938,
-      height = 500,
+      width = 908,
+      height = 410,
       country,
       state;
 
