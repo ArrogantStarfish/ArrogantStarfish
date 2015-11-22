@@ -87,6 +87,9 @@ app.get('/issues', function(req, res) {
           indexes.forEach(function(index) {
             if (index["Title"] === "Charities") {
               results.charities = index["Results"];
+              results.charities.forEach(function (charity) {
+                charity["Logo"] = "https"+charity["Logo"];
+              });
             }
           });
           var country = (req.query.country).replace(/"/g,"");
