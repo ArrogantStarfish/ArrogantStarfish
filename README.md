@@ -1,7 +1,7 @@
-# Who Cares?
+# We Care
 ---------------------------------
 
-> Who Cares is a web-app designed to give an unbiased world view of current issues and relief efforts.
+> We Care is a web-app designed to give an unbiased world view of current issues and relief efforts.
 
 > Click on a country and see what's making headlines and how you can help!
 
