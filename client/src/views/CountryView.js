@@ -124,7 +124,7 @@ var CountryView = Backbone.View.extend({
     var html = [];
     html[0] = '' +
       '<div class="tooltip-container">' +
-      '  <div class="flag" style="background-image: url(\'/lib/Libya.png\')"></div>' +
+      '  <div class="flag" style="background-image: url(\'/src/img/Libya.png\')"></div>' +
       '  <div class="tooltip-title">' +
       '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
       '  </div>' +
@@ -140,7 +140,7 @@ var CountryView = Backbone.View.extend({
       '  </div>' +
       '  <div>' +
       '    <div class="tooltip-charity-header">Maybe something here</div>' +
-      '    <hr>' +
+      //'    <hr>' +
       '    <div class="tooltip-charity-content">' +
       '      <ul>';
     html[3] = [];
@@ -172,7 +172,7 @@ var CountryView = Backbone.View.extend({
 
   htmlBuilder: function(html) {
     var a = _.reduce(html, function(string, next) {
-      var toJoin = Array.isArray(next) ? next /*.splice(0, 3)*/ .join('') : next
+      var toJoin = Array.isArray(next) ? next.splice(0, 5).join('') : next
       return string + toJoin;
     }, '');
     //console.log(a);
