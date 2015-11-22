@@ -120,7 +120,7 @@ var CountryView = Backbone.View.extend({
     var context = this;
     var news = this.model.get('news') || [];
     var charities = this.model.get('charities') || [];
-
+    //console.log(this)
     var html = [];
     html[0] = '' +
       '<div class="tooltip-container">' +
@@ -138,7 +138,7 @@ var CountryView = Backbone.View.extend({
       '      </ul>' +
       '    </div>' +
       '  </div>' +
-      '  <div class="tooltip-charity">' +
+      '  <div>' +
       '    <div class="tooltip-charity-header">Maybe something here</div>' +
       '    <hr>' +
       '    <div class="tooltip-charity-content">' +
@@ -154,7 +154,15 @@ var CountryView = Backbone.View.extend({
       html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
     charities.forEach(function(charity) {
-      html[3].push('<li><a href="' + charity.Description + '">' + charity.Highlight + '</a></li>');
+      console.log(charity)
+      var charHtml = '' +
+        '<li class="tooltip-charity-box">' +
+        '  <div src="' + charity.Logo + '"></div>' +
+        '  <a href="' + charity.Link + '">' + charity.Name + '</a>' +
+        '  <div class="charity-description">' + charity.Description + '</div>' +
+        '</li>';
+
+      html[3].push(charHtml);
     });
 
     this.toolTip

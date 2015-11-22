@@ -2,8 +2,11 @@ body {
   background-color: #444;
   color: #444;
   font-family: "Helvetica Neue";
-  margin-left: 20px;
+  /*margin-left: 20px;*/
   margin-top: 20px;
+  padding-left: 20px;
+  width: 100%;
+  overflow: hidden;
 }
 
 h1 {
@@ -73,36 +76,92 @@ button:focus{
 }
 
 
-#map {
-  background-color: #fff;
-  border: 1px solid #ccc;
-}
+/*#map {*/
+  /*background-color: #fff;
+  border: 1px solid #ccc;*/
+/*}*/
 .background {
   fill: none;
   pointer-events: all;
 }
 #countries, #states {
-  fill: #cde;
+  /*fill: #cde;*/
   stroke: #fff;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
-#countries .active, #states .active {
+/*#countries .active, #states .active {
   fill: #89a;
-}
-#cities {
+}*/
+/*#cities {
   stroke-width: 0;
-}
-.city {
+}*/
+/*.city {
   fill: #345;
   stroke: #fff;
-}
+}*/
 pre.prettyprint {
   border: 1px solid #ccc;
   margin-bottom: 0;
   padding: 9.5px;
 }
 
+/**
+ * INDEX STYLE
+ */
+
+.title {
+  /*font-family: 'Poiret One', cursive;*/
+  /*font-family: 'Philosopher', sans-serif;*/
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 130px;
+  display: inline;
+}
+.title-line {
+  width: 80px;
+  height: 7px;
+  position: absolute;
+  top: 139px;
+  left: 259px;
+  background-color: #F64E53;
+  display: block;
+}
+img.heart {
+  position: absolute;
+  left: 255px;
+  top: 55px;
+  width: 90px;
+}
+/*.shadow {
+  content:'';
+  display:block;
+  box-shadow:inset 0 0 20px black;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}​*/
+
+/**
+ * MAP STYLE
+ */
+#map {
+  position: relative;
+  /*z-index: -1000;*/
+  box-shadow: 0 0 10px 0px #040404;
+  width: 96%
+}
+.map-shadow-container {
+  position: relative;
+  width: 100%;
+  box-shadow: inset 0px 0px 15px 15px #444444;
+  width: 95%;
+}
+.fix-shadow {
+  width: 100%;
+  height: 2px;
+}
 /**
  * TOOLTIP STYLE 
  */
@@ -143,6 +202,7 @@ pre.prettyprint {
 .tooltip-charity {
   margin-top: 10px;
 }
+
 .tooltip hr {
   margin-right: -4px;
   margin-left: 10px;
@@ -192,9 +252,12 @@ pre.prettyprint {
   margin-left: 10px;
   border: 1px solid rgba(255,255,255,0.4);
 }
-.tooltip-article-header,
-.tooltip-charity-header {
+.tooltip-article-header {
   padding-left: 10px;
+}
+.tooltip-charity-header {
+  text-align: center;
+  margin-top: 10px;
 }
 .tooltip-article-content,
 .tooltip-charity-content,
@@ -230,7 +293,6 @@ pre.prettyprint {
   text-decoration: none;
   color: white;
 }
-
 .hovertip-container {
   padding-top: 80%;
   padding-left: 5%;
@@ -238,4 +300,9 @@ pre.prettyprint {
 .hovertip-content {
   float : right;
   text-align: right;
+}
+.tooltip li.tooltip-charity-box {
+  display: inline-block;
+  width: 48%;
+  margin-left: 5px;
 }

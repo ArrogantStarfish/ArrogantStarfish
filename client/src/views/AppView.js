@@ -1,5 +1,9 @@
 var AppView = Backbone.View.extend({
-  el: '<div><h1>WHO CARES?</h1></div>',
+  el: '<div style="width: 100%">' +
+      '  <h1 class="title">We&nbsp;&nbsp;&nbsp;care</h1>' +
+      '  <span class="title-line"></span>' + 
+      '  <img class="heart" src="/lib/heart.png">' +
+      '</div>',
 
   //the initialize function delegates ALL the DOM rendering
   initialize: function() {
@@ -16,7 +20,8 @@ var AppView = Backbone.View.extend({
   render: function() {
     $('body').html(
       this.$el.append([
-        this.mapView.el
+        this.mapView.el,
+        //this.articleView.el
       ])
     );
   }

@@ -11,7 +11,7 @@ var MapView = Backbone.View.extend({
   },
 
   advisoryKey: {
-    "0": "gray",
+    "0": "white",
     "1": "yellow",
     "2": "orange",
     "3": "red"
@@ -25,8 +25,8 @@ var MapView = Backbone.View.extend({
     console.log("in render");
     var context = this;
     var mwidth = $("#map").width(),
-      width = 938,
-      height = 500,
+      width = 908,
+      height = 410,
       country,
       state;
 
@@ -71,7 +71,7 @@ var MapView = Backbone.View.extend({
           }, this);
         })
         .style("fill", function(d) {
-          return this.advisoryKey[this.model.get(d.id)] ? this.advisoryKey[this.model.get(d.id)] : "gray";
+          return this.advisoryKey[this.model.get(d.id)] ? this.advisoryKey[this.model.get(d.id)] : "white";
         }.bind(context));
     });
 
