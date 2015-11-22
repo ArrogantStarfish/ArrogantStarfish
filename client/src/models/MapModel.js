@@ -19,6 +19,7 @@ var MapModel = Backbone.Model.extend({
     return warnings;
   },
   initialize: function() {
+    this.set('selectedCountry', null);
     var context = this;
     this.fetch({
       success: function(model, response, options) {
@@ -28,5 +29,15 @@ var MapModel = Backbone.Model.extend({
         console.log("Error fetching warnings");
       }
     });
+  },
+
+  updateCountry: function(model) {
+    if (this.get('selectedCountry')) {
+      this.get('selectedCountry').trigger('deselection');
+    }
+    this.set('selectedCountry', model);
+  },
+  removeSelection: function() {
+    this.set('selectedCountry', null);
   }
 });
