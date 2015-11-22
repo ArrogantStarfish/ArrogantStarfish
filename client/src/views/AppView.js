@@ -4,32 +4,19 @@ var AppView = Backbone.View.extend({
   //the initialize function delegates ALL the DOM rendering
   initialize: function() {
     //these are the views that make up the layout
-    this.inputView = new InputView({
-      model: this.model
-    });
     this.mapView = new MapView({
       model: this.model.get('mapModel')
     });
-    this.articleView = new ArticleView();
 
     //mapView must be rendered after the layout because the Datamap must attach to an already-rendered DOM element
     this.render();
     this.mapView.render();
-
-    //these are event handlers that must delegate through appView
-    this.mapView.on('article', function(data) {
-      this.articleView.model = data;
-      this.articleView.render();
-    }, this);
-    this.model.on('renderBubbles', this.mapView.renderBubbles, this.mapView);
   },
 
   render: function() {
     $('body').html(
       this.$el.append([
-        this.inputView.el,
-        this.mapView.el,
-        this.articleView.el
+        this.mapView.el
       ])
     );
   }
