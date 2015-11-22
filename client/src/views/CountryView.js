@@ -153,8 +153,8 @@ var CountryView = Backbone.View.extend({
     news.forEach(function(article) {
       html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
-    charities.forEach(function() {
-      html[3].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
+    charities.forEach(function(charity) {
+      html[3].push('<li><a href="' + charity.Description + '">' + charity.Highlight + '</a></li>');
     });
 
     this.toolTip

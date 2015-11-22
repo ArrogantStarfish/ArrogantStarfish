@@ -1,11 +1,5 @@
 var CountryModel = Backbone.Model.extend({
   url: '/issues',
-  parse: function(data) {
-    return {
-      news: data.news,
-      charities: data.charities
-    };
-  },
   initialize: function(name, mapModel) {
     this.set('countryName', name);
     this.set('mapModel', mapModel);
@@ -29,7 +23,9 @@ var CountryModel = Backbone.Model.extend({
       success: function() {
         context.trigger('dataLoaded', this);
       },
-      error: function() {}
-    }); //something else here
+      error: function() {
+        console.log('Error fetching country data');
+      }
+    });
   }
 });
