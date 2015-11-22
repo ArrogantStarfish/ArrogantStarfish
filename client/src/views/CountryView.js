@@ -38,7 +38,7 @@ var CountryView = Backbone.View.extend({
 
   makeHoverTip: function() {
     var context = this;
-    var hoverTiphtml = '' +
+    var hoverTipHtml = '' +
       '<div class="hovertip-container">' +
       '  <div class ="bottom-aligner"></div>' +
       '  <div class="hovertip-content">' + this.model.get('countryName') + '</div>' +
@@ -54,7 +54,7 @@ var CountryView = Backbone.View.extend({
       .each(function() {
         return context.positionToMouse(this);
       })
-      .html(hoverTiphtml)
+      .html(hoverTipHtml)
 
   },
 
@@ -151,7 +151,6 @@ var CountryView = Backbone.View.extend({
       '</div>';
 
     news.forEach(function(article) {
-      console.log(article);
       html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
     charities.forEach(function() {

@@ -28,7 +28,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom2",
         "arcs": [
           [14]
         ]
@@ -233,7 +233,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom3",
         "arcs": [
           [123]
         ]
@@ -736,7 +736,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom4",
         "arcs": [
           [374]
         ]
@@ -849,7 +849,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom5",
         "arcs": [
           [-333, -379, 432, -380, -337, -376]
         ]
@@ -920,7 +920,7 @@
         ]
       }, {
         "type": "MultiPolygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom6",
         "arcs": [
           [
             [466]
@@ -1001,7 +1001,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom8",
         "arcs": [
           [495]
         ]
@@ -1013,7 +1013,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom9",
         "arcs": [
           [-442, 498]
         ]
@@ -1379,7 +1379,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom10",
         "arcs": [
           [631]
         ]
@@ -1408,7 +1408,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom11",
         "arcs": [
           [641]
         ]
@@ -1471,7 +1471,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom12",
         "arcs": [
           [673]
         ]
@@ -1762,7 +1762,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom13",
         "arcs": [
           [783]
         ]
@@ -1967,7 +1967,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom14",
         "arcs": [
           [843]
         ]
@@ -2376,13 +2376,13 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom15",
         "arcs": [
           [978]
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom16",
         "arcs": [
           [979]
         ]
@@ -2521,7 +2521,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom17",
         "arcs": [
           [1006]
         ]
@@ -2771,7 +2771,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom17",
         "arcs": [
           [1084]
         ]
@@ -2812,7 +2812,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United Kingdom",
+        "id": "United Kingdom1",
         "arcs": [
           [1092, -382]
         ]
