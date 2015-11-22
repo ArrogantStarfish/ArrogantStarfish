@@ -87,9 +87,11 @@ app.get('/issues', function(req, res) {
           indexes.forEach(function(index) {
             if (index["Title"] === "Charities") {
               results.charities = index["Results"];
+              results.charities.forEach(function (charity) {
+                charity["Logo"] = "https"+charity["Logo"];
+              });
             }
           });
-          // get flag for country
           var country = (req.query.country).replace(/"/g,"");
           var code = ISOCodes[country];
           code = code.toString().toLowerCase();

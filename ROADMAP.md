@@ -1,19 +1,19 @@
 # Features to Come
 
-> Seeing who cares is a delightfully complex process that will involve many future iterations.
+> Filtering through the media is a complex process that will involve future iterations if it is to depict a full picture of world events without bias.
 
 ## Front End
 
-- Make geolocation a requirement before topic submission
-- Change opacity of dots based on particular topic features (e.g., date posted, concentration of area concerned about a particular topic)
-- Allow messages to work with links to relevant news articles
-- Zoom in on map on load based on user geolocation
+- idea 1
+- idea 2
+- etc.
 
 ## Back End
 
-- Use IP tables in Express to prevent spamming
-- Call Twitter API to see where people have recently tweeted about a topic
+- idea 1
+- idea 2
 
 ## Database
 
-[To come]
+- idea 1
+- idea 2
