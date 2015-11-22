@@ -203,6 +203,7 @@ img.heart {
 .tooltip-charity {
   margin-top: 10px;
 }
+
 .tooltip hr {
   margin-right: -4px;
   margin-left: 10px;
@@ -252,9 +253,12 @@ img.heart {
   margin-left: 10px;
   border: 1px solid rgba(255,255,255,0.4);
 }
-.tooltip-article-header,
-.tooltip-charity-header {
+.tooltip-article-header {
   padding-left: 10px;
+}
+.tooltip-charity-header {
+  text-align: center;
+  margin-top: 10px;
 }
 .tooltip-article-content,
 .tooltip-charity-content,
@@ -290,7 +294,6 @@ img.heart {
   text-decoration: none;
   color: white;
 }
-
 .hovertip-container {
   padding-top: 80%;
   padding-left: 5%;
@@ -298,4 +301,9 @@ img.heart {
 .hovertip-content {
   float : right;
   text-align: right;
+}
+.tooltip li.tooltip-charity-box {
+  display: inline-block;
+  width: 48%;
+  margin-left: 5px;
 }
