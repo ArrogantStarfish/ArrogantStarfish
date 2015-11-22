@@ -21,7 +21,7 @@ var AppView = Backbone.View.extend({
     $('body').html(
       this.$el.append([
         this.mapView.el,
-        this.articleView.el
+        //this.articleView.el
       ])
     );
   }
