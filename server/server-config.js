@@ -18,6 +18,33 @@ app.get('/warnings', function(req, res) {
   });
 });
 
+app.get('/breaking', function(req, res) {
+
+  // BUILD QUERY URLS ================================================
+  var breaking_url = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key=' + keys.ny_breaking; 
+
+  // API REQUESTS ====================================================
+  var results = {};
+  request(breaking_url, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      body = JSON.parse(body);
+      var newsArray = [];
+      var articleArray = body.results;
+      articleArray.forEach(function(article) {
+        var obj = {
+          headline: article.title,
+          url: article.url,
+          location: article.geo_facet 
+        };
+        newsArray.push(obj);
+      });
+      res.send(newsArray); 
+    } else {
+      res.send(response.statusCode); 
+    }
+  });
+});
+
 app.get('/issues', function(req, res) {
   // DATE FORMATTING =================================================
   var today = new Date(),

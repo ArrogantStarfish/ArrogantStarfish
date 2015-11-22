@@ -33,4 +33,4 @@ client/lib/
 .DS_Store
 
 # API Keys
-api.js 
+keys.js 
