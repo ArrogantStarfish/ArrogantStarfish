@@ -75,13 +75,13 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States",
+        "id": "United States1",
         "arcs": [
           [44]
         ]
       }, {
         "type": "Polygon",
-        "id": "France",
+        "id": "France1",
         "arcs": [
           [45]
         ]
@@ -215,7 +215,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "France",
+        "id": "France2",
         "arcs": [
           [114]
         ]
@@ -1163,7 +1163,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States",
+        "id": "United States2",
         "arcs": [
           [551]
         ]
@@ -1175,13 +1175,13 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "China",
+        "id": "China2",
         "arcs": [
           [555, -299]
         ]
       }, {
         "type": "Polygon",
-        "id": "Australia",
+        "id": "Australia1",
         "arcs": [
           [556]
         ]
@@ -1402,7 +1402,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Australia",
+        "id": "Australia2",
         "arcs": [
           [640]
         ]
@@ -1651,13 +1651,13 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "China",
+        "id": "China3",
         "arcs": [
           [739]
         ]
       }, {
         "type": "Polygon",
-        "id": "France",
+        "id": "France4",
         "arcs": [
           [740, 741]
         ]
@@ -1744,7 +1744,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States of America",
+        "id": "United States3",
         "arcs": [
           [770]
         ]
@@ -1797,7 +1797,7 @@
         ]
       }, {
         "type": "MultiPolygon",
-        "id": "France",
+        "id": "France5",
         "arcs": [
           [
             [796]
@@ -1814,7 +1814,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Australia",
+        "id": "Australia3",
         "arcs": [
           [800]
         ]
@@ -2088,7 +2088,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States",
+        "id": "United States4",
         "arcs": [
           [879]
         ]
@@ -2128,7 +2128,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "France",
+        "id": "France6",
         "arcs": [
           [888]
         ]
@@ -2447,7 +2447,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "France",
+        "id": "France7",
         "arcs": [
           [993]
         ]
@@ -2777,7 +2777,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "United States",
+        "id": "United States6",
         "arcs": [
           [1085]
         ]
@@ -2806,7 +2806,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "France",
+        "id": "France8",
         "arcs": [
           [1091]
         ]

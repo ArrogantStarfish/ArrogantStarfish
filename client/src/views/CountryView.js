@@ -6,14 +6,16 @@ var CountryView = Backbone.View.extend({
   },
   initialize: function() {
     var context = this;
-    this.selected = false;
-    this.selection = d3.select('svg').append('g').attr('class', context.countryID);
 
     d3.select(this.el)
       .attr("id", function(d) {
         context.countryID = d.id.replace(/ /g, '_')
         return context.countryID;
       });
+
+    this.selected = false;
+    this.selection = d3.select('svg').append('g').attr("class", context.countryID);
+
 
     this.makeToolTip();
     this.makeHoverTip();
@@ -36,18 +38,37 @@ var CountryView = Backbone.View.extend({
 
   makeHoverTip: function() {
     var context = this;
-    this.hoverTip = this.selection.append('text')
-      .attr('class', 'hovertip')
+    var hoverTiphtml = '' +
+      '<div class="hovertip-container">' +
+      '  <div class ="bottom-aligner"></div>' +
+      '  <div class="hovertip-content">' + this.model.get('countryName') + '</div>' +
+      '</div>';
+
+    this.hoverTip = this.selection.append('foreignObject')
+      .attr('class', 'hoverTip')
       .style({
-        display: "none",
-        background: "black"
+        display: 'none',
+        width: 100,
+        height: 100
       })
-      .text(context.model.get('countryName'))
-      .attr({
-        x: 50,
-        y: 50
+      .each(function() {
+        return context.positionToMouse(this);
       })
+      .html(hoverTiphtml)
+
   },
+
+  positionToMouse: function(element) {
+    var context = this;
+    d3.select('svg').on('mousemove.' + context.countryID, function() {
+      d3.select(element)
+        .attr({
+          x: d3.mouse(this)[0] - 102,
+          y: d3.mouse(this)[1] - 102
+        })
+    });
+  },
+
 
   positionToCountryCoods: function(element) {
     var context = this;
@@ -152,7 +173,7 @@ var CountryView = Backbone.View.extend({
   },
 
   showName: function() {
-    if (!this.selected) {
+    if (!this.model.get('selected')) {
       this.hoverTip.style('display', 'inherit');
     }
   },
