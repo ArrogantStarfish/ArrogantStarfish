@@ -89,7 +89,6 @@ app.get('/issues', function(req, res) {
               results.charities = index["Results"];
             }
           });
-          // get flag for country
           var country = (req.query.country).replace(/"/g,"");
           var code = ISOCodes[country];
           code = code.toString().toLowerCase();
