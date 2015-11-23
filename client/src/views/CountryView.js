@@ -21,6 +21,7 @@ var CountryView = Backbone.View.extend({
     this.makeHoverTip();
 
     this.model.on('dataLoaded', this.showCountryData, this);
+    this.model.on('change:news', this.showBreakingStory, this);
     this.model.on('selection', this.selectCountry, this);
     this.model.on('deselection', this.deselectCountry, this);
   },
@@ -194,6 +195,30 @@ var CountryView = Backbone.View.extend({
 
   hideName: function() {
     this.hoverTip.style('display', 'none');
+  },
+
+  showBreakingStory: function() {
+    console.log('here');
+    var context = this;
+    var news = this.model.get('news');
+    var html = '' +
+      '<div class="breaking-news-container">' +
+      '  <div class="country-name">' + this.model.get('countryName') + '</div>';
+    news.forEach(function(article) {
+      html += '<div class"breaking-news-headline>' + article.headline + '</div>'
+    })
+
+    console.log(this.breakingNews);
+    this.breakingNews = this.breakingNews || this.selection.append('foreignObject').attr('class', 'breakingNews');
+    this.breakingNews
+      .attr({
+        width: 100,
+        height: 20
+      })
+      .each(function() {
+        return context.positionToCountryCoods(this)
+      })
+      .html(html);
   }
 
 });

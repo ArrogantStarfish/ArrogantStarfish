@@ -370,3 +370,8 @@ img.heart {
 .tooltip li.tooltip-charity-box:nth-child(3) {
   margin-left: 10px;
 }
+
+.breaking-news-container {
+  background : white;
+  font-size: 6pt;
+}

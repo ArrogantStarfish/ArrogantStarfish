@@ -66,6 +66,7 @@ var MapView = Backbone.View.extend({
             model: countryModel,
             el: this
           });
+          context.model.get('countryCollection').push(countryModel);
           countryView.on('countryClicked', function(country) {
             countryClicked(d);
           }, this);
@@ -120,6 +121,8 @@ var MapView = Backbone.View.extend({
       svg.attr("width", w);
       svg.attr("height", w * height / width);
     });
+
+    this.model.get('breakingNews').trigger('getNews');
   }
 
 });
