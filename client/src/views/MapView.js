@@ -1,5 +1,5 @@
 var MapView = Backbone.View.extend({
-  el: '<div id="map"></div>',
+  el: '<div><button>Hide Breaking News</button><div id="map"></div></div>',
 
   fills: {
     defaultFill: '#ABDDA4',
@@ -18,6 +18,14 @@ var MapView = Backbone.View.extend({
   },
 
   initialize: function() {
+    this.newsDisabled = false;
+    this.button = new Button({
+      el: this.$el.find('button')
+    });
+    this.button.on('hideNews', this.removeHeadlines, this);
+    this.button.on('showNews', function() {
+      this.model.separateHeadlines();
+    }, this)
     this.model.on('warningsLoaded', this.renderMap, this);
     this.model.on('separateHeadlines', this.separateHeadlines, this);
   },
@@ -115,7 +123,9 @@ var MapView = Backbone.View.extend({
         var xyz = [width / 2, height / 1.5, 1];
         country = null;
         zoom(xyz);
-        setTimeout(context.model.separateHeadlines.bind(context.model), 1000);
+        if (!context.button.newsDisabled) {
+          setTimeout(context.model.separateHeadlines.bind(context.model), 1000);
+        }
       }
     }
 
