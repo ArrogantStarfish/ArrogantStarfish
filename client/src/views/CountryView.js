@@ -13,6 +13,11 @@ var CountryView = Backbone.View.extend({
         return context.countryID;
       });
 
+    var bbox = d3.select(context.el).node().getBBox();
+    this.model.set('x', bbox.x + bbox.width / 2);
+    this.model.set('y', bbox.y + bbox.height / 2);
+
+
     this.selected = false;
     this.selection = d3.select('svg').append('g').attr("class", context.countryID);
 
@@ -21,7 +26,7 @@ var CountryView = Backbone.View.extend({
     this.makeHoverTip();
 
     this.model.on('dataLoaded', this.showCountryData, this);
-    this.model.on('change:news', this.showBreakingStory, this);
+    // this.model.on('change:news', this.showBreakingStory, this);
     this.model.on('selection', this.selectCountry, this);
     this.model.on('deselection', this.deselectCountry, this);
   },
@@ -75,12 +80,10 @@ var CountryView = Backbone.View.extend({
     var context = this;
     return d3.select(element)
       .attr('x', function() {
-        var bbox = d3.select(context.el).node().getBBox();
-        return bbox.x + bbox.width / 3
+        return context.model.get('x');
       })
       .attr('y', function() {
-        var bbox = d3.select(context.el).node().getBBox();
-        return bbox.y + bbox.height / 2
+        return context.model.get('y');
       });
   },
 
@@ -99,7 +102,7 @@ var CountryView = Backbone.View.extend({
       .transition()
       .duration(750)
       .attr({
-        'x': 20,
+        'x': 40,
         'y': 50,
         width: 300,
         height: 300
@@ -121,18 +124,16 @@ var CountryView = Backbone.View.extend({
     var context = this;
     var news = this.model.get('news') || [];
     var charities = this.model.get('charities') || [];
-    var flag = this.model.get('flag') || '';
-    
-    flagCSS = flag !== '' ? 'background-image: url(\'/flags/' + flag + '\')' : '';
+    //console.log(this)
     var html = [];
     html[0] = '' +
       '<div class="tooltip-container">' +
-      '  <div class="flag" style="' + flagCSS + '"></div>' +
+      '  <div class="flag" style="background-image: url(\'/src/img/Libya.png\')"></div>' +
       '  <div class="tooltip-title">' +
       '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
       '  </div>' +
       '  <div class="tooltip-article">' +
-      '    <div class="tooltip-article-header">What\'s going on right now</div>' +
+      '    <div class="tooltip-article-header">What\'s going on rigth now</div>' +
       '    <hr>' +
       '    <div class="tooltip-article-content">' +
       '      <ul>';
@@ -142,7 +143,7 @@ var CountryView = Backbone.View.extend({
       '    </div>' +
       '  </div>' +
       '  <div>' +
-      '    <div class="tooltip-charity-header">Make the difference</div>' +
+      '    <div class="tooltip-charity-header">Maybe something here</div>' +
       //'    <hr>' +
       '    <div class="tooltip-charity-content">' +
       '      <ul>';
@@ -153,21 +154,15 @@ var CountryView = Backbone.View.extend({
       '  </div>' +
       '</div>';
 
-    news.forEach(function(article, i) {
-      // this line is needed because (i don't know why) but some articles were repeated
-      if (i === 0 || article.headline !== news[i - 1].headline) {
-        html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
-      }
+    news.forEach(function(article) {
+      html[1].push('<li><a href="' + article.url + '">' + article.headline + '</a></li>');
     });
-    charities.forEach(function(charity, i) {
-      console.log(charity)
-      var logo = i === 0 ? '<div class="tooltip-charity-logo" style="background-image: url(' + charity.Logo + ')"></div>' : '';
+    charities.forEach(function(charity) {
       var charHtml = '' +
         '<li class="tooltip-charity-box">' +
-        logo +
-        '  <a class="tooltip-charity-title" href="' + charity.Link + '">' + charity.Name.trim() + '</a>' +
+        '  <div src="' + charity.Logo + '"></div>' +
+        '  <a href="' + charity.Link + '">' + charity.Name + '</a>' +
         '  <div class="charity-description">' + charity.Description + '</div>' +
-        '  <div class="charity-more-link"><a href="' + charity.Link + '">Help them >></a></div>' +
         '</li>';
 
       html[3].push(charHtml);
@@ -180,7 +175,7 @@ var CountryView = Backbone.View.extend({
 
   htmlBuilder: function(html) {
     var a = _.reduce(html, function(string, next) {
-      var toJoin = Array.isArray(next) ? next.splice(0, 4).join('') : next
+      var toJoin = Array.isArray(next) ? next.splice(0, 5).join('') : next
       return string + toJoin;
     }, '');
     //console.log(a);
@@ -195,30 +190,37 @@ var CountryView = Backbone.View.extend({
 
   hideName: function() {
     this.hoverTip.style('display', 'none');
-  },
-
-  showBreakingStory: function() {
-    console.log('here');
-    var context = this;
-    var news = this.model.get('news');
-    var html = '' +
-      '<div class="breaking-news-container">' +
-      '  <div class="country-name">' + this.model.get('countryName') + '</div>';
-    news.forEach(function(article) {
-      html += '<div class"breaking-news-headline>' + article.headline + '</div>'
-    })
-
-    console.log(this.breakingNews);
-    this.breakingNews = this.breakingNews || this.selection.append('foreignObject').attr('class', 'breakingNews');
-    this.breakingNews
-      .attr({
-        width: 100,
-        height: 20
-      })
-      .each(function() {
-        return context.positionToCountryCoods(this)
-      })
-      .html(html);
   }
+
+  // showBreakingStory: function() {
+  //   console.log('here');
+  //   var context = this;
+  //   var news = this.model.get('news');
+  //   var html = '' +
+  //     '<div class="breaking-news-container">' +
+  //     '  <div class="country-name">' + this.model.get('countryName') + '</div>';
+  //   news.forEach(function(article) {
+  //     html += '<div class"breaking-news-headline>' + article.headline + '</div>'
+  //   })
+
+  //   var bbox = d3.select(context.el).node().getBBox();
+  //   var data = [{
+  //     x: bbox.x + bbox.width / 2,
+  //     y: bbox.y + bbox.height / 2
+  //   }]
+
+  //   console.log(this.breakingNews);
+  //   this.breakingNews = this.breakingNews || this.selection.append('rect').data(data).attr('class', 'breakingnews');
+  //   this.breakingNews
+  //     .attr({
+  //       fill: 'white',
+  //       width: 100,
+  //       height: 20
+  //     })
+  //     .each(function() {
+  //       return context.positionToCountryCoods(this)
+  //     })
+  //     // .html(html);
+  // }
 
 });

@@ -19,6 +19,7 @@ var MapView = Backbone.View.extend({
 
   initialize: function() {
     this.model.on('warningsLoaded', this.renderMap, this);
+    this.model.on('separateHeadlines', this.separateHeadlines, this);
   },
 
   renderMap: function() {
@@ -123,6 +124,121 @@ var MapView = Backbone.View.extend({
     });
 
     this.model.get('breakingNews').trigger('getNews');
+  },
+
+  separateHeadlines: function(breakingNews) {
+    var context = this;
+    var dataNodes = [];
+    var dataLinks = [];
+    breakingNews.forEach(function(headline) {
+      var country = context.model.get('countryCollection').findWhere({
+        countryName: headline.location[0]
+      });
+      if (country) {
+        var nodes = [{
+          x: country.get('x'),
+          y: country.get('y'),
+          class: 'breakingNews'
+        }, {
+          x: country.get('x'),
+          y: country.get('y'),
+          class: 'fixedNode',
+          fixed: true
+        }]
+        console.log(nodes, 'fucking nodes')
+        console.log(dataNodes, 'are THESE nodes normal?')
+        dataNodes = dataNodes.concat(nodes);
+        var link = {
+          source: dataNodes.length - 1,
+          target: dataNodes.length - 2
+        };
+        console.log(link, 'link');
+        console.log(dataNodes.length, 'huh?')
+        dataLinks.push(link);
+      }
+    });
+
+
+    console.log(dataNodes);
+    console.log(dataLinks, 'links');
+
+    var force = d3.layout.force()
+      .size([908, 410])
+      .nodes(dataNodes)
+      .links(dataLinks)
+      .linkDistance(.2)
+      .gravity(0.5)
+      .charge(function(node) {
+        return node.class === 'breakingNews' ? -3000 : -30
+      })
+
+    force.on('tick', function(e, o) {
+      nodes.transition().ease('linear').duration(2000)
+        .attr('x', function(d) {
+          return d.x;
+        })
+        .attr('y', function(d) {
+          return d.y;
+        });
+      links.transition().ease('linear').duration(2000)
+        .attr('x1', function(d) {
+          return d.source.x;
+        })
+        .attr('y1', function(d) {
+          return d.source.y;
+        })
+        .attr('x2', function(d) {
+          return d.target.x;
+        })
+        .attr('y2', function(d) {
+          return d.target.y;
+        });
+    });
+
+    links = d3.select("#map").select("svg").selectAll('.link')
+      .data(dataLinks)
+      .enter().append('line')
+      .attr('class', 'link')
+      .attr('x1', function(d) {
+        return dataNodes[d.source].x;
+      })
+      .attr('y1', function(d) {
+        return dataNodes[d.source].y;
+      })
+      .attr('x2', function(d) {
+        return dataNodes[d.target].x;
+      })
+      .attr('y2', function(d) {
+        return dataNodes[d.target].y;
+      })
+      .attr('stroke', 'green')
+      .attr("stroke-width", 2);
+
+    nodes = d3.select("#map").select("svg").selectAll('.node')
+      .data(dataNodes)
+      .enter().append('rect')
+      .attr({
+        width: 10,
+        height: 10
+      })
+      .attr("x", function(d) {
+        return d.x;
+      })
+      .attr("y", function(d) {
+        return d.y;
+      })
+      .attr('fixed', function(d) {
+        return d.fixed;
+      })
+      .attr('fill', function(d) {
+        console.log(d.fixed)
+        return d.fixed ? 'black' : 'pink';
+      })
+      .attr('class', function(d) {
+        return d.fixed ? "" : "headline";
+      })
+
+    force.start();
   }
 
 });

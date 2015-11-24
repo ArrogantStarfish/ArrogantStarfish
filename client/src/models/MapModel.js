@@ -22,7 +22,7 @@ var MapModel = Backbone.Model.extend({
     this.set('selectedCountry', null);
     this.set('breakingNews', new NewsModel());
     this.set('countryCollection', new CountryCollection(this.get('breakingNews')));
-    this.get('countryCollection').on('newsRendered', this.separateHeadlines, this);
+    this.get('breakingNews').on('newsLoaded', this.separateHeadlines, this);
 
     var context = this;
     this.fetch({
@@ -44,5 +44,7 @@ var MapModel = Backbone.Model.extend({
   removeSelection: function() {
     this.set('selectedCountry', null);
   },
-  separateHeadlines: function() {}
+  separateHeadlines: function(breakingNews) {
+    this.trigger('separateHeadlines', breakingNews);
+  }
 });
