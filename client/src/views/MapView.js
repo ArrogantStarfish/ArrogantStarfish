@@ -107,6 +107,7 @@ var MapView = Backbone.View.extend({
           .classed('selected', false);
       }
       if (d && country !== d) {
+        context.removeHeadlines();
         var xyz = getXYZ(d);
         country = d;
         zoom(xyz);
@@ -114,6 +115,7 @@ var MapView = Backbone.View.extend({
         var xyz = [width / 2, height / 1.5, 1];
         country = null;
         zoom(xyz);
+        setTimeout(context.model.separateHeadlines.bind(context.model), 1000);
       }
     }
 
@@ -123,7 +125,7 @@ var MapView = Backbone.View.extend({
       svg.attr("height", w * height / width);
     });
 
-    this.model.get('breakingNews').trigger('getNews');
+    this.model.get('newsModel').trigger('getNews');
   },
 
   separateHeadlines: function(breakingNews) {
@@ -146,23 +148,15 @@ var MapView = Backbone.View.extend({
           y: country.get('y'),
           class: 'fixedNode',
           fixed: true
-        }]
-        console.log(nodes, 'fucking nodes')
-        console.log(dataNodes, 'are THESE nodes normal?')
+        }];
         dataNodes = dataNodes.concat(nodes);
         var link = {
           source: dataNodes.length - 1,
           target: dataNodes.length - 2
         };
-        console.log(link, 'link');
-        console.log(dataNodes.length, 'huh?')
         dataLinks.push(link);
       }
     });
-
-
-    console.log(dataNodes);
-    console.log(dataLinks, 'links');
 
     var force = d3.layout.force()
       .size([908, 410])
@@ -171,10 +165,15 @@ var MapView = Backbone.View.extend({
       .linkDistance(.2)
       .gravity(0.5)
       .charge(function(node) {
-        return node.class === 'breakingNews' ? -3000 : -30
+        return node.class === 'breakingNews' ? -3000 : -3
       })
 
     force.on('tick', function(e, o) {
+      var q = d3.geom.quadtree(nodes),
+        i = 0,
+        n = nodes.length;
+
+      while (++i < n) q.visit(collide(nodes[i]))
       nodes.transition().ease('linear').duration(2000)
         .attr('x', function(d) {
           return d.x;
@@ -196,6 +195,30 @@ var MapView = Backbone.View.extend({
           return d.target.y + 10;
         });
     });
+
+    var collide = function(node) {
+      var r = 16,
+        nx1 = node.x - 150,
+        nx2 = node.x + 150,
+        ny1 = node.y - 150,
+        ny2 = node.y + 150;
+      return function(quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== node)) {
+          var x = node.x - quad.point.x,
+            y = node.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y),
+            r = node.radius + quad.point.radius;
+          if (l < r) {
+            l = (l - r) / l * .5;
+            node.x -= x *= l;
+            node.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      };
+    }
 
     links = d3.select("#map").select("svg").selectAll('.link')
       .data(dataLinks)
@@ -245,6 +268,11 @@ var MapView = Backbone.View.extend({
       })
 
     force.start();
+  },
+
+  removeHeadlines: function() {
+    d3.selectAll('.headline').remove();
+    d3.selectAll('.link').remove();
   }
 
 });
