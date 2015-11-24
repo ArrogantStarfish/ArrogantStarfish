@@ -86,7 +86,7 @@ button:focus{
 }
 #countries, #states {
   /*fill: #cde;*/
-  stroke: #fff;
+  /*stroke: #fff;*/
   stroke-linejoin: round;
   stroke-linecap: round;
 }
@@ -289,6 +289,9 @@ img.heart {
   /*padding-top: 10px;*/
   text-align: center;
   -webkit-margin-before: 0;
+  -webkit-margin-after: 0.5em;
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 20px;
 }
 .tooltip-charity-title {
   margin: 0 auto;
@@ -300,17 +303,18 @@ img.heart {
 }
 .tooltip .charity-description {
   white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   /*width: 100%;*/
   /*text-overflow: ellipsis;
   white-space:nowrap;
   overflow:hidden;*/
 }
 .tooltip .tooltip-charity-box:not(:nth-child(1)) .charity-description{
-  overflow: hidden;
-  text-overflow: ellipsis;
   -webkit-line-clamp: 3;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
 }
 .tooltip .charity-more-link {
   float: right;
