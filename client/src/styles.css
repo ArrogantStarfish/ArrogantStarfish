@@ -173,7 +173,7 @@ img.heart {
   background-color: rgba(0,0,0,0.75);
   border-radius: 3%;
   padding: 10px;
-  width: 400px;
+  width: 460px;
   color: white; 
 }
 .tooltip .flag {
@@ -193,6 +193,9 @@ img.heart {
   background-position: center center;
   box-sizing: border-box;
 }
+.tooltip-article {
+  margin-top: -3px;
+}
 .tooltip-article,
 .tooltip-charity {
   background-color: rgba(255,255,255,0.2);
@@ -207,15 +210,18 @@ img.heart {
   margin-right: -4px;
   margin-left: 10px;
   border: 1px solid rgba(255,255,255,0.4);
+  -webkit-margin-after: 0;
+  -webkit-margin-before: 0.3em;
 }
 .tooltip-article-header,
 .tooltip-charity-header {
   padding-left: 10px;
+  font-size: 14px;
 }
 .tooltip-article-content,
 .tooltip-charity-content {
   padding-top: 5px;
-  font-size: 11px;
+  font-size: 10px;
 }
 .tooltip-title {
   margin-top: -20px;
@@ -233,12 +239,13 @@ img.heart {
   /* outline: 2px solid white; */
   /* border-style: solid; */
   box-shadow: 0 0 0 3px rgba(255,255,255,0.8),;
+  background-color: rgba(255,255,255,0.8);
   border-width: 5px;
   background-position: center center;
   box-sizing: border-box;
 }
 .tooltip-article,
-.tooltip-charity
+.tooltip-charity-box
  {
   background-color: rgba(255,255,255,0.2);
   padding: 4px;
@@ -257,7 +264,16 @@ img.heart {
 }
 .tooltip-charity-header {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 5px;
+}
+.tooltip-charity-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 7%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  float: left;
 }
 .tooltip-article-content,
 .tooltip-charity-content,
@@ -274,14 +290,46 @@ img.heart {
   text-align: center;
   -webkit-margin-before: 0;
 }
+.tooltip-charity-title {
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+  text-align: center;
+  white-space: normal;
+  text-transform: uppercase;
+}
+.tooltip .charity-description {
+  white-space: pre-line;
+  /*width: 100%;*/
+  /*text-overflow: ellipsis;
+  white-space:nowrap;
+  overflow:hidden;*/
+}
+.tooltip .tooltip-charity-box:not(:nth-child(1)) .charity-description{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.tooltip .charity-more-link {
+  float: right;
+  font-style: italic;
+  margin-right: 5px;
+}
 .tooltip ul {
   /*list-style-type: none;*/
   list-style-position:inside;
   -webkit-margin-before: 0em;
-  -webkit-margin-after: 1em;
+  /*-webkit-margin-after: 1em;*/
+  -webkit-margin-after: 0.1em;
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   -webkit-padding-start: 7px;
+}
+.tooltip .tooltip-charity-content ul {
+  -webkit-padding-start: 0px;
+  -webkit-margin-end: 0px;
 }
 .tooltip li {
   width: 100%;
@@ -302,7 +350,19 @@ img.heart {
   text-align: right;
 }
 .tooltip li.tooltip-charity-box {
+  /*position: relative;*/
   display: inline-block;
-  width: 48%;
-  margin-left: 5px;
+  width: 47%;
+  /*margin-left: 5px;*/
+  vertical-align: top;
+}
+.tooltip li.tooltip-charity-box:nth-child(1) {
+  width: 98%;
+}
+.tooltip li.tooltip-charity-box:not(:nth-child(1)){
+  margin-top: 10px;
+  height: 80px;
+}
+.tooltip li.tooltip-charity-box:nth-child(3) {
+  margin-left: 10px;
 }
