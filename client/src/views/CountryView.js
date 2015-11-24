@@ -121,12 +121,12 @@ var CountryView = Backbone.View.extend({
     var news = this.model.get('news') || [];
     var charities = this.model.get('charities') || [];
     var flag = this.model.get('flag') || '';
-    //console.log(flag)
-    //console.log(this)
+    
+    flagCSS = flag !== '' ? 'background-image: url(\'/flags/' + flag + '\')' : '';
     var html = [];
     html[0] = '' +
       '<div class="tooltip-container">' +
-      '  <div class="flag" style="background-image: url(\'/flags/' + flag + '\')"></div>' +
+      '  <div class="flag" style="' + flagCSS + '"></div>' +
       '  <div class="tooltip-title">' +
       '    <p class="tooltip-title-text">' + context.model.get('countryName') + '</p>' +
       '  </div>' +
