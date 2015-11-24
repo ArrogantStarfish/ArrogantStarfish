@@ -12,9 +12,9 @@ var MapView = Backbone.View.extend({
 
   advisoryKey: {
     "0": "white",
-    "1": "yellow",
-    "2": "orange",
-    "3": "red"
+    "1": "#ffff38",
+    "2": "#FF9900",
+    "3": "#FF0000"
   },
 
   initialize: function() {
