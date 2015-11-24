@@ -148,8 +148,8 @@ var MapView = Backbone.View.extend({
       });
       if (country) {
         var nodes = [{
-          x: country.get('x'),
-          y: country.get('y'),
+          // x: country.get('x'),
+          // y: country.get('y'),
           class: 'breakingNews',
           countryName: article.location[0],
           headline: article.headline
@@ -175,23 +175,26 @@ var MapView = Backbone.View.extend({
       .linkDistance(.2)
       .gravity(0.5)
       .charge(function(node) {
-        return node.class === 'breakingNews' ? -3000 : -3
+        return node.class === 'breakingNews' ? -3000 : -30
       })
 
     force.on('tick', function(e, o) {
-      var q = d3.geom.quadtree(nodes),
-        i = 0,
-        n = nodes.length;
+      // var q = d3.geom.quadtree(nodes),
+      //   i = 0,
+      //   n = nodes.length;
 
-      while (++i < n) q.visit(collide(nodes[i]))
-      nodes.transition().ease('linear').duration(2000)
+      // while (++i < n) {
+      //   q.visit(collide(nodes[i]))
+      // }
+
+      nodes.transition().ease('bounce').duration(750)
         .attr('x', function(d) {
           return d.x;
         })
         .attr('y', function(d) {
           return d.y;
         });
-      links.transition().ease('linear').duration(2000)
+      links.transition().ease('bounce').duration(750)
         .attr('x1', function(d) {
           return d.source.x;
         })
@@ -235,16 +238,16 @@ var MapView = Backbone.View.extend({
       .enter().append('line')
       .attr('class', 'link')
       .attr('x1', function(d) {
-        return dataNodes[d.source].x;
+        return dataNodes[d.target].x + 50;
       })
       .attr('y1', function(d) {
-        return dataNodes[d.source].y;
+        return dataNodes[d.target].y;
       })
       .attr('x2', function(d) {
-        return dataNodes[d.source].x;
+        return dataNodes[d.target].x + 50;
       })
       .attr('y2', function(d) {
-        return dataNodes[d.source].y;
+        return dataNodes[d.target].y;
       })
       .attr('stroke', 'black')
       .attr("stroke-width", 1);
