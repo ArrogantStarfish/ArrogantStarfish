@@ -10,6 +10,7 @@ var ISOCodes = require('../db/ISOCodes');
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
+app.use('/flags', express.static(__dirname + '/../db/flags-normal'));
 
 app.get('/warnings', function(req, res) {
   Query.Country.find().exec(function (err, warnings) {
@@ -88,20 +89,22 @@ app.get('/issues', function(req, res) {
             if (index["Title"] === "Charities") {
               results.charities = index["Results"];
               results.charities.forEach(function (charity) {
-                charity["Logo"] = "https"+charity["Logo"];
+                charity["Logo"] = "https:"+charity["Logo"];
               });
             }
           });
           var country = (req.query.country).replace(/"/g,"");
           var code = ISOCodes[country];
           code = code.toString().toLowerCase();
-          Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
-            if (err) {
-              console.error(err);
-            }
-            results.flag = flag;
-            res.send(results);
-          });
+          results.flag = code+".png";
+          res.send(results);
+          // Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
+          //   if (err) {
+          //     console.error(err);
+          //   }
+          //   results.flag = flag;
+          //   res.send(results);
+          // });
         }
       });
     }
