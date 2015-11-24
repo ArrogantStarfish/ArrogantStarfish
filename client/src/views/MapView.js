@@ -130,15 +130,17 @@ var MapView = Backbone.View.extend({
     var context = this;
     var dataNodes = [];
     var dataLinks = [];
-    breakingNews.forEach(function(headline) {
+    breakingNews.forEach(function(article) {
       var country = context.model.get('countryCollection').findWhere({
-        countryName: headline.location[0]
+        countryName: article.location[0]
       });
       if (country) {
         var nodes = [{
           x: country.get('x'),
           y: country.get('y'),
-          class: 'breakingNews'
+          class: 'breakingNews',
+          countryName: article.location[0],
+          headline: article.headline
         }, {
           x: country.get('x'),
           y: country.get('y'),
@@ -188,10 +190,10 @@ var MapView = Backbone.View.extend({
           return d.source.y;
         })
         .attr('x2', function(d) {
-          return d.target.x;
+          return d.target.x + 50;
         })
         .attr('y2', function(d) {
-          return d.target.y;
+          return d.target.y + 10;
         });
     });
 
@@ -206,20 +208,19 @@ var MapView = Backbone.View.extend({
         return dataNodes[d.source].y;
       })
       .attr('x2', function(d) {
-        return dataNodes[d.target].x;
+        return dataNodes[d.source].x;
       })
       .attr('y2', function(d) {
-        return dataNodes[d.target].y;
+        return dataNodes[d.source].y;
       })
-      .attr('stroke', 'green')
-      .attr("stroke-width", 2);
+      .attr('stroke', 'black')
+      .attr("stroke-width", 1);
 
     nodes = d3.select("#map").select("svg").selectAll('.node')
       .data(dataNodes)
-      .enter().append('rect')
+      .enter().append('foreignObject')
       .attr({
-        width: 10,
-        height: 10
+        width: 100
       })
       .attr("x", function(d) {
         return d.x;
@@ -230,12 +231,17 @@ var MapView = Backbone.View.extend({
       .attr('fixed', function(d) {
         return d.fixed;
       })
-      .attr('fill', function(d) {
-        console.log(d.fixed)
-        return d.fixed ? 'black' : 'pink';
-      })
       .attr('class', function(d) {
         return d.fixed ? "" : "headline";
+      })
+      .html(function(d) {
+        if (d.headline) {
+          return '' +
+            '<div class="breaking-news-container">' +
+            '  <div class="country-name">' + d.countryName + '</div>' +
+            '  <div class"breaking-news-headline>' + d.headline + '</div>' +
+            '</div>';
+        }
       })
 
     force.start();

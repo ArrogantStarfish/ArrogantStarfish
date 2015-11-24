@@ -372,6 +372,13 @@ img.heart {
 }
 
 .breaking-news-container {
-  background : white;
-  font-size: 6pt;
+  background : rgba(255, 255, 255, .9);
+  font-size: 8pt;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.country-name {
+  font-weight: bold;
 }
