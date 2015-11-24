@@ -196,10 +196,10 @@ var MapView = Backbone.View.extend({
         });
       links.transition().ease('bounce').duration(750)
         .attr('x1', function(d) {
-          return d.source.x;
+          return d.source.x + 10;
         })
         .attr('y1', function(d) {
-          return d.source.y;
+          return d.source.y + 10;
         })
         .attr('x2', function(d) {
           return d.target.x + 50;
@@ -241,13 +241,13 @@ var MapView = Backbone.View.extend({
         return dataNodes[d.target].x + 50;
       })
       .attr('y1', function(d) {
-        return dataNodes[d.target].y;
+        return dataNodes[d.target].y + 10;
       })
       .attr('x2', function(d) {
         return dataNodes[d.target].x + 50;
       })
       .attr('y2', function(d) {
-        return dataNodes[d.target].y;
+        return dataNodes[d.target].y + 10;
       })
       .attr('stroke', 'black')
       .attr("stroke-width", 1);
