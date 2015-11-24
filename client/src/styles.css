@@ -350,8 +350,13 @@ img.heart {
   padding-left: 5%;
 }
 .hovertip-content {
+  font-size: 7pt;
   float : right;
-  text-align: right;
+  text-align: center;
+  color : white;
+  background: rgba(0,0,0,0.75);
+  border-radius: 3px;
+  padding: 3px;
 }
 .tooltip li.tooltip-charity-box {
   /*position: relative;*/
