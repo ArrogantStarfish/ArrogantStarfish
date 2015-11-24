@@ -10,9 +10,10 @@ var ISOCodes = require('../db/ISOCodes');
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
+app.use('/flags', express.static(__dirname + '/../db/flags-normal'));
 
 app.get('/warnings', function(req, res) {
-  Query.Country.find().exec(function (err, warnings) {
+  Query.Country.find().exec(function(err, warnings) {
     if (err) return console.error(err);
     res.json(warnings);
   });
@@ -21,7 +22,7 @@ app.get('/warnings', function(req, res) {
 app.get('/breaking', function(req, res) {
 
   // BUILD QUERY URLS ================================================
-  var breaking_url = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key=' + keys.ny_breaking; 
+  var breaking_url = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key=' + keys.ny_breaking;
 
   // API REQUESTS ====================================================
   var results = {};
@@ -34,13 +35,13 @@ app.get('/breaking', function(req, res) {
         var obj = {
           headline: article.title,
           url: article.url,
-          location: article.geo_facet 
+          location: article.geo_facet
         };
         newsArray.push(obj);
       });
-      res.send(newsArray); 
+      res.send(newsArray);
     } else {
-      res.send(response.statusCode); 
+      res.send(response.statusCode);
     }
   });
 });
@@ -61,12 +62,12 @@ app.get('/issues', function(req, res) {
 
   // API REQUESTS ====================================================
   var results = {};
-  request(ny_url, function (error, response, body) {
+  request(ny_url, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       body = JSON.parse(body);
       var newsArray = [];
       var articleArray = body.response.docs;
-      articleArray.forEach(function (article) {
+      articleArray.forEach(function(article) {
         var obj = {
           headline: article.headline.main,
           url: article.web_url
@@ -80,28 +81,32 @@ app.get('/issues', function(req, res) {
           'Accept': 'application/json'
         }
       };
-      request(options, function (error, response, body) {
+      request(options, function(error, response, body) {
         if (!error && response.statusCode === 200) {
           var body = JSON.parse(response.body);
           var indexes = body["GroupedResults"];
           indexes.forEach(function(index) {
             if (index["Title"] === "Charities") {
               results.charities = index["Results"];
-              results.charities.forEach(function (charity) {
-                charity["Logo"] = "https"+charity["Logo"];
+              results.charities.forEach(function(charity) {
+                charity["Logo"] = "https:" + charity["Logo"];
               });
             }
           });
-          var country = (req.query.country).replace(/"/g,"");
+          var country = (req.query.country).replace(/"/g, "");
           var code = ISOCodes[country];
-          code = code.toString().toLowerCase();
-          Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
-            if (err) {
-              console.error(err);
-            }
-            results.flag = flag;
-            res.send(results);
-          });
+          if (code) {
+            code = code.toString().toLowerCase();
+            results.flag = code + ".png";
+          }
+          res.send(results);
+          // Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
+          //   if (err) {
+          //     console.error(err);
+          //   }
+          //   results.flag = flag;
+          //   res.send(results);
+          // });
         }
       });
     }

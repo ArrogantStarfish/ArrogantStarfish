@@ -57,7 +57,7 @@ input:focus{
   width: 300px;
 }
 
-button {
+/*button {
   width: 150px;
   height: 50px;
   margin: 10px;
@@ -69,7 +69,7 @@ button {
 }
 button:focus{
   outline:none;
-}
+}*/
 
 .datamaps-bubble {
 
@@ -86,13 +86,13 @@ button:focus{
 }
 #countries, #states {
   /*fill: #cde;*/
-  stroke: #fff;
+/*  stroke: #fff;*/
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 /*#countries .active, #states .active {
   fill: #89a;
-}*/
+}
 /*#cities {
   stroke-width: 0;
 }*/
@@ -171,9 +171,9 @@ img.heart {
 }
 .tooltip-container {
   background-color: rgba(0,0,0,0.75);
-  border-radius: 4px;
+  border-radius: 3%;
   padding: 10px;
-  width: 400px;
+  width: 460px;
   color: white; 
 }
 .tooltip .flag {
@@ -184,7 +184,7 @@ img.heart {
   margin: -50px 10% 0;
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 4px;
+  border-radius: 5%;
   /* border-color: rgba(255,255,255,0.6); */
   /* outline: 2px solid white; */
   /* border-style: solid; */
@@ -193,11 +193,15 @@ img.heart {
   background-position: center center;
   box-sizing: border-box;
 }
+.tooltip-article {
+  margin-top: -3px;
+}
+
 .tooltip-article,
 .tooltip-charity {
   background-color: rgba(255,255,255,0.2);
   padding: 4px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 .tooltip-charity {
   margin-top: 10px;
@@ -207,10 +211,13 @@ img.heart {
   margin-right: -4px;
   margin-left: 10px;
   border: 1px solid rgba(255,255,255,0.4);
+ -webkit-margin-after: 0;
+ -webkit-margin-before: 0.3em;
 }
 .tooltip-article-header,
 .tooltip-charity-header {
   padding-left: 10px;
+  font-size: 14px;
 }
 .tooltip-article-content,
 .tooltip-charity-content {
@@ -232,13 +239,14 @@ img.heart {
   /* border-color: rgba(255,255,255,0.6); */
   /* outline: 2px solid white; */
   /* border-style: solid; */
+  background-color: rgba(255,255,255,0.8);
   box-shadow: 0 0 0 3px rgba(255,255,255,0.8),;
   border-width: 5px;
   background-position: center center;
   box-sizing: border-box;
 }
 .tooltip-article,
-.tooltip-charity
+.tooltip-charity-box
  {
   background-color: rgba(255,255,255,0.2);
   padding: 4px;
@@ -257,8 +265,19 @@ img.heart {
 }
 .tooltip-charity-header {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 5px;
 }
+
+.tooltip-charity-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 7%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  float: left;
+}
+
 .tooltip-article-content,
 .tooltip-charity-content,
 .hovertip {
@@ -273,15 +292,50 @@ img.heart {
   /*padding-top: 10px;*/
   text-align: center;
   -webkit-margin-before: 0;
+   -webkit-margin-after: 0.5em;
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 20px;
+}
+.tooltip-charity-title {
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+  text-align: center;
+  white-space: normal;
+  text-transform: uppercase;
+}
+.tooltip .charity-description {
+  white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  /*width: 100%;*/
+  /*text-overflow: ellipsis;
+  white-space:nowrap;
+  overflow:hidden;*/
+}
+.tooltip .tooltip-charity-box:not(:nth-child(1)) .charity-description{
+  -webkit-line-clamp: 3;
+}
+.tooltip .charity-more-link {
+  float: right;
+  font-style: italic;
+  margin-right: 5px;
 }
 .tooltip ul {
   /*list-style-type: none;*/
   list-style-position:inside;
   -webkit-margin-before: 0em;
-  -webkit-margin-after: 1em;
+  -webkit-margin-after: .1em;
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
   -webkit-padding-start: 7px;
+}
+.tooltip .tooltip-charity-content ul {
+  -webkit-padding-start: 0px;
+  -webkit-margin-end: 0px;
 }
 .tooltip li {
   width: 100%;
@@ -298,11 +352,54 @@ img.heart {
   padding-left: 5%;
 }
 .hovertip-content {
+  font-size: 7pt;
   float : right;
-  text-align: right;
+  text-align: center;
+  color : white;
+  background: rgba(0,0,0,0.75);
+  border-radius: 3px;
+  padding: 3px;
 }
 .tooltip li.tooltip-charity-box {
+  /*position: relative;*/
   display: inline-block;
-  width: 48%;
-  margin-left: 5px;
+  width: 47%;
+/*  margin-left: 5px;*/
+  vertical-align: top;
+}
+.tooltip li.tooltip-charity-box:nth-child(1) {
+  width: 98%;
+}
+.tooltip li.tooltip-charity-box:not(:nth-child(1)){
+  margin-top: 10px;
+  height: 80px;
+}
+.tooltip li.tooltip-charity-box:nth-child(3) {
+  margin-left: 10px;
+}
+
+.breaking-news-container {
+  background : rgba(255, 255, 255, .9);
+  font-size: 8pt;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.country-name {
+  font-weight: bold;
+}
+
+button {
+  position: absolute;
+  right : 1%;
+  top : 120px;
+  margin : 10px;
+  height: 35px;
+  font-size: 11pt;
+  color: white;
+  background: rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 3px;
+  padding: 5px;
 }
