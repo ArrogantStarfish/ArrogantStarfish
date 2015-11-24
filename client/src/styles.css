@@ -57,7 +57,7 @@ input:focus{
   width: 300px;
 }
 
-button {
+/*button {
   width: 150px;
   height: 50px;
   margin: 10px;
@@ -69,7 +69,7 @@ button {
 }
 button:focus{
   outline:none;
-}
+}*/
 
 .datamaps-bubble {
 
@@ -171,7 +171,7 @@ img.heart {
 }
 .tooltip-container {
   background-color: rgba(0,0,0,0.75);
-  border-radius: 4px;
+  border-radius: 3%;
   padding: 10px;
   width: 460px;
   color: white; 
@@ -184,7 +184,7 @@ img.heart {
   margin: -50px 10% 0;
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 4px;
+  border-radius: 5%;
   /* border-color: rgba(255,255,255,0.6); */
   /* outline: 2px solid white; */
   /* border-style: solid; */
@@ -201,7 +201,7 @@ img.heart {
 .tooltip-charity {
   background-color: rgba(255,255,255,0.2);
   padding: 4px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 .tooltip-charity {
   margin-top: 10px;
@@ -352,8 +352,13 @@ img.heart {
   padding-left: 5%;
 }
 .hovertip-content {
+  font-size: 7pt;
   float : right;
-  text-align: right;
+  text-align: center;
+  color : white;
+  background: rgba(0,0,0,0.75);
+  border-radius: 3px;
+  padding: 3px;
 }
 .tooltip li.tooltip-charity-box {
   /*position: relative;*/
@@ -371,4 +376,30 @@ img.heart {
 }
 .tooltip li.tooltip-charity-box:nth-child(3) {
   margin-left: 10px;
+}
+
+.breaking-news-container {
+  background : rgba(255, 255, 255, .9);
+  font-size: 8pt;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.country-name {
+  font-weight: bold;
+}
+
+button {
+  position: absolute;
+  right : 1%;
+  top : 120px;
+  margin : 10px;
+  height: 35px;
+  font-size: 11pt;
+  color: white;
+  background: rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 3px;
+  padding: 5px;
 }
