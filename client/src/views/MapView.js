@@ -12,9 +12,9 @@ var MapView = Backbone.View.extend({
 
   advisoryKey: {
     "0": "white",
-    "1": "yellow",
-    "2": "orange",
-    "3": "red"
+    "1": "#ffff38",
+    "2": "#FF9900",
+    "3": "#FF0000"
   },
 
   initialize: function() {
@@ -90,7 +90,8 @@ var MapView = Backbone.View.extend({
       var w_scale = (bounds[1][0] - bounds[0][0]) / width;
       var h_scale = (bounds[1][1] - bounds[0][1]) / height;
       var z = .96 / Math.max(w_scale, h_scale);
-      var x = (bounds[1][0] + bounds[0][0]) / 2;
+      // moved center zoom point to the right to make room for a bigger tooltip
+      var x = (bounds[1][0] + bounds[0][0]) / 2 - 15;
       var y = (bounds[1][1] + bounds[0][1]) / 2 + (height / z / 6);
       return [x, y, z];
     }
