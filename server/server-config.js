@@ -95,8 +95,10 @@ app.get('/issues', function(req, res) {
           });
           var country = (req.query.country).replace(/"/g,"");
           var code = ISOCodes[country];
-          code = code.toString().toLowerCase();
-          results.flag = code+".png";
+          if (code) {
+            code = code.toString().toLowerCase();
+            results.flag = code+".png";
+          }
           res.send(results);
           // Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
           //   if (err) {
