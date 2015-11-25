@@ -6,7 +6,8 @@ body {
   margin-top: 20px;
   padding-left: 20px;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  min-width: 750px;
 }
 
 h1 {
@@ -116,21 +117,50 @@ pre.prettyprint {
   font-family: 'Montserrat Subrayada', sans-serif;
   font-size: 130px;
   display: inline;
+  position: fixed;
+  top: 0px;
+  min-width: 900px;
 }
 .title-line {
+  position: relative;
+  display: inline-block;
+  margin-left: -9.4%;
+  margin-top: 119px;
+  /*margin-left: 0%;
+  margin-top: 34px;*/
   width: 80px;
   height: 7px;
-  position: absolute;
-  top: 139px;
+  /* -webkit-transform: scale3d(0.5, 0.5, 0); */
+  outline: 2px solid transparent;
+  /* transform-origin: 0px 0px; */
+  /*transform-origin: 55px -35px;*/
+  /*transform-origin: 18px -119px;*/
+  transform-origin: 461px -119px;
+  vertical-align: top;
+  background-color: #F64E53;
+  /*width: 80px;
+  height: 7px;
+  position: fixed;
+  top: 119px;
   left: 259px;
   background-color: #F64E53;
-  display: block;
+  display: block;*/
 }
 img.heart {
-  position: absolute;
-  left: 255px;
-  top: 55px;
+  position: relative;
+  margin-left: -52%;
+  margin-top: 34px;
   width: 90px;
+  /*position: fixed;
+  left: 255px;
+  top: 35px;
+  width: 90px;*/
+  /*-webkit-transform: scale3d(0.5, 0.5, 0);*/
+  outline: 2px solid transparent;
+  /*transform-origin: 0px 0px;*/
+  /*transform-origin: 92px -35px;*/
+  transform-origin: 468px -35px;
+  vertical-align: top;
 }
 /*.shadow {
   content:'';
@@ -150,7 +180,8 @@ img.heart {
   position: relative;
   /*z-index: -1000;*/
   box-shadow: 0 0 10px 0px #040404;
-  width: 96%
+  width: 96%;
+  margin-top: 150px;
 }
 .map-shadow-container {
   position: relative;
