@@ -20,12 +20,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind('connection error: '));
 
 // LOAD TRAVEL WARNINGS ====================================
-function clearAlerts() {
-  var Query = require('./query');
+var clearAlerts = function() {
   Query.Country.find().remove().exec();
 };
-function loadAlerts() {
-  var Query = require('./query');
+var loadAlerts = function() {
   for (var key in alerts.data) {
     var entry = {
       name: alerts.data[key].eng.name,
@@ -39,13 +37,10 @@ function loadAlerts() {
 };
 
 // LOAD FLAGS =============================================
-function clearFlags() {
-  var Query = require('./query');
+var clearFlags = function() {
   Query.Flag.find().remove().exec();
 };
-function loadFlags() {
-  var Query = require('./query');
-
+var loadFlags = function() {
   var flagDirectory = 'db/flags-normal/';
   var data = {};
   fs.readdir(flagDirectory, function (err, flags) {

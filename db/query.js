@@ -1,4 +1,5 @@
 // MODULES ====================================
+var db = require('./config'); 
 // To create mongoose schema
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
