@@ -40,6 +40,43 @@
   $(function() {
     var app = new AppModel();
     var appView = new AppView({model:app});
+
+    //var myScroll = new IScroll(window);
+
+    var $title = $('.title');
+    var $heart = $('img.heart');
+    var $line = $('.title-line');
+
+    var $titleOriginalSize; //parseFloat($title.css('width'));
+    var $titleOriginalFont = parseInt($title.css('font-size'));
+    var $heartOriginalSize = parseInt($heart.css('width'));
+    var $heartOriginalLeft = parseInt($heart.css('left'));
+    var $heartOriginalTop = parseInt($heart.css('top'));
+
+    $(window).scroll(function() {
+      //console.log('test', data);
+      $titleOriginalSize = 692//$titleOriginalSize || parseFloat($title.css('width'));
+      //console.dir(myScroll.x);
+      var scroll = $(this).scrollTop();
+      var updateTitleSize = $titleOriginalFont - scroll; 
+      var newHeartWidth = ($heartOriginalSize * updateTitleSize) / $titleOriginalFont;
+      var updateHeartSize = newHeartWidth / $heartOriginalSize;
+      //var updateHeartLeft = (($heartOriginalSize * updateHeartSize) - $heartOriginalSize);
+      var titleWidth = parseInt($title.css('width'));
+      var updateHeartLeft = 255 - (titleWidth * 255 / $titleOriginalSize);
+      // console.log('originalLeft', $heartOriginalLeft)
+      // console.log('titleWidth', titleWidth);
+      // console.log('OriginalSize', $titleOriginalSize);
+      var updateHeartTop = $heartOriginalTop - scroll;
+
+      if (updateTitleSize >= 30) {
+        console.log($titleOriginalFont, updateHeartLeft);
+        $title.css('font-size', updateTitleSize);
+        $heart.css('transform', 'scale3d(' + updateHeartSize + ', ' + updateHeartSize + ', 1)');
+        $line.css('transform', 'scale3d(' + updateHeartSize + ', ' + updateHeartSize + ', 1)');
+        //$heart.css('transform', 'translate3d(' + updateHeartLeft + ', ' + updateHeartTop + ', 1)');
+      }
+    });
   });
 </script>
 </body>
