@@ -1,8 +1,11 @@
 var AppView = Backbone.View.extend({
   el: '<div style="width: 100%">' +
-      '  <h1 class="title">We&nbsp;&nbsp;&nbsp;care</h1>' +
-      '  <span class="title-line"></span>' + 
-      '  <img class="heart" src="/src/img/heart.png">' +
+      '  <h1 class="title">We&nbsp;&nbsp;&nbsp;care' +
+          '<img class="heart" src="/src/img/heart.png">' +
+          '<div class="title-line"></div>' +
+      '  </h1>' +
+      //'  <span class="title-line"></span>' + 
+      //'  <img class="heart" src="/src/img/heart.png">' +
       '</div>',
 
   //the initialize function delegates ALL the DOM rendering
