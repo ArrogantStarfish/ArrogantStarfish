@@ -1,13 +1,18 @@
+// MODULES ====================================
+
+// Mongoose ORM for MongoDB
 var mongoose = require('mongoose');
-var alerts = require('./TravelAlerts.json');
+// Created schema
 var Query = require('./query');
+// Static country data
+var alerts = require('./TravelAlerts.json');
+// To read flag image folder
 var fs = require('fs');
-var express = require('express');
-// required for automating travel warning updates
+// To automate travel warning updates
 var CronJob = require('cron').CronJob;
 
-
-mongoURI = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/whocaresdb';
+// CONNECT TO DB ====================================
+mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/whocaresdb';
 
 mongoose.connect(mongoURI);
 

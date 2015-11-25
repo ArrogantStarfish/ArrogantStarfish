@@ -10,8 +10,11 @@ var ISOCodes = require('../db/ISOCodes');
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
+
+// Mount flag image middleware 
 app.use('/flags', express.static(__dirname + '/../db/flags-normal'));
 
+// Query DB for data on world map warnings
 app.get('/warnings', function(req, res) {
   Query.Country.find().exec(function(err, warnings) {
     if (err) return console.error(err);
@@ -19,6 +22,7 @@ app.get('/warnings', function(req, res) {
   });
 });
 
+// Return NYT Top News
 app.get('/breaking', function(req, res) {
 
   // BUILD QUERY URLS ================================================
@@ -46,6 +50,7 @@ app.get('/breaking', function(req, res) {
   });
 });
 
+// Return results of NYT & JustGiving country name query
 app.get('/issues', function(req, res) {
   // DATE FORMATTING =================================================
   var today = new Date(),
@@ -61,7 +66,10 @@ app.get('/issues', function(req, res) {
   var giving_url = 'https://api.justgiving.com/{' + keys.just_giving + '}/v1/onesearch?q={' + req.query.country + '}';
 
   // API REQUESTS ====================================================
+  // Combined results object
   var results = {};
+
+  // NYT API
   request(ny_url, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       body = JSON.parse(body);
@@ -75,6 +83,8 @@ app.get('/issues', function(req, res) {
         newsArray.push(obj);
       });
       results.news = newsArray;
+
+      // JustGiving API 
       var options = {
         url: giving_url,
         headers: {
