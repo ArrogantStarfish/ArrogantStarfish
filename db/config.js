@@ -68,7 +68,7 @@ db.loadFlags = function () {
 };
 
 // UPDATE WARNINGS ONCE A WEEK ==============================
-var mountie = new CronJob('37 21 * * tue', function(){
+var mountie = new CronJob('12 13 * * wed', function(){
     db.clearAlerts();
     db.loadAlerts();
   }, function () {
