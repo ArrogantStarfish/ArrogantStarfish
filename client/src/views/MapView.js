@@ -39,6 +39,7 @@ var MapView = Backbone.View.extend({
       country,
       state;
 
+    console.log(mwidth)
     var projection = d3.geo.mercator()
       .scale(150)
       .translate([width / 2, height / 1.5]);
@@ -51,24 +52,24 @@ var MapView = Backbone.View.extend({
       .attr("viewBox", "0 0 " + width + " " + height)
       .attr("width", mwidth)
       .attr("height", mwidth * height / width)
-      
-    svg.append('foreignObject')
-        .attr('class', 'mapLogo')
-        .attr({
-          width: 100
-        })
-        .attr("x", '5')
-        .attr("y", '5')
-        .html('<div class="logo-map-small"></div>');
 
     svg.append('foreignObject')
-        .attr('class', 'map-bn-container')
-        .attr({
-          width: 210
-        })
-        .attr("x", '5')
-        .attr("y", '10')
-        .html('<div class="map-breaking-news"><button class="icon"></button></div>');
+      .attr('class', 'mapLogo')
+      .attr({
+        width: 100
+      })
+      .attr("x", '5')
+      .attr("y", '5')
+      .html('<div class="logo-map-small"></div>');
+
+    svg.append('foreignObject')
+      .attr('class', 'map-bn-container')
+      .attr({
+        width: 210
+      })
+      .attr("x", '5')
+      .attr("y", '10')
+      .html('<div class="map-breaking-news"><button class="icon"></button></div>');
 
     svg.append("rect")
       .attr("class", "background")
@@ -164,19 +165,20 @@ var MapView = Backbone.View.extend({
         countryName: article.location[0]
       });
       if (country) {
-        var nodes = [{
-          // x: country.get('x'),
-          // y: country.get('y'),
+        var newNodes = [{
+          x: country.get('x'),
+          y: country.get('y'),
           class: 'breakingNews',
           countryName: article.location[0],
-          headline: article.headline
+          headline: article.headline,
+          url: article.url
         }, {
           x: country.get('x'),
           y: country.get('y'),
           class: 'fixedNode',
           fixed: true
         }];
-        dataNodes = dataNodes.concat(nodes);
+        dataNodes = dataNodes.concat(newNodes);
         var link = {
           source: dataNodes.length - 1,
           target: dataNodes.length - 2
@@ -190,33 +192,35 @@ var MapView = Backbone.View.extend({
       .nodes(dataNodes)
       .links(dataLinks)
       .linkDistance(.2)
-      .gravity(0.5)
+      .gravity(.5)
       .charge(function(node) {
-        return node.class === 'breakingNews' ? -3000 : -30
+        return node.class === 'breakingNews' ? -2500 : 0
       })
 
     force.on('tick', function(e, o) {
-      // var q = d3.geom.quadtree(nodes),
-      //   i = 0,
-      //   n = nodes.length;
+      var q = d3.geom.quadtree(dataNodes),
+        i = 0,
+        n = dataNodes.length;
 
-      // while (++i < n) {
-      //   q.visit(collide(nodes[i]))
-      // }
+      while (++i < n) {
+        if (!dataNodes[i].fixed) {
+          q.visit(collide(dataNodes[i]));
+        }
+      }
 
-      nodes.transition().ease('linear').duration(750)
+      nodes.transition().ease('linear').duration(1000)
         .attr('x', function(d) {
           return d.x;
         })
         .attr('y', function(d) {
           return d.y;
         });
-      links.transition().ease('linear').duration(750)
+      links.transition().ease('linear').duration(1000)
         .attr('x1', function(d) {
-          return d.source.x + 10;
+          return d.source.x;
         })
         .attr('y1', function(d) {
-          return d.source.y + 10;
+          return d.source.y;
         })
         .attr('x2', function(d) {
           return d.target.x + 50;
@@ -225,46 +229,49 @@ var MapView = Backbone.View.extend({
           return d.target.y + 10;
         });
     });
-
     var collide = function(node) {
-      var r = 16,
-        nx1 = node.x - 150,
-        nx2 = node.x + 150,
-        ny1 = node.y - 150,
-        ny2 = node.y + 150;
+      var nx1 = node.x;
+      var nx2 = node.x + 100;
+      var ny1 = node.y;
+      var ny2 = node.y + 100;
+      //var fixed = node.fixed ? true : false;
       return function(quad, x1, y1, x2, y2) {
         if (quad.point && (quad.point !== node)) {
-          var x = node.x - quad.point.x,
-            y = node.y - quad.point.y,
-            l = Math.sqrt(x * x + y * y),
-            r = node.radius + quad.point.radius;
-          if (l < r) {
-            l = (l - r) / l * .5;
-            node.x -= x *= l;
-            node.y -= y *= l;
-            quad.point.x += x;
-            quad.point.y += y;
+          if (!quad.point.fixed) {
+            var x = (node.x + 50) - (quad.point.x + 50),
+              y = (node.y + 50) - (quad.point.y + 50),
+              l = Math.sqrt(x * x + y * y),
+              r = 110; //node.radius + quad.point.radius;
+            if (l < r) {
+              l = (l - r) / l * .5;
+              node.x -= x *= l;
+              node.y -= y *= l;
+              quad.point.x += x;
+              quad.point.y += y;
+            }
           }
+          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
         }
-        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
       };
-    }
+    };
+
+    force.start();
 
     links = d3.select("#map").select("svg").selectAll('.link')
       .data(dataLinks)
       .enter().append('line')
       .attr('class', 'link')
       .attr('x1', function(d) {
-        return dataNodes[d.target].x + 50;
+        return d.source.x;
       })
       .attr('y1', function(d) {
-        return dataNodes[d.target].y + 10;
+        return d.source.y;
       })
       .attr('x2', function(d) {
-        return dataNodes[d.target].x + 50;
+        return d.target.x + 50;
       })
       .attr('y2', function(d) {
-        return dataNodes[d.target].y + 10;
+        return d.target.y + 10;
       })
       .attr('stroke', 'black')
       .attr("stroke-width", 1);
@@ -289,15 +296,16 @@ var MapView = Backbone.View.extend({
       })
       .html(function(d) {
         if (d.headline) {
+          console.log(d);
           return '' +
             '<div class="breaking-news-container">' +
             '  <div class="country-name">' + d.countryName + '</div>' +
-            '  <div class"breaking-news-headline>' + d.headline + '</div>' +
+            '  <div class"breaking-news-headline><a href="' + d.url + '">' + d.headline + '</a></div>' +
             '</div>';
         }
       })
 
-    force.start();
+    //force.start();
   },
 
   removeHeadlines: function() {

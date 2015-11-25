@@ -410,6 +410,7 @@ img.heart {
 }
 .country-name {
   font-weight: bold;
+  font-family: 'Montserrat Subrayada', sans-serif;
 }
 button {
   height: 35px;
