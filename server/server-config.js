@@ -1,7 +1,12 @@
+// MODULES ====================================
+// Express
 var express = require('express');
 var request = require('request');
 var app = express();
+// To initalize Mongo connection
+var db = require('../db/config.js');
 var Query = require('../db/query');
+
 var bodyParser = require('body-parser');
 var alerts = require('../db/TravelAlerts.json');
 var keys = require('./keys');

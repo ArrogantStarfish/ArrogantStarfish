@@ -1,9 +1,9 @@
 // MODULES ====================================
-
 // Mongoose ORM for MongoDB
 var mongoose = require('mongoose');
 // Created schema
 var Query = require('./query');
+
 // Static country data
 var alerts = require('./TravelAlerts.json');
 // To read flag image folder
@@ -79,4 +79,4 @@ db.once('open', function() {
   loadFlags();
 });
 
-module.exports = db;
+module.exports = mongoose;
