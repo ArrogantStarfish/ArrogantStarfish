@@ -1,11 +1,11 @@
 var request = require('supertest');
 var express = require('express');
 var expect = require('chai').expect;
-var app = require('../server/server-config');
+var app = require('../../server/server-config');
 
-var db = require('../db/config');
-var alerts = require('../db/TravelAlerts.json');
-var Query = require('../db/query');
+var db = require('../../db/config');
+var alerts = require('../../db/TravelAlerts.json');
+var Query = require('../../db/query');
 
 describe('Who Cares Database', function() {
 

@@ -1,7 +1,7 @@
 var request = require('supertest');
 var express = require('express');
 var expect = require('chai').expect;
-var app = require('../server/server-config');
+var app = require('../../server/server-config');
 
 describe('Who Cares Server', function() {
 
@@ -11,7 +11,9 @@ describe('Who Cares Server', function() {
         .get('/warnings')
         .expect(200)
         .expect(function (res) {
-          expect(Object.keys(res.body).length).to.equal(229);
+          var sample = res.body[0];
+          expect(sample).to.be.an('object');
+          expect(sample).to.include.keys('name', 'advisoryState', 'hasAdvisory', 'advisoryText');
         })
         .end(done);
     });
