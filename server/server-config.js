@@ -1,7 +1,7 @@
 // MODULES ====================================
 // Express
 var express = require('express');
-var request = require('request');
+var request = require('request-promise');
 var app = express();
 // To initalize Mongo connection
 var db = require('../db/config.js');
@@ -35,8 +35,8 @@ app.get('/breaking', function(req, res) {
 
   // API REQUESTS ====================================================
   var results = {};
-  request(breaking_url, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
+  request(breaking_url)
+    .then(function(body) {
       body = JSON.parse(body);
       var newsArray = [];
       var articleArray = body.results;
@@ -49,10 +49,10 @@ app.get('/breaking', function(req, res) {
         newsArray.push(obj);
       });
       res.send(newsArray);
-    } else {
-      res.send(response.statusCode);
-    }
-  });
+    })
+    .catch(function(err) {
+      res.send(err);
+    });
 });
 
 // Return results of NYT & JustGiving country name query
@@ -68,15 +68,21 @@ app.get('/issues', function(req, res) {
 
   // BUILD QUERY URLS ================================================
   var ny_url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + req.query.country + '&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "Today\'s Headlines" "Topics" "World")&begin_date=' + todaysDate + '&api-key=' + keys.ny_times;
-  var giving_url = 'https://api.justgiving.com/{' + keys.just_giving + '}/v1/onesearch?q={' + req.query.country + '}';
+  var giving_url = 'https://api.justgiving.com/{' + keys.just_giving + '}/v1/onesearch?q={' + req.query.country + '}'; 
+  var options = {
+    url: giving_url,
+    headers: {
+      'Accept': 'application/json'
+    }
+  };
 
   // API REQUESTS ====================================================
   // Combined results object
   var results = {};
 
   // NYT API
-  request(ny_url, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
+  request(ny_url)
+    .then(function(body) {
       body = JSON.parse(body);
       var newsArray = [];
       var articleArray = body.response.docs;
@@ -88,44 +94,34 @@ app.get('/issues', function(req, res) {
         newsArray.push(obj);
       });
       results.news = newsArray;
-
-      // JustGiving API 
-      var options = {
-        url: giving_url,
-        headers: {
-          'Accept': 'application/json'
-        }
-      };
-      request(options, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-          var body = JSON.parse(response.body);
-          var indexes = body["GroupedResults"];
-          indexes.forEach(function(index) {
-            if (index["Title"] === "Charities") {
-              results.charities = index["Results"];
-              results.charities.forEach(function(charity) {
-                charity["Logo"] = "https:" + charity["Logo"];
-              });
-            }
+    })
+    .then(function() {
+      return request(options)
+    })
+    .then(function(body) {
+      body = JSON.parse(body);
+      var indexes = body["GroupedResults"];
+      indexes.forEach(function(index) {
+        if (index["Title"] === "Charities") {
+          results.charities = index["Results"];
+          results.charities.forEach(function(charity) {
+            charity["Logo"] = "https:" + charity["Logo"];
           });
-          var country = (req.query.country).replace(/"/g, "");
-          var code = ISOCodes[country];
-          if (code) {
-            code = code.toString().toLowerCase();
-            results.flag = code + ".png";
-          }
-          res.send(results);
-          // Query.Flag.findOne({country: code+".png"}).exec(function (err, flag) {
-          //   if (err) {
-          //     console.error(err);
-          //   }
-          //   results.flag = flag;
-          //   res.send(results);
-          // });
         }
       });
-    }
-  });
+      var country = (req.query.country).replace(/"/g, "");
+      var code = ISOCodes[country];
+      if (code) {
+        code = code.toString().toLowerCase();
+        results.flag = code + ".png";
+      }
+    })
+    .catch(function(err) {
+    res.send(err); 
+    })
+    .finally(function() {
+      res.send(results)
+    }); 
 });
 
 module.exports = app;
