@@ -1,4 +1,5 @@
-var db = require('./config');
+// MODULES ====================================
+// To create mongoose schema
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -11,8 +12,8 @@ var countrySchema = new Schema ({
 });
 
 var flagSchema = new Schema({
-    img: { data: Buffer, contentType: String },
-    country: String
+  img: { data: Buffer, contentType: String },
+  country: String
 });
 
 // MODELS ====================================

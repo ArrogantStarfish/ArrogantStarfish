@@ -1,13 +1,18 @@
+// MODULES ====================================
+// Mongoose ORM for MongoDB
 var mongoose = require('mongoose');
-var alerts = require('./TravelAlerts.json');
+// Created schema
 var Query = require('./query');
+
+// Static country data
+var alerts = require('./TravelAlerts.json');
+// To read flag image folder
 var fs = require('fs');
-var express = require('express');
-// required for automating travel warning updates
+// To automate travel warning updates
 var CronJob = require('cron').CronJob;
 
-
-mongoURI = process.env.CUSTOMCONNSTR_MONGOLAB_URI || 'mongodb://localhost/whocaresdb';
+// CONNECT TO DB ====================================
+mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/whocaresdb';
 
 mongoose.connect(mongoURI);
 
@@ -15,12 +20,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind('connection error: '));
 
 // LOAD TRAVEL WARNINGS ====================================
-function clearAlerts() {
-  var Query = require('./query');
+var clearAlerts = function() {
   Query.Country.find().remove().exec();
 };
-function loadAlerts() {
-  var Query = require('./query');
+var loadAlerts = function() {
   for (var key in alerts.data) {
     var entry = {
       name: alerts.data[key].eng.name,
@@ -34,13 +37,10 @@ function loadAlerts() {
 };
 
 // LOAD FLAGS =============================================
-function clearFlags() {
-  var Query = require('./query');
+var clearFlags = function() {
   Query.Flag.find().remove().exec();
 };
-function loadFlags() {
-  var Query = require('./query');
-
+var loadFlags = function() {
   var flagDirectory = 'db/flags-normal/';
   var data = {};
   fs.readdir(flagDirectory, function (err, flags) {
@@ -79,4 +79,4 @@ db.once('open', function() {
   loadFlags();
 });
 
-module.exports = db;
+module.exports = mongoose;
