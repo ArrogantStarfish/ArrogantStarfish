@@ -46,17 +46,25 @@ var MapView = Backbone.View.extend({
     var path = d3.geo.path()
       .projection(projection);
 
-
     var svg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
       .attr("viewBox", "0 0 " + width + " " + height)
       .attr("width", mwidth)
-      .attr("height", mwidth * height / width);
+      .attr("height", mwidth * height / width)
+      
+    svg.append('foreignObject')
+        .attr('class', 'mapLogo')
+        .attr({
+          width: 100
+        })
+        .attr("x", '5')
+        .attr("y", '5')
+        .html('<div class="logo-map-small"></div>');
 
     svg.append("rect")
       .attr("class", "background")
       .attr("width", width)
-      .attr("height", height)
+      .attr("height", height);
 
     var g = svg.append("g")
       .attr("id", "container");
