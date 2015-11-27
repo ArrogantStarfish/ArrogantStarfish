@@ -32,7 +32,6 @@ describe('Who Cares Database', function() {
           console.log(typeof query);
           expect(query.length).to.equal(1);
         }
-      });
       done();
     });
   });

@@ -22,7 +22,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind('connection error: '));
 
 // LOAD TRAVEL WARNINGS ====================================
-
 db.clearAlerts = function () {
   Query.Country.find().remove().exec();
 };
