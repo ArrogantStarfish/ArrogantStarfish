@@ -86,10 +86,11 @@ While node is running, visit the locally running server at [127.0.0.1:3000](127.
 
 ### Testing
 
-To run tests:
+To run backend tests:
 ```sh
 grunt test
 ```
+To run front end tests, go to test > frontend > backboneSpec.html and open the file in the browser.
 
 ### Checking Syntax with JSHint
 

@@ -25,16 +25,13 @@ describe('Who Cares Database', function() {
     it ('Deletes old warnings from the database upon refresh', function (done) {
       db.clearAlerts();
       db.loadAlerts();
-      Query.Country.count({}, function (err, count){
-        expect(count).to.equal(229);
-      });
-      done();
-    });
-  });
-  describe('Flags', function (){
-    it('should store flags for every country in the database', function (done){
-      Query.Flag.count({}, function (err, count) {
-        expect(count).to.equal(196);
+      Query.Country.find({name: 'Chile'}).exec(function (err, query) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(typeof query);
+          expect(query.length).to.equal(1);
+        }
       });
       done();
     });

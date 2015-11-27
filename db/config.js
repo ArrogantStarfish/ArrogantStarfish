@@ -6,8 +6,7 @@ var Query = require('./query');
 
 // Static country data
 var alerts = require('./TravelAlerts.json');
-// To read flag image folder
-var fs = require('fs');
+
 // To automate travel warning updates
 var express = require('express');
 var request = require('request');
@@ -49,32 +48,6 @@ db.loadAlerts = function () {
   }
 };
 
-// LOAD FLAGS =============================================
-db.clearFlags = function () {
-  Query.Flag.find().remove().exec();
-};
-db.loadFlags = function () {
-  var flagDirectory = 'db/flags-normal/';
-  var data = {};
-  fs.readdir(flagDirectory, function (err, flags) {
-    if (err) {
-      console.error(err);
-    }
-    flags.forEach(function (flagName) {
-      fs.readFile(flagDirectory+flagName, function (err, image) {
-        if (err) {
-          console.error(err);
-        }
-        var flag = new Query.Flag;
-        flag.img.data = image;
-        flag.img.contentType = 'image/png';
-        flag.country = flagName;
-        flag.save();
-      });
-    });
-  });
-};
-
 // UPDATE WARNINGS ONCE A WEEK ==============================
 var mountie = new CronJob('29 13 * * wed', function(){
     db.clearAlerts();
@@ -88,8 +61,6 @@ var mountie = new CronJob('29 13 * * wed', function(){
 
 db.once('open', function() {
   console.log('Mongodb connection open');
-  db.clearFlags();
-  db.loadFlags();
 });
 
-module.exports = mongoose;
+module.exports = db;
