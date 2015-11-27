@@ -11,15 +11,7 @@ var countrySchema = new Schema ({
   advisoryText: String
 });
 
-var flagSchema = new Schema({
-  img: { data: Buffer, contentType: String },
-  country: String
-});
-
 // MODELS ====================================
 var Country = mongoose.model('Country', countrySchema);
 
-var Flag = mongoose.model('Flag', flagSchema);
-
 module.exports.Country = Country;
-module.exports.Flag = Flag;
