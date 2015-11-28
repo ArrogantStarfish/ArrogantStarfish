@@ -1,5 +1,5 @@
 var MapView = Backbone.View.extend({
-  el: '<div><button>Hide Breaking News</button><div id="map"></div></div>',
+  el: '<div><button class="breaking-news">Hide Breaking News</button><div id="map"></div></div>',
 
   fills: {
     defaultFill: '#ABDDA4',
@@ -60,6 +60,15 @@ var MapView = Backbone.View.extend({
         .attr("x", '5')
         .attr("y", '5')
         .html('<div class="logo-map-small"></div>');
+
+    svg.append('foreignObject')
+        //.attr('class', 'map-breaking-news')
+        .attr({
+          width: 210
+        })
+        .attr("x", '765')
+        .attr("y", '-90')
+        .html('<div class="map-breaking-news"><button>Hide Breaking News</button></div>');
 
     svg.append("rect")
       .attr("class", "background")

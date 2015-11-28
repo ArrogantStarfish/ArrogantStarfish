@@ -3,7 +3,7 @@ var Button = Backbone.View.extend({
     'click': 'buttonClicked'
   },
   initialize: function() {
-    console.log(this.el);
+    //console.log(this.el);
     this.newsDisabled = false;
   },
   buttonClicked: function() {
