@@ -62,13 +62,13 @@ var MapView = Backbone.View.extend({
         .html('<div class="logo-map-small"></div>');
 
     svg.append('foreignObject')
-        //.attr('class', 'map-breaking-news')
+        .attr('class', 'map-bn-container')
         .attr({
           width: 210
         })
-        .attr("x", '765')
-        .attr("y", '-90')
-        .html('<div class="map-breaking-news"><button>Hide Breaking News</button></div>');
+        .attr("x", '5')
+        .attr("y", '10')
+        .html('<div class="map-breaking-news"><button class="icon"></button></div>');
 
     svg.append("rect")
       .attr("class", "background")
