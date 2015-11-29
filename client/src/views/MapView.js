@@ -234,6 +234,7 @@ var MapView = Backbone.View.extend({
       var nx2 = node.x + 100;
       var ny1 = node.y;
       var ny2 = node.y + 100;
+      var ny2 = node.y + 150;
       //var fixed = node.fixed ? true : false;
       return function(quad, x1, y1, x2, y2) {
         if (quad.point && (quad.point !== node)) {
