@@ -51,11 +51,14 @@ var AppView = Backbone.View.extend({
       this.$scroll.showMapLogo = false;
       this.$scroll.title.animate({opacity: 0}, 150);
       $('.logo-map-small').animate({opacity: 1}, 300);
+      //this.trigger('')
+      this.mapView.button.swapDomButton(true);
     }
     if (!this.$scroll.showMapLogo && scroll < 100 && this.$scroll.title.css('opacity') === '0') {
       this.$scroll.showMapLogo = true;
       $('.logo-map-small').animate({opacity: 0}, 200);
       this.$scroll.title.animate({opacity: 1}, 200);
+      this.mapView.button.swapDomButton(false);
     }
   },
 
