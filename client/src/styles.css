@@ -416,7 +416,6 @@ img.heart {
 .tooltip li.tooltip-charity-box:nth-child(3) {
   margin-left: 10px;
 }
-
 .breaking-news-container {
   background : rgba(255, 255, 255, .9);
   font-size: 8pt;
@@ -424,16 +423,10 @@ img.heart {
   border-radius: 3px;
   border: 1px solid rgba(255,255,255,0.4);
 }
-
 .country-name {
   font-weight: bold;
 }
-
 button {
-  position: absolute;
-  right : 1%;
-  top : 120px;
-  margin: -20px 20px 0 0;
   height: 35px;
   font-size: 11pt;
   color: white;
@@ -442,3 +435,37 @@ button {
   border-radius: 3px;
   padding: 5px;
 }
+button.breaking-news {
+  position: absolute;
+  right : 1%;
+  top : 120px;
+  margin: -20px 20px 0 0;
+  /*height: 35px;
+  font-size: 11pt;
+  color: white;
+  background: rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 3px;
+  padding: 5px;*/
+}
+.map-breaking-news button {
+  display: none;
+  /*position: absolute;*/
+  /*right : 1%;*/
+  /*top : 120px;*/
+  font-size: 20pt;
+  margin: -20px 20px 0 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  height: 30px;
+  /*line-height: 0 !important;*/
+  /*height: 35px;
+  font-size: 11pt;
+  color: white;
+  background: rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 3px;
+  padding: 5px;*/
+  padding: 0 10px 30px 10px;
+}
+
