@@ -2,6 +2,7 @@
 // Express
 var express = require('express');
 var request = require('request-promise');
+var Q = require('q'); 
 var app = express();
 // To initalize Mongo connection
 var db = require('../db/config.js');
@@ -75,53 +76,68 @@ app.get('/issues', function(req, res) {
       'Accept': 'application/json'
     }
   };
-
   // API REQUESTS ====================================================
-  // Combined results object
-  var results = {};
+  // Sends multiple requests asynchronously 
+  Q.all([
+    requestNY(ny_url),
+    requestGiving(options),
+    getFlag(req.query.country)
+  ])
+  .spread(function(news, charities, flag) {
+    res.send({
+      news: news,
+      charities: charities,
+      flag: flag
+    })
+  })
+  .catch(function(error) {
+    console.log(error); 
+  })
+  .done(); 
 
   // NYT API
-  request(ny_url)
-    .then(function(body) {
-      body = JSON.parse(body);
-      var newsArray = [];
-      var articleArray = body.response.docs;
-      articleArray.forEach(function(article) {
-        var obj = {
-          headline: article.headline.main,
-          url: article.web_url
-        };
-        newsArray.push(obj);
+  function requestNY(ny_url) {
+    return request(ny_url)
+      .then(function(body) {
+        body = JSON.parse(body);
+        var articles = body.response.docs;
+
+        return articles.map(function(article) {
+          return {
+            headline: article.headline.main,
+            url: article.web_url
+          };
+        });
       });
-      results.news = newsArray;
-    })
-    .then(function() {
-      return request(options)
-    })
-    .then(function(body) {
-      body = JSON.parse(body);
-      var indexes = body["GroupedResults"];
-      indexes.forEach(function(index) {
-        if (index["Title"] === "Charities") {
-          results.charities = index["Results"];
-          results.charities.forEach(function(charity) {
-            charity["Logo"] = "https:" + charity["Logo"];
+  }; 
+  // JustGiving API
+  function requestGiving(options) {
+    return request(options)
+        .then(function(body) {
+          body = JSON.parse(body);
+          var indexes = body.GroupedResults; 
+          // Extract Charities object from GroupedResults array
+          var charities; 
+          indexes.forEach(function(index) {
+            if (index.Title === "Charities") {
+              charities = index.Results; 
+              charities.forEach(function(charity) {
+                charity.Logo = "https:" + charity.Logo;
+              }); 
+            }
           });
-        }
-      });
-      var country = (req.query.country).replace(/"/g, "");
-      var code = ISOCodes[country];
-      if (code) {
-        code = code.toString().toLowerCase();
-        results.flag = code + ".png";
-      }
-    })
-    .catch(function(err) {
-    res.send(err); 
-    })
-    .finally(function() {
-      res.send(results)
-    }); 
+          return charities; 
+        });  
+  }; 
+  // Get country's flag
+  function getFlag(country) {
+    var country = country.replace(/"/g, "");
+    var code = ISOCodes[country];
+    if (code) {
+      code = code.toString().toLowerCase();
+      return code + ".png";
+    }    
+  }
 });
 
 module.exports = app;
