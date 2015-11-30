@@ -40,63 +40,113 @@ app.get('/warnings', function(req, res) {
   });
 });
 
-// Return /r/worldnews subreddit Top Posts
-app.get('/topreddit', function(req, res) {
+// // Return /r/worldnews subreddit Top Posts
+// app.get('/topreddit', function(req, res) {
 
-  reddit('/r/worldnews/top').listing({
-    limit: 10
-  })
-    .then(function(slice) {
-      var articleArray = slice.children; 
-      var newsArray = articleArray.map(function(article) {
-        // Extract country name from article headline
-        var splitTitle = article.data.title.split(' ');
-        var location = []; 
-        splitTitle.forEach(function(word) {
-          var country = _.find(CountryData, function(co) {
-            // Example: Russian is a demonym for Russia
-            if (co.demonym === word || co.name.common === word) {
-              return true; 
-            }    
-          }); 
-          if (country && location.length < 1) { location.push(country.name.common) }; 
-        }); 
-        return {
-          headline: article.data.title,
-          url: article.data.url,
-          location: location
-        }
-      })
-      res.send(newsArray); 
-    })
-    .catch(function(error) {
-      res.send(error); 
-    });
-}); 
+//   reddit('/r/worldnews/top').listing({
+//     limit: 10
+//   })
+//     .then(function(slice) {
+//       var articleArray = slice.children; 
+//       var newsArray = articleArray.map(function(article) {
+//         // Extract country name from article headline
+//         var splitTitle = article.data.title.split(' ');
+//         var location = []; 
+//         splitTitle.forEach(function(word) {
+//           var country = _.find(CountryData, function(co) {
+//             // Example: Russian is a demonym for Russia
+//             if (co.demonym === word || co.name.common === word) {
+//               return true; 
+//             }    
+//           }); 
+//           if (country && location.length < 1) { location.push(country.name.common) }; 
+//         }); 
+//         return {
+//           headline: article.data.title,
+//           url: article.data.url,
+//           location: location
+//         }
+//       })
+//       res.send(newsArray); 
+//     })
+//     .catch(function(error) {
+//       res.send(error); 
+//     });
+// }); 
 
 // Return NYT Top News
-app.get('/breaking', function(req, res) {
+app.get('/top', function(req, res) {
 
   // BUILD QUERY URLS ================================================
-  var breaking_url = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key=' + keys.ny_breaking;
+  var top_nyt = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key=' + keys.top_nyt;
 
   // API REQUESTS ====================================================
-  request(breaking_url)
-    .then(function(body) {
-      body = JSON.parse(body);
-      var articleArray = body.results;
-      var newsArray = articleArray.map(function(article) {
-        return {
-          headline: article.title,
-          url: article.url,
-          location: article.geo_facet
-        };
+  // Sends multiple requests asynchronously 
+  Q.all([
+    requestTopNYT(top_nyt),
+    requestTopReddit()
+  ])
+  .spread(function(newsNYT, newsReddit) {
+    var topArray = newsNYT.concat(newsReddit); 
+    res.send(topArray); 
+  })
+  .catch(function(error) {
+    console.log(error); 
+  })
+  .done(); 
+
+  // NYT API
+  function requestTopNYT(top_nyt) {
+    return request(top_nyt)
+      .then(function(body) {
+        body = JSON.parse(body);
+        var articleArray = body.results.slice(0, 10);
+        return articleArray.map(function(article) {
+          return {
+            source: "NYT", 
+            headline: article.title,
+            url: article.url,
+            location: article.geo_facet.splice(0, 1); 
+          };
+        });
+      })
+      .catch(function(error) {
+        res.send(error);
       });
-      res.send(newsArray);
+  }; 
+
+  // Reddit API
+  function requestTopReddit() {
+    return reddit('/r/worldnews/top').listing({
+      limit: 10
     })
-    .catch(function(error) {
-      res.send(error);
-    });
+      .then(function(slice) {
+        var articleArray = slice.children; 
+        return articleArray.map(function(article) {
+          // Extract country name from article headline
+          var splitTitle = article.data.title.split(' ');
+          var location = []; 
+          splitTitle.forEach(function(word) {
+            var country = _.find(CountryData, function(co) {
+              // Example: Russian is a demonym for Russia
+              if (co.demonym === word || co.name.common === word) {
+                return true; 
+              }    
+            }); 
+            if (country && location.length < 1) { location.push(country.name.common) }; 
+          }); 
+          return {
+            source: "Reddit",
+            headline: article.data.title,
+            url: article.data.url,
+            location: location
+          }
+        })
+      })
+      .catch(function(error) {
+        res.send(error); 
+      });
+  }
 });
 
 // Return results of NYT & JustGiving country name query
@@ -111,7 +161,7 @@ app.get('/issues', function(req, res) {
   todaysDate = "" + year + month + day;
 
   // BUILD QUERY URLS ================================================
-  var ny_url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + req.query.country + '&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "Today\'s Headlines" "Topics" "World")&begin_date=' + todaysDate + '&api-key=' + keys.ny_times;
+  var nyt_url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + req.query.country + '&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "Today\'s Headlines" "Topics" "World")&begin_date=' + todaysDate + '&api-key=' + keys.query_nyt;
   var giving_url = 'https://api.justgiving.com/{' + keys.just_giving + '}/v1/onesearch?q={' + req.query.country + '}'; 
   var options = {
     url: giving_url,
@@ -122,7 +172,7 @@ app.get('/issues', function(req, res) {
   // API REQUESTS ====================================================
   // Sends multiple requests asynchronously 
   Q.all([
-    requestNY(ny_url),
+    requestNY(nyt_url),
     requestGiving(options),
     getFlag(req.query.country)
   ])
@@ -139,8 +189,8 @@ app.get('/issues', function(req, res) {
   .done(); 
 
   // NYT API
-  function requestNY(ny_url) {
-    return request(ny_url)
+  function requestNY(nyt_url) {
+    return request(nyt_url)
       .then(function(body) {
         body = JSON.parse(body);
         var articles = body.response.docs;
