@@ -1,15 +1,6 @@
 var MapView = Backbone.View.extend({
   el: '<div><button class="breaking-news">Hide Breaking News</button><div id="map"></div></div>',
 
-  fills: {
-    defaultFill: '#ABDDA4',
-    older: '#b27300',
-    //additions to this have to also be implemented in renderBubbles()
-    newerThanThreeDays: '#cc8400',
-    today: '#e59400',
-    thisHour: '#ffa500'
-  },
-
   advisoryKey: {
     "0": "white",
     "1": "#ffff38",
@@ -191,10 +182,10 @@ var MapView = Backbone.View.extend({
       .size([908, 410])
       .nodes(dataNodes)
       .links(dataLinks)
-      .linkDistance(.2)
-      .gravity(.5)
+      .linkDistance(4)
+      .gravity(.1)
       .charge(function(node) {
-        return node.class === 'breakingNews' ? -2500 : 0
+        return node.class === 'breakingNews' ? 30 : -30
       })
 
     force.on('tick', function(e, o) {
@@ -208,14 +199,14 @@ var MapView = Backbone.View.extend({
         }
       }
 
-      nodes.transition().ease('linear').duration(1000)
+      nodes.transition().ease('linear').duration(500)
         .attr('x', function(d) {
           return d.x;
         })
         .attr('y', function(d) {
           return d.y;
         });
-      links.transition().ease('linear').duration(1000)
+      links.transition().ease('linear').duration(500)
         .attr('x1', function(d) {
           return d.source.x;
         })
@@ -234,8 +225,6 @@ var MapView = Backbone.View.extend({
       var nx2 = node.x + 100;
       var ny1 = node.y;
       var ny2 = node.y + 100;
-      var ny2 = node.y + 150;
-      //var fixed = node.fixed ? true : false;
       return function(quad, x1, y1, x2, y2) {
         if (quad.point && (quad.point !== node)) {
           if (!quad.point.fixed) {
