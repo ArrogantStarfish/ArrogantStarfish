@@ -1,5 +1,5 @@
 var MapView = Backbone.View.extend({
-  el: '<div><button>Hide Breaking News</button><div id="map"></div></div>',
+  el: '<div><button class="breaking-news">Hide Breaking News</button><div id="map"></div></div>',
 
   fills: {
     defaultFill: '#ABDDA4',
@@ -35,7 +35,7 @@ var MapView = Backbone.View.extend({
     var context = this;
     var mwidth = $("#map").width(),
       width = 908,
-      height = 410,
+      height = 525,
       country,
       state;
 
@@ -46,17 +46,34 @@ var MapView = Backbone.View.extend({
     var path = d3.geo.path()
       .projection(projection);
 
-
     var svg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMidYMid")
       .attr("viewBox", "0 0 " + width + " " + height)
       .attr("width", mwidth)
-      .attr("height", mwidth * height / width);
+      .attr("height", mwidth * height / width)
+      
+    svg.append('foreignObject')
+        .attr('class', 'mapLogo')
+        .attr({
+          width: 100
+        })
+        .attr("x", '5')
+        .attr("y", '5')
+        .html('<div class="logo-map-small"></div>');
+
+    svg.append('foreignObject')
+        .attr('class', 'map-bn-container')
+        .attr({
+          width: 210
+        })
+        .attr("x", '5')
+        .attr("y", '10')
+        .html('<div class="map-breaking-news"><button class="icon"></button></div>');
 
     svg.append("rect")
       .attr("class", "background")
       .attr("width", width)
-      .attr("height", height)
+      .attr("height", height);
 
     var g = svg.append("g")
       .attr("id", "container");
