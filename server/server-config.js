@@ -3,15 +3,27 @@
 var express = require('express');
 var request = require('request-promise');
 var Q = require('q'); 
+var _ = require('lodash'); 
 var app = express();
 // To initalize Mongo connection
 var db = require('../db/config.js');
 var Query = require('../db/query');
-var Snoocore = require('snoocore'); 
 var bodyParser = require('body-parser');
 var alerts = require('../db/TravelAlerts.json');
 var keys = require('./keys');
-var ISOCodes = require('../db/ISOCodes');
+// Reddit
+var Snoocore = require('snoocore'); 
+var reddit = new Snoocore({
+  userAgent: '/u/wecare_app WeCare@1.0.0', // unique string identifying the app
+  oauth: {
+    type: 'implicit',
+    key: keys.top_reddit,  
+    redirectUri: 'http://localhost:3000',
+    scope: ['read'],
+    deviceId: 'DO_NOT_TRACK_THIS_DEVICE'
+  }
+});
+var CountryData = require('../db/CountryData');
 
 app.use(bodyParser.json());
 
@@ -28,29 +40,31 @@ app.get('/warnings', function(req, res) {
   });
 });
 
-var reddit = new Snoocore({
-  userAgent: '/u/wecare_app WeCare@1.0.0', // unique string identifying the app
-  oauth: {
-    type: 'implicit',
-    key: keys.top_reddit,  
-    redirectUri: 'http://localhost:3000',
-    scope: ['read'],
-    deviceId: 'DO_NOT_TRACK_THIS_DEVICE'
-  }
-});
-
 // Return /r/worldnews subreddit Top Posts
 app.get('/topreddit', function(req, res) {
+
   reddit('/r/worldnews/top').listing({
     limit: 10
   })
     .then(function(slice) {
       var articleArray = slice.children; 
       var newsArray = articleArray.map(function(article) {
+        // Extract country name from article headline
+        var splitTitle = article.data.title.split(' ');
+        var location = []; 
+        splitTitle.forEach(function(word) {
+          var country = _.find(CountryData, function(co) {
+            // Example: Russian is a demonym for Russia
+            if (co.demonym === word || co.name.common === word) {
+              return true; 
+            }    
+          }); 
+          if (country && location.length < 1) { location.push(country.name.common) }; 
+        }); 
         return {
           headline: article.data.title,
           url: article.data.url,
-          location: ["China"]
+          location: location
         }
       })
       res.send(newsArray); 
@@ -63,12 +77,10 @@ app.get('/topreddit', function(req, res) {
 // Return NYT Top News
 app.get('/breaking', function(req, res) {
 
-
   // BUILD QUERY URLS ================================================
   var breaking_url = 'http://api.nytimes.com/svc/topstories/v1/world.json?api-key=' + keys.ny_breaking;
 
   // API REQUESTS ====================================================
-  var results = {};
   request(breaking_url)
     .then(function(body) {
       body = JSON.parse(body);
@@ -82,8 +94,8 @@ app.get('/breaking', function(req, res) {
       });
       res.send(newsArray);
     })
-    .catch(function(err) {
-      res.send(err);
+    .catch(function(error) {
+      res.send(error);
     });
 });
 
@@ -163,9 +175,11 @@ app.get('/issues', function(req, res) {
   // Get country's flag
   function getFlag(country) {
     var country = country.replace(/"/g, "");
-    var code = ISOCodes[country];
+    var code = _.find(CountryData, function(co) {
+      if (co.name.common === country) { return true; };     
+    }); 
     if (code) {
-      code = code.toString().toLowerCase();
+      code = code.cca2.toString().toLowerCase();
       return code + ".png";
     }    
   }
