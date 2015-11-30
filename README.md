@@ -1,17 +1,17 @@
-# Who Cares?
+# We Care
 ---------------------------------
 
-> Who Cares is a web-app designed to see who cares about a subject.
+> We Care is a web-app designed to give an unbiased world view of current issues and relief efforts.
 
-> Put in a subject and a message, and see what other people in the US have to say about it!
+> Click on a country and see what's making headlines and how you can help!
 
 > For further details, see: [PRESS-RELEASE.md](PRESS-RELEASE.md).
 
 ## Team
 
-  - __Product Owner__: Rory Sametz
-  - __Scrum Master__: Ambroise Piganeau
-  - __Development Team Members__: Ambroise Piganeau, Haley Bash, Joy Johnson, Rory Sametz
+  - __Product Owner__: Abel Wang
+  - __Scrum Master__: Laura Gelston
+  - __Development Team Members__: Jess O'Brien, Lorenzo De Nobili
 
 ## Table of Contents
 
@@ -86,16 +86,11 @@ While node is running, visit the locally running server at [127.0.0.1:3000](127.
 
 ### Testing
 
-To run tests:
+To run backend tests:
 ```sh
 grunt test
 ```
-
-### Adding Dummy Data to Database
-
-```sh
-grunt generateData
-```
+To run front end tests, go to test > frontend > backboneSpec.html and open the file in the browser.
 
 ### Checking Syntax with JSHint
 
