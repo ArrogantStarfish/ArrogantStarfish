@@ -210,59 +210,42 @@ img.heart {
 }
 .tooltip-container {
   background-color: rgba(0,0,0,0.75);
-  border-radius: 3%;
+  border-radius: 4px;
   padding: 10px;
   width: 460px;
   color: white; 
-}
-.tooltip .flag {
-  width: 80px;
-  height: 80px;
-  /* position: relative; */
-  padding: 0;
-  margin: -50px 10% 0;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 5%;
-  /* border-color: rgba(255,255,255,0.6); */
-  /* outline: 2px solid white; */
-  /* border-style: solid; */
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.8),;
-  border-width: 5px;
-  background-position: center center;
-  box-sizing: border-box;
 }
 .tooltip-article {
   margin-top: -3px;
 }
 
 .tooltip-article,
-.tooltip-charity {
+.tooltip-charity-box {
   background-color: rgba(255,255,255,0.2);
   padding: 4px;
   border-radius: 3px;
 }
-.tooltip-charity {
+/*.tooltip-charity {
   margin-top: 10px;
-}
+}*/
 
-.tooltip hr {
+/*.tooltip hr {
   margin-right: -4px;
   margin-left: 10px;
   border: 1px solid rgba(255,255,255,0.4);
  -webkit-margin-after: 0;
  -webkit-margin-before: 0.3em;
-}
+}*/
 .tooltip-article-header,
 .tooltip-charity-header {
   padding-left: 10px;
   font-size: 14px;
 }
-.tooltip-article-content,
+/*.tooltip-article-content,
 .tooltip-charity-content {
   padding-top: 5px;
   font-size: 11px;
-}
+}*/
 .tooltip-title {
   margin-top: -20px;
 }
@@ -284,13 +267,13 @@ img.heart {
   background-position: center center;
   box-sizing: border-box;
 }
-.tooltip-article,
+/*.tooltip-article,
 .tooltip-charity-box
  {
   background-color: rgba(255,255,255,0.2);
   padding: 4px;
   border-radius: 3px;
-}
+}*/
 .tooltip-charity {
   margin-top: 10px;
 }
@@ -298,10 +281,12 @@ img.heart {
   margin-right: -4px;
   margin-left: 10px;
   border: 1px solid rgba(255,255,255,0.4);
+ -webkit-margin-after: 0;
+ -webkit-margin-before: 0.3em;
 }
-.tooltip-article-header {
+/*.tooltip-article-header {
   padding-left: 10px;
-}
+}*/
 .tooltip-charity-header {
   text-align: center;
   margin-top: 5px;
@@ -323,9 +308,9 @@ img.heart {
   padding-top: 5px;
   font-size: 11px;
 }
-.tooltip-title {
+/*.tooltip-title {
   margin-top: -20px;
-}
+}*/
 .tooltip-title-text {
   width: 100%;
   /*padding-top: 10px;*/
