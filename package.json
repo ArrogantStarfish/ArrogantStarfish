@@ -12,11 +12,14 @@
     "bower": "1.6.5",
     "cron": "^1.0.9",
     "express": "^4.13.3",
+    "lodash": "^3.10.1",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
+    "q": "^1.4.1",
     "request-promise": "^1.0.2",
     "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "snoocore": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
