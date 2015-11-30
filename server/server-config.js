@@ -100,13 +100,13 @@ app.get('/top', function(req, res) {
     return request(top_nyt)
       .then(function(body) {
         body = JSON.parse(body);
-        var articleArray = body.results;
+        var articleArray = body.results.slice(0, 10);
         return articleArray.map(function(article) {
           return {
             source: "NYT", 
             headline: article.title,
             url: article.url,
-            location: article.geo_facet
+            location: article.geo_facet.splice(0, 1); 
           };
         });
       })
