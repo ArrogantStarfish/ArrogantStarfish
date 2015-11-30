@@ -72,22 +72,25 @@ app.get('/top', function(req, res) {
         var articleArray = body.results.slice(0, 10);
         return articleArray.map(function(article) {
           var location = []; 
-          article.geo_facet.forEach(function(location) {
+          console.log('HSFJSKDFDSKL:FJLS:DKJ');
+          if (typeof article.geo_facet === "string") { article.geo_facet = [] }; 
+          article.geo_facet.forEach(function(loc) {
+            console.log(location);
             var country = _.find(CountryData, function(co) {
               // Filters for capital cities or country name 
-              if (co.capital === word || co.name.common === location) {
+              if (co.capital === loc || co.name.common === loc) {
                 return true; 
               }
-            }); 
+            });
             if (country && location.length < 1) { location.push(country.name.common) }; 
-          })
+          }); 
           return {
             source: "NYT", 
             headline: article.title,
             url: article.url,
             location: location
-          };
-        });
+          }
+        })
       })
       .catch(function(error) {
         res.send(error);
@@ -108,7 +111,7 @@ app.get('/top', function(req, res) {
           splitTitle.forEach(function(word) {
             var country = _.find(CountryData, function(co) {
               // Filters for denonym or country name. Denonym example: Russian for Russia, Italian for Italy
-              if (co.demonym === word || co.name.common === word) {
+              if (co.demonym === word || co.name.common === word || co.capital === word) {
                 return true; 
               }    
             }); 
