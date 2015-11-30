@@ -179,11 +179,11 @@ var MapView = Backbone.View.extend({
     });
 
     var force = d3.layout.force()
-      .size([908, 410])
+      .size([908, 525])
       .nodes(dataNodes)
       .links(dataLinks)
-      .linkDistance(4)
-      .gravity(.1)
+      .linkDistance(5)
+      .gravity(.3)
       .charge(function(node) {
         return node.class === 'breakingNews' ? 30 : -30
       })
