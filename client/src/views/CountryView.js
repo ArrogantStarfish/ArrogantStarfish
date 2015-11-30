@@ -18,11 +18,22 @@ var CountryView = Backbone.View.extend({
     this.model.set('y', bbox.y + bbox.height / 2);
 
     if (this.countryID === "France") {
-      this.model.set('y', bbox.y + bbox.height / 2 - 70);
+      this.model.set('y', bbox.y + bbox.height / 2 - 100);
     }
     if (this.countryID === "United_States") {
       this.model.set('x', bbox.x + bbox.width / 2 - 250);
-      this.model.set('y', bbox.y + bbox.height / 2 + 30);
+      this.model.set('y', bbox.y + bbox.height / 2 + 50);
+    }
+    if (this.countryID === "Argentina") {
+      this.model.set('y', bbox.y + bbox.height / 2 - 50);
+    }
+    if (this.countryID === "Canada") {
+      this.model.set('x', bbox.x + bbox.width / 2 - 25);
+      this.model.set('y', bbox.y + bbox.height / 2 + 100);
+    }
+    if (this.countryID === "Russia") {
+      this.model.set('x', bbox.x + bbox.width / 2 + 250);
+      this.model.set('y', bbox.y + bbox.height / 2 + 50);
     }
 
 
@@ -171,7 +182,6 @@ var CountryView = Backbone.View.extend({
       }
     });
     charities.forEach(function(charity, i) {
-      console.log(charity)
       var logo = i === 0 ? '<div class="tooltip-charity-logo" style="background-image: url(' + charity.Logo + ')"></div>' : '';
       var charHtml = '' +
         '<li class="tooltip-charity-box">' +
