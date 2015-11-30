@@ -1,15 +1,17 @@
-var db = require('./config');
+// MODULES ====================================
+// To create mongoose schema
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var querySchema = mongoose.Schema({
-  latitude: Number,
-  longitude: Number,
-  keyword: String,
-  datetime: Date,
-  message: String,
-  url: String
+// SCHEMAS ====================================
+var countrySchema = new Schema ({
+  name: String,
+  advisoryState: Number,
+  hasAdvisory: Number,
+  advisoryText: String
 });
 
-var Query = mongoose.model('Query', querySchema);
+// MODELS ====================================
+var Country = mongoose.model('Country', countrySchema);
 
-module.exports = Query;
+module.exports.Country = Country;

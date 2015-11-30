@@ -9,10 +9,14 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
+    "bower": "1.6.5",
+    "cron": "^1.0.9",
     "express": "^4.13.3",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
-    "bower": "1.6.5"
+    "request-promise": "^1.0.2",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",
@@ -25,7 +29,6 @@
     "grunt-mocha-test": "^0.12.7",
     "jshint": "^2.8.0",
     "mocha": "^2.3.3",
-    "request": "^2.65.0",
     "supertest": "^1.1.0"
   }
 }

@@ -15,7 +15,8 @@
     "client/lib"
   ],
   "dependencies": {
-    "datamaps": "~0.4.0",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "d3": "~3.5.9",
+    "topojson": "~1.6.19"
   }
 }
